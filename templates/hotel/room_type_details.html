@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title> room types </title>
+    <style>
+        
+    </style>
+  </head>
+  <body>
+    <p>this is the hotel room type page<p>
+
+        <div class="gradient">
+            <div class ="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>{{room_type.room_type}} Room</h2>
+                        <nav id="breadcrubs">
+                            <ul>
+                                <li><p>{{rooms.count}} Rooms available</p></li>
+                            </ul>
+
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <section class=" fullwidth_block mt-0 pt-0 pd-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="mb-2 text-center">All availble rooms<br><span>The {{room_type.room_type}} has {{rooms.count}} available Room(s)</span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        {% for r in rooms %}
+                            <div class="plan featured col-md-4 col-sm-6 col-xl-12">
+                                <div class="utf-price-plan">
+                                    <h3>Room No. {{r.room_number}}</h3>
+                                    <span class="value">${{r.room_type.price}}<span>/Night</span></span>
+
+                                </div>
+                                <div class="utf_price_plan_features">
+                                    <ul>
+                                        <li>Beds: {{r.room_type.number_of_beds}}</li>
+                                        <li>Capacity: {{r.room_type.room_capsity}} People</li>
+                                    </ul>
+                                    <input type="hidden" class="room_id_{{r.id}}" value="{{r.id}}" id="room_id">
+                                    <input type="hidden" class="room_number_{{r.id}}" value="{{r.room_number}}" id="room_number">
+                                    
+                                    
+                                    <button class="btn border add-to-selection" data-index="{{r.id}}"><i class="fa fa-shopping-cart"></i>Add to whishlist</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <input type="hidden" value="{{hotel.id}}" id="id">
+                        <input type="hidden" value="{{hotel.name}}" id="hotel_name">
+                        <input type="hidden" value="{{room_type.room_type}}" id="room_name">
+                        <input type="hidden" value="{{room_type.price}}" id="room_price">
+                        <input type="hidden" value="{{room_type.number_of_beds}}" id="number_of_beds">
+                        <input type="hidden" value="{{room_type.id}}" id="room_type">
+                        <input type="hidden" value="{{checkin}}" id="checkin">
+                        <input type="hidden" value="{{checkout}}" id="checkout">
+                        <input type="hidden" value="{{adults}}" id="adults">
+                        <input type="hidden" value="{{children}}" id="children">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="booking_widget_box" style="border:1px dashed rgba(42, 1, 119, 0.61); padding:30px; boder-radius:3px; bg-info">
+                            <h3> <i class="fa fa-calender"></i>Booking</h3>
+                            <form class=" row width-form mt-0 form-group" method="POST" action="{% url 'booking:check_room_availability' %}">
+                                {% csrf_token %}
+                                <div class="mb-3 row">
+                                    <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Indate" class="form-label">Check in date</label>
+                                    <input type="date" class="form-control" name="checkin" id="Indate" placeholder="Select date">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="Outdate" class="form-label">Check out date</label>
+                                    <input type="date" class="form-control" id="Outdate" name="checkout" placeholder="Select date">
+                                </div>
+                                <div class="with-forms">
+                                    <div class="col-lg-12 col-md-12">
+                                        <a href=""> Guests <span><input class="qtyTotal" name="qtyTotal" readonly></span></a>
+                                        <div class="panel-dropdown-content">
+                                            <div class="qtyButtons mb-3 ">
+                                                <div class="qtyTitle">Adults</div>
+                                                <input type="number" min="1"  class="form-control" name="adults" placeholder="Adults">
+                                            </div>
+                                            <div class="qtyButtons mb-3">
+                                                <div class="qtyTitle">Children</div>
+                                                <input type="number" min="0"  class="form-control" name="children" placeholder="Children">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="with-forms mt-3">
+                                    <div class="col-lg-12 col-md-12">
+                                        <a href="">Select a room type</a>
+                                        <select name="room-type" class="form-select" required>
+                                            {% for r in hotel.hotel_room_types %}
+                                              <option value="{{r.slug}}">{{r.room_type}}</option>
+                                            {% endfor %}
+                                         </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn mt-5 bg-success ">Check Availability</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <script>//adding rooms to whishlist
+            $(document).ready(function(){
+                //add to selection
+                $('.add-to-selection').on("click", function(){
+                    let button = $(this)
+                    let id = button.attr("data-index")
+
+                    let hotel_id = $("#id").val()
+                    let room_id = $(`.room_id_${id}`).val()
+                    let room_number = $(`.room_number_${id}`).val()
+                    let hotel_name = $("#hotel_name").val()
+                    let room_name = $("#room_name").val()
+                    let room_type = $("#room_type").val()
+                    let room_price = $("#room_price").val()
+                    let number_of_beds = $("#number_of_beds").val()
+                    let checkin = $("#checkin").val()
+                    let checkout = $("#checkout").val()
+                    let adults = $("#adults").val()
+                    let children = $("#children").val()
+
+
+
+                    console.log("room id is", room_id);
+                    console.log("room number is", room_number);
+                    console.log("hotel name is", hotel_name);
+                    console.log("room  name is", room_name);
+                    console.log("hotel price is", room_price);
+                    console.log("the type of room is", room_type);
+                    console.log("number of beds", number_of_beds);
+                    console.log("checkin is", checkin);
+                    console.log("checkout is", checkout);
+                    console.log("adults is", adults);
+                    console.log("children", children);
+                    console.log("id is", id);
+
+                    $.ajax({
+                        url: '/booking/add_to_selection/', 
+                        
+                        data: {
+                            "id":id,
+                            "hotel_id":hotel_id,
+                            "room_id":room_id,
+                            "room_number":room_number,
+                            "hotel_name":hotel_name,
+                            "room_name":room_name,
+                            "room_type":room_type,
+                            "room_price":room_price,
+                            "number_of_beds":number_of_beds,
+                            "checkin":checkin,
+                            "checkout":checkout,
+                            "adults":adults,
+                            "children":children,
+                        },
+                        dataType: "json",
+                        beforeSend: function() {
+                            console.log("Sending data to server....");
+
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $(".room_count").text(response.total_selectetd_items)
+                            button.text("Added")
+
+
+                        }
+                    })
+
+                })
+            })
+
+
+          
+
+
+
+
+        </script>
+
+
+           
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  </body>
+</html>
+ 

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title> room types </title>
+    <style>
+        
+    </style>
+  </head>
+  <body>
+    <section>
+        <div id="main-wrapper" class="selection-list">
+            <div id="titlebar" class="gradient">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>All Rooms Selections</h2>
+                            <nav id="breadcrubs">
+                                <ul>
+                                    <li><a>Home</a></li>
+                                    <li><a>Hotel</a></li>
+                                    <li><a>Rooms</a></li>
+                                    <li><a>My selected rooms</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container mb-6">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 payment-section bg-info p-5">
+                        <div class="mb-4 booking-listing-section-form ">
+                            <fieldset style="boder 2px solid black">
+                                <h3 style="font-family:sanserif; text-align:center; margin-top:.1px;"><i class="fas fa-bed "></i>Selected Rooms</h3>
+                                <div class="listing-section">
+                                    <div class="pricing-list m-1">
+                                        <ul>
+                                            {% for id, item in data.items %}
+                                                <li>
+                                                    <h5>
+                                                    Room Name: {{item.room_name}}
+                                                    <small>
+                                                            <a href="" style="cursor:pointer; " class="delete-item" data-item={{id}}><i class="fas fa-trash"></1>Cancel<a/>
+                                                    </small> 
+                                                    </h5>
+                                                    <p><strong>Room Number: </strong>{{item.room_number}}</p>
+                                                    <p><strong>Beds: </strong>{{item.number_of_beds}}</p>
+                                                    <span>{{item.room_price}}$</span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                           </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <form class="booking-list-form mb-4" method="POST">
+                {% csrf_token %}
+                <h3><i class="fa far-user"></i>Billing information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" type="text" name="full_name" value="" placeholder="First Name">
+    
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="email" name="email" value="" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="col-lg -12 text-center:"" ">
+                        <button type="submit" class="btn bg-success mt-2 mb-2">Continue to book</button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-lg-4 col-md-4 mt-0 list-payment-section">
+                <div class="booking-item-list-container container compact">
+                    <div class="listing-items">
+                        <img src="{{hotel.image.url}}" alt="hotel image">
+                        <div class="listing-item-content">
+                            <h3>{{hotel.name}}</h3>
+                            <span><i class="fa fa-map-maker"></i>{{hotel.address}}</span>
+                            <span><i class="fa fa-phone"></i>{{hotel.phone}}</span>
+                            <div class="rating-section">
+                                <div class="counter-star-rating">Reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="boxed-widget opening-hours mt-0">
+                    <h3><i class="fa fa-calender-check=0"></i>Booking Summery</h3>
+                    <ul>
+                        <li>Check in <span>{{checkin}}</span></li>
+                        <li>Check out <span>{{checkout}}</span></li>
+                        <li>Total days <span>{{total_days}}</span></li>
+                        <li>Adults <span>{{adults}}</span></li>
+                        <li>Children <span>{{children}}</span></li>
+                        <li>V.A.T <span>$0.00</span></li>
+                        <li class="total-cost">Total Cost <span>{{total}}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<script>//deleting the rooms in the selection
+    $(document).on("click", ".delete-item", function(){
+        event.preventDefault();// 
+
+        let id = $(this).attr("data-item")
+        let button = $(this)
+
+        console.log("id is ===", id);
+
+        $.ajax({
+            url: "/booking/delete_selection/",
+            data: {
+                "id":id
+            },
+            dataType: "json",
+            beforeSend: function(){
+                button.html("<p>deleted</p>")
+                //console.log("deleting ......");
+            },
+            success: function(res){
+                $(".selection-list").html(res.data)
+                
+                //console.log(ELly);
+            }
+        })
+    })
+  
+
+
+</script>
+
+  </body>
+</html> 

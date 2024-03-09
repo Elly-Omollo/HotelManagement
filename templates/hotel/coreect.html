@@ -1,0 +1,47 @@
+<section class="section3">
+    <div class="wrapper p-5">
+      <div class="form-control bg-primary text-center  mt-3 mb-5 pb-4" style="padding-left:30px;">
+        <h3>choose the dates to see price</h3>
+        <form class=" row width-form mt-0 form-group" method="post" action="{% url 'booking:check_room_availability' %}">
+          {% csrf_token %}
+          <div class="mb-3 row">
+              <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
+          </div>
+          <div class="mb-3 row">
+              <label for="Indate" class="form-label">Check in date</label>
+              <input type="date" class="form-control" value="" name="checkin" id="Indate" placeholder="Select date">
+          </div>
+          <div class="mb-3 row">
+              <label for="Outdate" class="form-label">Check out date</label>
+              <input type="date" class="form-control" id="Outdate" name="checkout" placeholder="Select date">
+          </div>
+          <div class="with-forms">
+              <div class="col-lg-12 col-md-12">
+                  <a href=""> Guests <span class="qtyTotal" name="qtyTotal">2</span></a>
+                  <div class="panel-dropdown-content">
+                      <div class="qtyButtons mb-3 ">
+                          <div class="qtyTitle">Adults</div>
+                          <input type="number" min="1" value="" class="form-control" name="adults" placeholder="Adults">
+                      </div>
+                      <div class="qtyButtons mb-3">
+                          <div class="qtyTitle">Children</div>
+                          <input type="number" min="0" value="" class="form-control" name="children" placeholder="Children">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="with-forms mt-3">
+              <div class="col-lg-12 col-md-12">
+                  <a href="">Select a room type</a>
+                  <select name="room-type" class="form-select" required>
+                     {% for r in hotel.hotel_room_types %}
+                       <option value="{{r.slug}}">{{r.room_type}}</option>
+                     {% endfor %}
+                  </select>
+              </div>
+          </div>
+          <button type="submit" class="btn mt-5 bg-success ">Check Availability</button>
+      </form> 
+      </div>
+    </div>
+  </section>

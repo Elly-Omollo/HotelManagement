@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content%}
+<h1 class=""> this is the manager signup page </h1>
+        <div class="body1 ">
+            <form  method="POST" class="form-control m-5">
+              {% csrf_token %}
+
+                <p class="text-black">login as a manager  </p>
+                {{ form.as_p }}
+
+
+                <div class="fomr-group  col-12">
+                 
+                    <input 
+                      class="btn btn-outline-info form-control col-12 "
+                      type="submit"
+                      name="button"
+                      value="REGISTER"
+                    />
+                  </div>
+            </form>
+        </div>
+
+{% endblock %}

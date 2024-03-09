@@ -1,0 +1,93 @@
+{% extends 'base/base.html'%}
+{% load static %}
+{% block title%}
+customer login
+
+{%endblock%}
+
+{% block content %}
+<div class="body1">
+        <!-- <div class= "log">
+            <p>
+                when jesus was preaching and healing the sick
+            </p>
+        </div> -->
+
+           
+
+        <div class="wrapper">
+            <span class="material-symbols-outlined" id="close">
+                close
+                </span>
+            <div class="form-box login  col-md-12 h-100  ">
+                <h2>Login</h2>
+                <form  method="POST" class="form-group ">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">mail </span>
+                        <input type="email" name="email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">lock</span>
+                        <input type="password" name="password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label for=""><input type="checkbox">Remember me</label>
+                        <a href="">Forgot password?</a>
+                    </div>
+                    <button type="submit" id="btn1" class="btn btn-info w-100 h-45">Login</button>
+                    <div class="login-register">
+                        <p>
+                            Don't have an account?
+                            <a href="" class="register-link">Register</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- <div class="form-box register  col-md-12 h-100  ">
+                <h2 
+                >Register</h2>
+                <form action="/login/manager_signup/" method="POST" class="form-group ">
+                  {% csrf_token %}
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
+                        <input type="text" name="username" required >
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">mail </span>
+                        <input type="email" name="email" required >
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">call </span>
+                        <input type="text" name="phone_no" required >
+                        <label for="phone_no">Phone</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="material-symbols-outlined">lock</span>
+                        <input type="password" name="password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label for="">
+                            <input type="checkbox">I agree to the  <a href="">terms and conditions</a>
+                        </label>
+                    </div>
+                    <button type="submit" id="btn1" class="btn btn-info w-100 h-45">Sign Up</button>
+                    <div class="login-register">
+                        <p>
+                            Already have an account?
+                            <a href="" class="login-link">Log In</a>
+                        </p>
+                    </div>
+                </form>
+            </div> -->
+        </div>
+    </div>
+{%endblock%}

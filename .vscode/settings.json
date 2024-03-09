@@ -1,0 +1,6 @@
+{
+    "editor.stickyScroll.scrollWithEditor": false,
+    "workbench.tree.enableStickyScroll": false,
+    "editor.hover.sticky": false,
+    "editor.stickyScroll.enabled": false
+}

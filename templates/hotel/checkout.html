@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+    <section>
+
+
+
+
+        <div id="main-wrapper">
+            <div id="titlebar" class="gradient">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>All room selections</h2>
+                            <nav id="breadcrumbs">
+                                <ul>
+                                    <li><a>Home</a></li>
+                                    <li><a>Hotel</a></li>
+                                    <li><a>Rooms</a></li>
+                                    <li><a>My selected rooms</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="constainer mt-6">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 payment-selection">
+                        <div class="notification warning closeable">
+                            <p><span>NOTE</span> Review your order before payment.</p>
+                            <a class="close" href="#">check order</a>
+                        </div>
+                        <div class="booking-list-form mb-4">
+                            <h3><i class="fa fa-bed"> </i>Selected Rooms</h3>
+                            <div class="listing-selection">
+                                <div class="price-listing-section">
+                                    <ul style="background:blue; padding:30px; border-radius:10px;">
+                                        {% for r in booking.room.all %}
+                                            <li style="background:violet; border-radius:2px; padding-left:20px;width:100px;">
+                                                <h5>Room :{{r.room_type.room_type}} </h5>
+                                                <h5>Room Number : {{r.room_number}}</h5>
+                                                <p><strong>Beds:</strong>{{r.room_type.number_of_beds}}</p>
+                                                <span>${{r.room_type.price}} /Night</span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-list-form mb-4">
+                            <h3><i class="fa fa-bed"> </i>Billing Information</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Full Name:</label>
+                                    <input 
+                                    name="full_name"
+                                    type="text"
+                                    value="{{booking.full_name}}"
+                                    readonly
+                                    placeholder="Your name"
+                                    />
+                                </div>
+                                <div class="col-md-6"><br>
+                                    <div class="medium-icon">
+                                        <label>E-mail:</label>
+                                        <input 
+                                        name="email"
+                                        type="email"
+                                        value="{{booking.email}}"
+                                        readonly
+                                        placeholder="Enter your email"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6"><br>
+                                    <div class="medium-icon">
+                                        <label>Phone:</label>
+                                        <input 
+                                        name="phone"
+                                        type="text"
+                                        value="{{booking.phone}}"
+                                        readonly
+                                        placeholder="Enter your contact"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 mt-0  " style="background:pink; margin:10px;">
+                            <div class="booking-list-container">
+                                <div class="listing-item">
+                                    <img src={{booking.hotel.image.url}} alt="hotelphoto" />
+                                    <h3>{{booking.hotel.name}}</h3>
+                                    <span><i class="fa fa-map-maker"></i>Address: {{booking.hotel.address}}</span><br>
+                                    <span><i class="fa fa-phone"></i>Contact: {{booking.hotel.mobile}}</span>
+                                    <div class="utf-rating-section" data-rating="4.5">
+                                        <div class="utf-counter-star-rating"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-summery">
+                            <h3><i class="fa fa-calender"></i>Booking Summery</h3>
+                            <ul>
+                                <li>Check in date:<span> {{booking.check_in_date}}</span></li>
+                                <li>Check out date:<span> {{booking.check_out_date}}</span></li>
+                                <li>Total days:<span> {{booking.total_days}}</span></li>
+                                <li>Adults:<span>{{booking.number_adults}}</span></li>
+                                <li>Children:<span>{{booking.num_children}}</span></li>
+                                <li>Discount:<span>${{booking.saved}}</span></li>
+                                <li class="total-cost">
+                                    <form class="form-control" method="POST" action="">
+                                        {% csrf_token %}
+                                        <div class="col-md-8">
+                                            <input
+                                                id="couponCode"
+                                                name="code"
+                                                placeholder="Have a coupon enter here....."
+                                                type="text"
+                                            />
+                                        </didv>
+                                        <div class="col-md-4">
+                                            <input type="submit" class="coupon_code" vallue="Apply"/>
+
+                                        </div>
+                                    </form>
+                                </li>
+                                <li class="total-cost">Total cost: <span>{{booking.payable}}</span></li>
+                            </ul>
+                            <div id="paypal-button-container"></div>
+                            {% comment %} <form class="form-group" action="" method="POST">
+                                {% csrf_token %}
+                                <input
+                                    type ="text"
+                                    name="publick_key"
+                                    value="flutter-public-key"
+                                />
+                                <input type="text" name="customer[email]" value="" />
+                                <input type="text" name="customer[name]" value="" />
+                                <input type="text" name="tx_ref" value="" />
+                                <input type="text" name="amout" value="" />
+                                <input type="text" name="currency" value="USD" />
+                                <input type="text" name="meta[token]" value="" />
+                                <input type="text" name="redirect_url" value="/success/page/" />
+                                <button
+                                    id=""
+                                    class=""
+                                    style ="background:orange; color:rgb(37,28,3)"
+                                >
+                                    pay with paypal
+                                    <img 
+                                        src=""
+                                        style="with:40px;"
+                                        alt="paypal image"
+                                    />
+                                </button>
+                            </form> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    {% comment %} <script src="https://www.paypal.com/sdk/js?client-id=TEST&currency=USD"></script> {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        let booking_total = "{{booking.payable}}";
+        let booking_id = "{{booking.bookingid}}";
+        let success_id = "{{booking.success_id}}";
+
+        console.log("this is the amount you should pay",booking_total);
+        console.log("this is the booking id",booking_id);
+        console.log("this is the success id ",success_id);
+
+        paypal.Buttons({
+            createOrder: function(data, actions){
+                return actions.order.create({
+                    purchase_units: [{
+                       amount: {
+                        value: booking_total
+                       } 
+                    }]
+                })
+            },
+            onApprove: function(data, actions){
+                return actions.order.capture().then(function(Detail){
+                    console.log(Detail);
+                    if (Detail.status == "COMPLETED"){
+                        //redirect to the succcess page 
+                        windows.location.href = '/success/${booking_id}/?succcess=${success_id}&payer_id=${Detail.id}&status=${Detail.status}&booking_total=${booking_total}';
+                    }
+                })
+            }
+        }).render("#paypal-button-container")
+        
+    </script>
+</body>
+</html>

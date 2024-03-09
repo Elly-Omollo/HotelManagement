@@ -1,0 +1,251 @@
+{% extends "base/base.html" %}
+{% load static %}
+{%block title%}Details page{% endblock%}
+{% block content%}
+    <header class="navbar1 nav bg-danger">
+        <div class="back"><a href=""><i> button to the home page</i></a></div>
+        <div class="sign"><a href=""><i>signin icon</i></a></div>
+    </header>
+
+   
+
+    <section class="section-carousel">
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+            {% for hotelimage in hotel.hotel_gallery.all %}
+              <div class="carousel-item active">
+                <img src="{{hotelimage.image.url}}" class="d-block w-100 h-70" alt="">
+              </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden=""></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden=""></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </section>
+
+    <div class=" text-center my-3">
+        <p>{{hotel.name}}</p>
+    </div>
+
+    <!-- <section class="section3">
+      <div class="wrapper p-5">
+        <div class="form-control bg-primary text-center  mt-3 mb-5 pb-4" style="padding-left:30px;">
+          <h3>choose the dates to see price</h3>
+          <form class=" row width-form mt-0 form-group" method="post" action="{% url 'booking:check_room_availability' %}">
+            {% csrf_token %}
+            <div class="mb-3 row">
+                <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
+            </div>
+            <div class="mb-3 row">
+                <label for="Indate" class="form-label">Check in date</label>
+                <input type="date" class="form-control" value="" name="checkin" id="Indate" placeholder="Select date">
+            </div>
+            <div class="mb-3 row">
+                <label for="Outdate" class="form-label">Check out date</label>
+                <input type="date" class="form-control" id="Outdate" name="checkout" placeholder="Select date">
+            </div>
+            <div class="with-forms">
+                <div class="col-lg-12 col-md-12">
+                    <a href=""> Guests <span class="qtyTotal" name="qtyTotal">2</span></a>
+                    <div class="panel-dropdown-content">
+                        <div class="qtyButtons mb-3 ">
+                            <div class="qtyTitle">Adults</div>
+                            <input type="number" min="1" value="" class="form-control" name="adults" placeholder="Adults">
+                        </div>
+                        <div class="qtyButtons mb-3">
+                            <div class="qtyTitle">Children</div>
+                            <input type="number" min="0" value="" class="form-control" name="children" placeholder="Children">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="with-forms mt-3">
+                <div class="col-lg-12 col-md-12">
+                    <a href="">Select a room type</a>
+                    <select name="room-type" class="form-select" required>
+                       {% for r in hotel.hotel_room_types %}
+                         <option value="{{r.slug}}">{{r.room_type}}</option>
+                       {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn mt-5 bg-success ">Check Availability</button>
+        </form> 
+        </div>
+      </div>
+    </section> -->
+
+    <!-- new form -->
+
+
+
+    <div class="container-fluid bg-primary mt-2 p-5">
+      <div class="row bg-info my-3 p-4 m-4 h-6">
+        <h3 class="form-header"> select your hotel of desire</h3>
+        <form class="form-control" id="myForm" method="post" action="{% url 'booking:check_room_availability' %}">
+          {% csrf_token %}
+          <div class="mb-3 row">
+            <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
+        </div>
+          <div class="row ">
+            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+              <label>Adults</label>
+              <input 
+                class="form-control"
+                type="number"
+                placeholder="adults"
+                min="1"
+                name="adults"
+              />
+            </div>
+            <div class="fomr-group col-sl-12 col-lg-3 col-md-6"> 
+              <label>Children</label>
+              <input 
+                class="form-control"
+                type="number"
+                placeholder="children"
+                name="children"
+                min="0"
+              
+              />
+            </div>
+            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+              <label>Check in date</label>
+              <input 
+                class="form-control"
+                type="date"
+                name="checkin"
+                placeholder="check in date"
+              
+              />
+            </div>
+            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+              <label>heck out date</label>
+              <input 
+                class="form-control"
+                type="date"
+                name="checkout"
+                placeholder="Check out date"
+              />
+            </div>
+            
+          </div>
+          <div class="row my-3">
+              <!-- <div class="col-lg-4 col-md-12">
+                <label>Select location</label>
+                  <select name="location" class="form-select" type="hidden">
+                     {% for r in location %}
+                       <option value="{{r.id}}">{{r.address}}</option>
+                     {% endfor %}
+                  </select>
+              </div> -->
+              <div class="col-lg-4 col-md-12">
+                <label>Select a room type</label>
+                  <select name="room-type" class="form-select">
+                     {% for r in hotel.hotel_room_types %}
+                       <option value="{{r.slug}}">{{r.room_type}}</option>
+                     {% endfor %}
+                  </select>
+              </div>
+              <div class="fomr-group  col-lg-4 col-md-12">
+                <label>Check Availability</label>
+                <input 
+                  class="btn btn-outline-info form-control "
+                  type="submit"
+                  name="button"
+                  
+                  
+                />
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- end of new form -->
+
+    <section class="section4">
+      <h3>Description</h3>
+      <p>{{ hotel.description }}</p>
+       <div class="listing-tags">
+         <a href=""><i class="material-symbols-outlined" aerial-hiden="true"> call</i>  {{hotel.mobile}}</a><br>
+         <span class="">
+         
+          </span>
+         <a href=""><i class="fa fa-envelope-o" aerial-hiden="true"></i>{{hotel.address}}</a><br>
+         <span class="material-symbols-outlined">{{hotel.email}}</span>
+         <a href=""><i class="sl sl-icon-phone" aerial-hiden="true"></i></a><br>
+      </div>
+       <div class="listing-media-tags">
+        <h3 class="listing-headline-part mb-40 mt-40"> Our social media pages</h3>
+         <a href=""><i class="sl sl-icon-facebook" aerial-hiden="true"></i>{{hotel.facebook}}</a>
+         <a href=""><i class="fa fa-twitter" aerial-hiden="true"></i>{{hotel.twitter}}</a>
+         <a href=""><i class="sl sl-icon-instagram" aerial-hiden="true"></i>{{hotel.instagram}}</a>
+      </div>
+       <div class="list-tags">
+        <h3 class="listing-headline-part mb-40 mt-40"> Tags</h3>
+        {% for t in hotel.tags.all %}
+            <a href=""><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</a>
+        {% endfor %}
+         
+       </div>
+    </section>
+    <section class="rooms-listing bg-primary mt-6 mb-6 p-7">
+      <h3> select room</h3>
+      <ul>
+        
+        
+         {% for r in hotel.hotel_room_types %}
+          <li>
+            <h3> room type: {{ r.room_type }}</h3>
+            <p><srong>Room capacity:</strong> {{ r.room_capsity }}  Persons</p>
+            <p><srong>Number of beds:</strong> {{ r.number_of_beds }}  Beds</p>
+            <p><srong>Price:</strong> ${{ r.price }} /Night</p>
+              <p><a href="{% url 'hotel:room_type_details' r.hotel.slug r.slug %}">View More</a></p>
+          </li>
+          
+        {% endfor %}
+        
+      </ul> 
+
+    </section>
+
+
+    <section class="section5 bg-info mt-5 mb-4">
+      <div class="review-items text-center">
+        <h4>facilities</h4>
+        <span><i>wifi</i></span>
+        <span><i>family rooms</i></span>
+        <span><i>no smoking room</i></span>
+        <span><i>parking</i></span>
+      </div>
+      </div>
+    </section>
+
+    <section class="section6">
+      <div class="blogs">
+        <div class="img">
+          <img src="" alt="user">
+        </div>
+        <div class="title">username</div>
+        <div class="description">
+          <p>
+            
+            the stay waas soo enjoyablel and the services were also nice<br>
+          
+          </p>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

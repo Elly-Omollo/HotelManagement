@@ -1,0 +1,288 @@
+{% extends "base/base.html" %}
+{% load static %}
+{%block title%}book hotel{% endblock%}
+{% block content%}
+   
+           <!-- Carousel -->
+<div id="page" class="carousel carousel-nav slide pt-4 mt-5"  data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#page" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#page" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#page" data-bs-slide-to="2"></button>
+        </div>
+        
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'images/carousel1.jpg'%}" alt="" class="d-block" >
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'images/carousel3.jpg'%}" alt="" class="d-block" >
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'images/hotel1.jpg'%}" alt="" class="d-block" >
+          </div>
+        </div>
+        
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#page" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#page" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+</div>
+
+            <div class="container-fluid bg-primary mt-2 p-5">
+              <div class="row bg-info my-3 p-4 m-4 h-6">
+                <h3 class="form-header"> select your hotel of desire</h3>
+                <form class="form-control" id="myForm" method="post" action="#">
+                  {% csrf_token %}
+                  <div class="row ">
+                    <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+                      <label>Adults</label>
+                      <input 
+                        class="form-control"
+                        type="number"
+                        placeholder="adults"
+                        min="1"
+                        name="adults"
+                      />
+                    </div>
+                    <div class="fomr-group col-sl-12 col-lg-3 col-md-6"> 
+                      <label>Children</label>
+                      <input 
+                        class="form-control"
+                        type="number"
+                        placeholder="children"
+                        name="children"
+                        min="0"
+                      
+                      />
+                    </div>
+                    <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+                      <label>Check in date</label>
+                      <input 
+                        class="form-control"
+                        type="date"
+                        name="checkin"
+                        placeholder="check in date"
+                      
+                      />
+                    </div>
+                    <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
+                      <label>heck out date</label>
+                      <input 
+                        class="form-control"
+                        type="date"
+                        name="checkout"
+                        placeholder="Check out date"
+                      />
+                    </div>
+                    
+                  </div>
+                  <div class="row my-3">
+                      <div class="col-lg-4 col-md-12">
+                        <label>Select location</label>
+                          <select name="location" class="form-select">
+                             {% for r in location %}
+                               <option value="{{r.id}}">{{r.address}}</option>
+                             {% endfor %}
+                          </select>
+                      </div>
+                      <div class="col-lg-4 col-md-12">
+                        <label>Select a room type</label>
+                          <select name="room-type" class="form-select">
+                             {% for r in roomtype %}
+                               <option value="{{r.id}}">{{r.room_type}}</option>
+                             {% endfor %}
+                          </select>
+                      </div>
+                      <div class="fomr-group  col-lg-4 col-md-12">
+                        <label>Check Availability</label>
+                        <input 
+                          class="btn btn-outline-info form-control "
+                          type="submit"
+                          name="button"
+                          value="Check "
+                        />
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+{% comment %} <div class="container-fluid bg-primary mt-2 p-5">
+      <div class="row bg-info my-3 p-4 m-4 h-6">
+        <form class="form-control form1 m-2" method="post" action="{% url 'booking:check_room_availability' %}">
+          {% csrf_token %}
+          <div class="row">
+          <div class="fomr-group col-2">Adults
+            <input 
+              class="form-control"
+              type="number"
+              placeholder="adults"
+              min="1"
+              name="adults"
+            />
+          </div>
+          <div class="fomr-group col-2"> Children
+            <input 
+              class="form-control"
+              type="number"
+              placeholder="children"
+              name="children"
+              min="0"
+            
+            />
+          </div>
+          <div class="fomr-group col-3">Check in date
+            <input 
+              class="form-control"
+              type="date"
+              name="checkin"
+              placeholder="check in date"
+            
+            />
+          </div>
+          <div class="fomr-group col-3">Check out date
+            <input 
+              class="form-control"
+              type="date"
+              name="checkout"
+              placeholder="Check out date"
+            />
+          </div>
+          <div class="fomr-group col-2">check availability
+            <input 
+              class="btn bg-info"
+              type="submit"
+              name="button"
+              value="Check"
+            />
+          </div>
+        
+        </div>
+        </form>
+      </di>
+</div> {% endcomment %}
+
+            <div class="container-fluid mt-3  bg-danger container1 ">
+              <h3 >The best palce for you</h3>
+              <p>Explore our pages and find the best accommodation around the world.</p>
+            </div>
+
+             <div class="container-fluid bg-info p-4">
+              <div class="row bg-success py-5">
+                <div class="container bg-danger p-5">
+                  <div class="main" >
+                    {% for h in hotels%}
+                        <div class="card shadow">
+                            <a href="{% url 'hotel:hotel_details' h.slug %}" class="card-link">
+                                <div class="card-items">
+                                    <div class="image">
+                                        <img src="{{h.image.url}}" alt="hotels image">
+                                    </div>    
+                                    <span class="utf-open-now">Open now</span><br>
+                                    {% if h.featured == True %}
+                                        <span class="utf-open-now">Featured</span>
+
+                                    {% endif %}
+                                    <div class="listing-item-content">
+                                        <div class="listing-price-block">
+                                            <span class="listing-price"><i class="fa fa-tag"></i>price</span>
+                                        </div>
+                                        <h3>{{h.name}}</h3>
+                                        <span><i class="fa fa-map-maker "></i> address: {{h.address}}</span><br>
+                                        <span><i class="fa fa-phone">contact :{{h.mobile}}</i></span><br>
+                                        <span><i class="fa fa-email"></i>mail: {{h.email}}</span><br>
+                                    </div>
+                                    <div class="utf-star-rating-section" data-rating="4.5">
+                                        <div class="utf-counter-star-rating">(4.5)</div>
+                                        <span class="utf-view-count"><i class="fa fa-eye"></i>{{h.views}}views</span>
+                                        <span class="like-icon">like icon</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                   
+                </div>
+                </div>
+
+              </div>
+            </div>
+           
+        
+          <div class="popular_grid">
+            {% for h in hotels %}
+            <div class="popular_card">
+              <img src="{{h.image.url}}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+            {% endfor %}
+            <div class="popular_card">
+              <img src="{% static 'images/carousel1.jpg' %}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+            <div class="popular_card">
+              <img src="{% static 'images/carousel1.jpg' %}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+            <div class="popular_card">
+              <img src="{% static 'images/carousel1.jpg' %}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+            <div class="popular_card">
+              <img src="{% static 'images/carousel1.jpg' %}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+            <div class="popular_card">
+              <img src="{% static 'images/hotel1.jpg' %}" alt="" />
+              <div class="popular_content">
+                <div class="popula_card_hrader">
+                  <h4>HOTEL NAME: </h4>
+                  <h4>HOTEL PRICE: </h4>
+                </div>
+                <P>Hotel location </P>
+              </div>
+            </div>
+          </div>
+        
+
+{% endblock%}
+
+      
+       
