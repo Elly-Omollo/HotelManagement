@@ -11,11 +11,6 @@ from django.contrib import messages
 
 # customer login
 def user_login(request):
-    if request.user.is_authenticated and request.user.is_Customer:
-        return redirect('customer_dashboard')
-    if request.user.is_authenticated and request.user.is_User:
-        return redirect('manager_dashboard')
-    
     if request.method=="POST":
         email=request.POST['email']
         password=request.POST['password']
@@ -32,19 +27,13 @@ def user_login(request):
         else:
             # print("==========Dear=======",email, "login failed please try again")
             messages.warning(request, "Invalid credential. Please try again.")
-            return redirect('hotel:index')
+            return redirect('userauth:user_login')
             # return  render (request,'userauth/user_login.html',{})
         
     return render(request,'userauth/user_login.html',{})
     
 # customer register
 def user_signup(request):
-    if request.user.is_authenticated and request.user.is_customer:
-        return redirect('customer_dashboard')
-    if request.user.is_authenticated and request.user.is_user:
-        return redirect('manager_dashboard')
-    
-
     if request.method=="POST":
         username=request.POST['username']
         email=request.POST['email']
@@ -88,12 +77,11 @@ def user_signup(request):
 
 
 
-# manger signup page
+# manager signup page
 def RegisterView(request):
     if request.user.is_authenticated:
         messages.warning(request, f"Hey you are already logged in." )
-        return redirect("hotel:index")
-    
+        return redirect("manager_dashboard")
     form = UserRegistrationForm(request.POST or None)
     
     if form.is_valid():

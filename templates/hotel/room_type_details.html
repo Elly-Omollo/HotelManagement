@@ -1,27 +1,27 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+{% extends 'base/base.html' %}
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title> room types </title>
+    {% block title %} room types {% endblock %}
     <style>
         
     </style>
   </head>
   <body>
-    <p>this is the hotel room type page<p>
+    {% block content  %}
 
-        <div class="gradient">
-            <div class ="container">
+
+    <p class="container my-3 text-white bg-dark">this is the hotel room type page<p>
+
+        <div class="gradient my-5 mt-5">
+            <div class ="container-fluid bg-secondary">
                 <div class="row">
                     <div class="col-md-12">
                         <h2>{{room_type.room_type}} Room</h2>
                         <nav id="breadcrubs">
                             <ul>
-                                <li><p>{{rooms.count}} Rooms available</p></li>
+                                <li><h2>{{rooms.count}} Rooms available</h2></li>
                             </ul>
 
                         </nav>
@@ -72,7 +72,7 @@
                         <input type="hidden" value="{{children}}" id="children">
                     </div>
                     <div class="col-lg-4">
-                        <div class="booking_widget_box" style="border:1px dashed rgba(42, 1, 119, 0.61); padding:30px; boder-radius:3px; bg-info">
+                        <div class="booking_widget_box bg-info" style="border:1px dashed rgba(42, 1, 119, 0.61); padding:30px; border-radius:3px; ">
                             <h3> <i class="fa fa-calender"></i>Booking</h3>
                             <form class=" row width-form mt-0 form-group" method="POST" action="{% url 'booking:check_room_availability' %}">
                                 {% csrf_token %}
@@ -201,8 +201,5 @@
 
 
            
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-  </body>
-</html>
+ {% endblock %}
  

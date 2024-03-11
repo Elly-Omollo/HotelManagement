@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head></head>
-<body>
+{% extends 'base/base.html'%}
+{% block title%}
+  confirm booking 
+{% endblock %}
+
+{% block content %}
     <section>
-
-
-
-
         <div id="main-wrapper">
             <div id="titlebar" class="gradient">
                 <div class="container">
@@ -152,7 +150,7 @@
                                     pay with paypal
                                     <img 
                                         src=""
-                                        style="with:40px;"
+                                        style="width:40px;"
                                         alt="paypal image"
                                     />
                                 </button>
@@ -197,5 +195,4 @@
         }).render("#paypal-button-container")
         
     </script>
-</body>
-</html>
+{% endblock}
