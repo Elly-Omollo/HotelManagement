@@ -73,20 +73,6 @@ class Profile(models.Model):
         ordering = ['date']
 
 
-class Customer(models.Model):
-    username=models.CharField(max_length=100, unique=True)
-    password=models.CharField(max_length=100)
-    email=models.CharField(max_length=50)
-    phone_no=models.CharField(max_length=50)
-    state=models.CharField(max_length=30,blank=True)
-    otp = models.CharField(max_length= 100, blank=True)
-
-    def __str__(self):
-        return self.username
-
-
-
-
 def __str__(self):
     if self.full_name:
         return f"{self.full_name}"

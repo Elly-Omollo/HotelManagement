@@ -5,6 +5,8 @@
             <meta charset="UTF-8">
             {%load static %}
             <link rel="stylesheet" type="text/css" href="{% static 'css/user_login.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+            
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
              <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
@@ -15,287 +17,12 @@
                 {%block title%}
                 {%endblock%}
             </title>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-                @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-                :root{
-                    --primary-color:#0f1a2c;
-                    --secondary-color:pink;
-                    --text-dark: #0f172a;
-                    --text-light: rgb(89, 89, 101);
-                    --extra-light: white;
-                    --max-width: 1200px;
-                    --white:#ffffff;
-                    --header-font: "Playfair Display",serif;
-                }
-              
-                a{
-                    text-decoration:none;
-                }
-                .nav_bar{
-                    {% comment %} top:0;
-                    left:0;
-                    z-index: 1000; {% endcomment %}
-                    width: 100%;
-                    {% comment %} position:fixed; {% endcomment %}
-                    display: flex;
-                    padding: 9px;
-                    justify-content: space-between;
-                    height: 80px;
-                    {% comment %} background-color: rgb(23, 141, 141);  {% endcomment %}
-                    {% comment %} position: relative; {% endcomment %}
-                    {% comment %} isolation: isolate; {% endcomment %}
-                    box-shadow: 0 2px 10px rgba(0, 1, 0, 0.4);
-                }
-                .nav_header{
-                    {% comment %} background-color:red; {% endcomment %}
-                    {% comment %} width: 22%;  {% endcomment %}
-                    {% comment %} height:50px;  {% endcomment %}
-                    {% comment %} justify-content: space-between; {% endcomment %}
-                    height:60px;
-                    padding: .5rem;
-                    display: flex;
-                    box-shadow: 0 2px 10px rgba(0, 1, 0, 0.4);
-                    {% comment %} align-items: center; {% endcomment %}
-                    {% comment %} background-color: var(--extra-light); {% endcomment %}
-                    {% comment %} background-color:red;  {% endcomment %}
-                }
-                .logo{
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    {% comment %} top:0;  {% endcomment %}
-                    font-weight: 500;
-                    color: var(--text-light);
-                    letter-spacing: 2px;
-                }
-                .logo div{
-                    padding-inline: .01px;
-                    font-size: 1.5rem;
-                }
-                @media only screen and (max-width: 780px){
-                    .nav1{
-                        display:none;
-                    }
-                   
-                }
-                @media only screen and (max-width: 600px){
-                    .nav1{
-                        display:none;
-                    }
-                    .home{
-                        display:none;
-                    }
-                }
-                .navigation a{
-                    font-weight: 300;
-                   
-                    position: relative;
-                    font-size: 1.1em;
-                    color: #040111;
-                    text-decoration: none;
-                    font-weight: 500;
-                    margin-right: 10px;
-                    margin-left: 10px;
-                }
-                .navigation a::after{
-                    content: '';
-                    position: absolute;
-                    width: 100%;
-                    height: 3px;
-                    background: #d70707;
-                    border-radius: 5px;
-                    left: 0;
-                    bottom: -6px;
-                    transform: scaleX(0);
-                    transform-origin: right;
-                    transition: transform .5s;
-                }
-                .navigation a:hover::after{
-                    transform-origin: left;
-                    transform: scaleX(1);
-                }
-                header .btnlogin-popup{
-                    width: 130px;
-                    height: 50px;
-                    background: transparent;
-                    /* border: 2px solid #3b0f8e; */
-                    outline: none;
-                    /* border-radius: 6px; */
-                    cursor: pointer;
-                    font-size: 1.1em;
-                    color: #0e0d0d;
-                    font-weight: 500;
-                    margin-left: 40px;  
-                    transition: 1ms;
-                }
-                header .btnlogin-popup:hover{
-                    background: #c9c9c9;
-                    color: #01060a;
-                }
-                .carousel-nav{
-                    height:450px;
-                    object-fit: contain;
-                }
-                .carousel-item img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit:cover;
-                  }
-                  .container1{
-                    margin-top:5px;
-                    {% comment %} background:red; {% endcomment %}
-                    font-style: var(header-font)
-                    {% comment %} margin:  3%;  {% endcomment %}
-                    box-shadow: 0 0 0 1 rgba(0 0 0 0.4);
-                     {% comment %} background-color: antiquewhite;  {% endcomment %}
-                     text-align: center; 
-                     width: 100%; 
-                     padding:3%;
-                  }
-                  #myForm label{
-                    padding-top:10px;
-                    padding-left: 10px;
-                  }
-                  .form-header{
-                    color:red;
-                    font-style:Sanserif;
-                    text-align:center;
-
-                  }
-                  {% comment %} hotel listing styles {% endcomment %}
-                  .main{
-                    {% comment %} height:200px; {% endcomment %}
-                    background-color:orange;
-                    padding:10px;
-                    display: flex;
-                    flex-wrap: wrap;
-                    padding:.5rem;
-                    overflow: hidden;
-                    background-color: rgb(225, 222, 218); 
-                    height: auto;
-                    justify-content: space-around;
-                }
-                .card a{
-                    text-decoration: none;
-                }
-                
-                .main .card{
-                    display:inline-block; 
-                    overflow: hidden;
-                    width: 300px;
-                    height:auto;
-                    margin:1rem;
-                    
-                    overflow: hidden;
-                    border-radius:1rem;
-                    box-shadow: 0 0 10 rgba(0, 0, 0, 0.6);
-                }
-                .main .card:hover{
-                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-                }
-                
-                .image{
-                    {% comment %} width:100%; {% endcomment %}
-                    {% comment %} height:100% ; {% endcomment %}
-                    transform: scale(1.2);
-                    
-                    display: block;
-                    {% comment %} margin-bottom: 20px ; {% endcomment %}
-                }
-                
-                .image img{
-                    width:100%;
-                    height: 200px;
-                    object-fit: cover;
-                } 
-                .card-items{
-                    background:red;
-                    height:100%;
-                    padding:10px;
-                    {% comment %} height: 400px;  {% endcomment %}
-                    width: 500px;
-                    
-                    
-                    color: #0f1a2c;
-                   
-                }
-                
-                .listing-item-content h3{
-                    text-align: center;
-                }
-                
-                @media only screen and (max-width: 1000px){
-                    .main .card{
-                        
-                        
-                    }
-                }
-                @media only screen and (max-width: 600px){
-                    .main .card{
-                        
-                        
-                    }
-                }
-
-                
-                  {% comment %} end of hotel listing styles {% endcomment %}
-                  
-                  {% comment %}start  {% endcomment %}
-                  
-                .popular_grid{
-                    background:red;
-                    padding:.5rem;
-                    overflow: hidden;
-                    background-color: rgb(225, 222, 218); 
-                    display: flex;
-                    flex-wrap: wrap;
-                    height: auto;
-                    justify-content: space-around;
-                    
-                }
-                .popular_card{
-                    width: 200px;
-                    height:300px;
-                    margin:1rem;
-                    background:blue;
-                   overflow: hidden;
-                   border-radius:1rem;
-                   box-shadow: 0 0 0 rgba(0,0,0,0.4);
-
-                }
-                .popular_card img{
-                    height: 150px;
-                    width:100%;
-                }
-                .popular_content{
-                    padding:1rem;
-                }
-                .popula_card_hrader{
-                    display:flex;
-                    align-items:center;
-                    justify-content: space-between;
-                    gap: 1rem;
-                    margin-bottom: 0.5rem;
-                }
-                .popula_card_hrader h4{
-                    font-size:1.2rem;
-                    font-weight: 600;
-                    color: aqua;
-                }
-                .popular_content p{
-                   color:grey; 
-                } 
-
-             
-                  
-                  {% comment %} end {% endcomment %}
-            </style>
+            
 
         </head>
         <body>
-            <header class="nav_bar navbar  navbar-expand-sm bg-light fixed-top">
+
+             <header class="nav_bar navbar  navbar-default bg-light fixed-top">
                 <div class="nav_header">
                     <a href="Aboutpage">
                     <div class="logo nav_logo">
@@ -339,7 +66,7 @@
                     {% endif %}
                 </nav>
                 <!-- <button class="btnlogin-popup"><span class="material-symbols-outlined">menu </span></button> -->
-            </header>
+            </header> 
     
             <div class="modal" id="account">
                 <div class="modal-dialog">
@@ -354,12 +81,9 @@
                         <!-- modal body -->
                         <div class="modal-body">
                             <div class=" row log-modal  col-12 p-4 ">
-                                <div class="container col-4   mt-6 ">
-                                  <h2><a href="/login/user_login/">Customer</a></h2>
-                                </div>
                                 <div class="container col-4 
                                  mt-6 center">
-                                  <h2><a href="login/manager_login/">Manager</a></h2>
+                                  <h2><a href="user/login/">Manager</a></h2>
                                 </div>
                             </div>
                         </div>

@@ -166,12 +166,12 @@ JAZZMIN_SETTINGS = {
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": None,
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to the HMS",
+    "welcome_sign": "Welcome to the eBooking",
     # Copyright on the footer
     "copyright": "nyachomoelly@yahoo.com",
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string 
-    "search_model": ["auth.User", "auth.Customer"],
+    "search_model": ["auth.User"],
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
 
@@ -191,7 +191,7 @@ JAZZMIN_SETTINGS = {
 
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"name": "Support", "url": "#", "new_window": True},
         {"model": "auth.user"},
         
     ],

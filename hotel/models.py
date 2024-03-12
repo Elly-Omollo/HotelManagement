@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
-from userauth.models import User, Customer
+from userauth.models import User
 import shortuuid
 from taggit.managers import TaggableManager
 # Create your models here.
@@ -20,13 +20,13 @@ ICON_TYPE = (
 )
 
 PAYMENT_STATUS = (
-    ("1"," PAID"),
-    ("2","PENDING"),
-    ("3","processing"),
-    ("4","failed"),
-    ("5","refunded"),
-    ("6","NOT PAID"),
-    ("7","CANCELLED"),
+    ("NOT PAID","NOT PAID"),
+    ("PAID"," PAID"),
+    ("PENDING","PENDING"),
+    ("processing","processing"),
+    ("failed","failed"),
+    ("refunded","refunded"),
+    ("CANCELLED","CANCELLED"),
 )
 
 
@@ -130,7 +130,7 @@ class RoomType(models.Model):
 
 
     def __str__(self):
-        return f"{self.room_type} -{self.hotel.name} - {self.price}"
+        return f"{self.room_type}"
     
     class Meta:
         verbose_name_plural = "Room Type"
@@ -143,7 +143,7 @@ class RoomType(models.Model):
         if self.slug == "" or self.slug == None:
             uuid_key = shortuuid.uuid()
             uniqueid = uuid_key[:4]
-            self.slug = slugify(self.name)+'-'+str(uniqueid.lower())
+            self.slug = slugify(self.hotel.name)+'-'+str(uniqueid.lower())
 
         super(RoomType,self).save(*args, **kwargs)
 
@@ -179,8 +179,7 @@ class Room(models.Model):
 
 #booking models
 class Booking(models.Model):
-    username = models.ForeignKey(Customer, null= True, on_delete=models.CASCADE)
-    
+    username = models.ForeignKey(User, null= True, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=200)
     phone = models.CharField(max_length=100)
