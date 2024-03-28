@@ -1,0 +1,53 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content  %}
+
+<div class="container-fluid mt-5 p-5 mb-5">
+    
+        <div class="row ">
+            <div class=" card col-lg-12 col-md-12">
+                <div class="card-body mt-3">
+                    <h4 class="card-title bg-dark text-light p-3">Notifications</h4>
+                    <di class="card-subtitle">
+                        {% for n in notifications %}
+                        <div class="my-1">
+                            <div class="row bg-success p-2 ">
+                                <span class="material-symbols-outlined col-lg-1 col-md-1 col-sm-1 pt-2 text-light">
+                                    notifications_active
+                                </span>
+                                {% if n.type == "Booking Confirmed" %}
+                                    <p  class="col-lg-10 col-md-10 col-sm-10 pt-2 text-light">
+                                        Your booking <span class="btn btn-secondary">{{n.booking.bookingid}}</span> has been Confirmed succesfully
+                                    </p>
+                                    <a href="{% url 'user_dashboard:notification_seen' n.id %}" class="col-lg-1 col-md-1 col-sm-1 bg-danger text-center pt-2">
+                                        <span class="material-symbols-outlined text-light pt-1" >
+                                            close
+                                        </span>
+                                    </a>
+                                {% else %}
+                                    <p  class="col-lg-10 col-md-10 col-sm-10 pt-2 text-light">
+                                        Your booking <span class="btn btn-secondary">{{n.booking.bookingid}}</span> has been Canceled
+                                        <i class="spinner-grow text-danger spinner-grow-sm"></i>
+                                        <i class="spinner-grow text-danger spinner-grow-sm"></i>
+                                        <i class="spinner-grow text-danger spinner-grow-sm"></i>
+                                    </p>
+                                    
+                                    <a href="{% url 'user_dashboard:notification_seen' n.id %}" class="col-lg-1 col-md-1 col-sm-1 bg-danger text-center pt-2">
+                                        <span class="material-symbols-outlined text-light pt-1" >
+                                            close
+                                        </span>
+                                    </a>
+                                    {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+{% endblock %}

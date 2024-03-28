@@ -73,11 +73,11 @@ class Profile(models.Model):
         ordering = ['date']
 
 
-def __str__(self):
-    if self.full_name:
-        return f"{self.full_name}"
-    else:
-        return f"{self.username}"
+    def __str__(self):
+        if self.full_name:
+            return f"{self.full_name}"
+        else:
+            return f"{self.user}"
     
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

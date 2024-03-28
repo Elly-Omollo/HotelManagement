@@ -1,0 +1,175 @@
+{% extends 'base/bass.html'%}
+
+
+
+{%block title%}Order Page{% endblock%}
+
+
+{% block content  %}
+
+    <div class="container my-5">
+        <div class="row justify-content-center mt-1">
+            <div class="col-md-12 col-sm-12 p-4">
+                <form class="form-control" method="POST" action="/customer/order_confirmation">
+                    {% csrf_token %}
+                    <div class="pt-5">
+                        <div class="row">
+                            <h5>choose an appetizer</h5>
+                            {% for item in appetizers %}
+                            <div class="col-md-12 col-sm-12">
+                                <img class="rounded" src="{{item.image.url}}" width="150" height="100"/>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex flex-row">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" name="items[]" class="form-check-input" value="{{item.pk}}" multiple>
+                                        <label class="form-check-label">{{item.name}}</label>
+                                    </div>
+                                    <p class="font-weight-bold pl-5">{{item.price}}$</p>
+                                </div>
+                                <!-- <p>{{item.description}}</p> -->
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <hr/>
+                    </div>
+                    <div class="pt-5">
+                        <div class="row">
+                            <h5>choose a fruit</h5>
+                            {% for f in fruit  %}
+                            <div class="col-md-12 col-sm-12">
+                                <img class="rounded" src="{{f.image.url}}" width="150" height="100"/>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex flex-row ">
+                                    <div class="form-group form-check ">
+                                        <input type="checkbox" name="items[]" class="form-check-input" value="{{f.pk}}" multiple>
+                                        <label class="form-check-label">{{f.name}}</label>
+                                    </div>
+                                    <p class="font-weight-bold pl-5">  {{f.price}} $</p>
+                                </div>
+                                <!-- <p>{{f.description}}</p> -->
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <hr/>
+                    </div>
+                    <div class="pt-5">
+                        <div class="row">
+                            <h5>choose an entre</h5>
+                            {% for e in entre %}
+                            <div class="col-md-12 col-sm-12">
+                                <img class="rounded" src="{{e.image.url}}" width="150" height="100"/>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex flex-row">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" name="items[]" class="form-check-input" value="{{e.pk}}" multiple>
+                                        <label class="form-check-label">{{e.name}}</label>
+                                    </div>
+                                    <p class="font-weight-bold pl-5">{{e.price}} $</p>
+                                </div>
+                                <!-- <p>{{item.description}}</p> -->
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <hr/>
+                    </div>
+                     
+                    <div class="pt-5">
+                        <div class="row">
+                            <h5>choose a drink</h5>
+                            {% for d in drinks%}
+                            <div class="col-md-12 col-sm-12">
+                                <img class="rounded" src="{{d.image.url}}" width="150" height="100"/>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex flex-row">
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" name="items[]" class="form-check-input" value="{{d.pk}}" multiple>
+                                        <label class="form-check-label">{{d.name}}</label>
+                                    </div>
+                                    <p class="font-weight-bold pl-5">{{d.price}} $</p>
+                                </div>
+                                <!-- <p>{{d.description}}</p> -->
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <hr/>
+                    </div>
+                     
+                    
+                    <fieldset class="my-5"><legend class="justify-content-center text-center">Fill in your details for proper tracking</legend>
+                        
+                            <div class="form-group pt-3">
+                                <label class="form-check-label" for="name">Full Name</label>
+                                <input required class="form-control" type="text" placeholder="Enter your Name"  value="{{d.name}}" name="name" />
+                            </div> 
+                            <div class="form-group pt-3">
+                                <label class="form-check-label" for="email">Email Address</label>
+                                <input required class="form-control" type="email" placeholder="example@gmail.com" name="email" />
+                            </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group pt-3">
+                                    <label class="form-check-label" for="room_number">Room Number</label>
+                                    <input required class="form-control" type="text" placeholder="GC101" name="room_number" />
+                                </div> 
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group pt-3">
+                                    <label class="form-check-label" for="room_type">Room</label>
+                                    <input required class="form-control" type="text" placeholder="Single" name="room_type" />
+                                </div> 
+                            </div>
+                            
+                        </div>
+                    </fieldset> 
+                    <hr/>
+                   
+                   
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-primary" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#myModal"
+                      >
+                        Submit Order
+                      </button>
+                    
+
+  
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title">Confirm Order Submition</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                               
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Go back</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Place Order!</button>
+                                </div>
+                        
+                            </div>
+                            </div>
+                        </div>
+                        
+
+                    <!-- end modal -->
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

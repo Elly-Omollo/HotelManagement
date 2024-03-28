@@ -1,52 +1,24 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title> room types </title>
-    <style>
-        
-    </style>
-  </head>
-  <body>
-    <section>
-        <div id="main-wrapper" class="selection-list">
-            <div id="titlebar" class="gradient">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>All Rooms Selections</h2>
-                            <nav id="breadcrubs">
-                                <ul>
-                                    <li><a>Home</a></li>
-                                    <li><a>Hotel</a></li>
-                                    <li><a>Rooms</a></li>
-                                    <li><a>My selected rooms</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{% extends "base/base.html" %}
+{% load static %}
+{%block title%}Home Page{% endblock%}
+{% block content%}
+    <!-- <section style="margin-top: 100px;"> 
+        <div id="main-wrapper" class="selection-list1">
             <div class="container mb-6">
-                <div class="row">
+                <div class="row bg-danger">
                     <div class="col-lg-8 col-md-8 payment-section bg-info p-5">
                         <div class="mb-4 booking-listing-section-form ">
-                            <fieldset style="boder 2px solid black">
+                            
                                 <h3 style="font-family:sanserif; text-align:center; margin-top:.1px;"><i class="fas fa-bed "></i>Selected Rooms</h3>
                                 <div class="listing-section">
-                                    <div class="pricing-list m-1">
-                                        <ul>
+                                    <div class="row">
+                                        <ul class="card-group">
                                             {% for id, item in data.items %}
-                                                <li>
+                                                <li class="card">
                                                     <h5>
                                                     Room Name: {{item.room_name}}
                                                     <small>
-                                                            <a href="" style="cursor:pointer; " class="delete-item" data-item={{id}}><i class="fas fa-trash"></1>Cancel<a/>
+                                                            <a href="" style="cursor:pointer; " class="delete-item" data-item={{id}}><i class="fas fa-trash"></1>Cancel</a>
                                                     </small> 
                                                     </h5>
                                                     <p><strong>Room Number: </strong>{{item.room_number}}</p>
@@ -57,67 +29,110 @@
                                         </ul>
                                     </div>
                                 </div>
-                           </fieldset>
+                          
                         </div>
                     </div>
                 </div>
             </div>
     
-            <form class="booking-list-form mb-4" method="POST">
-                {% csrf_token %}
-                <h3><i class="fa far-user"></i>Billing information</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label class="form-label">First Name</label>
-                        <input class="form-control" type="text" name="full_name" value="" placeholder="First Name">
-    
-                    </div>
-                    <div class="col-md-6">
-                        <div class="medium-icons">
-                            <label class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" value="" placeholder="Email">
+            
+        </div>
+    </section> -->
+
+    <!-- slelecte rooms -->
+
+    <section class="my-5">
+        <div class="container selection-list p-3">
+            <h3 class="text-center">selected rooms<h3>
+          <div class="row ">
+            {% for id, item in data.items %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card text-center bg-info">
+                        <div class="card-body">
+                            <h5 class="card-title text-light"><b> {{item.room_name}}</b></h5>
+                            <h3><strong>Room Number: </strong>{{item.room_number}}</h3>
+                            <p>Beds Available:<strong> {{item.number_of_beds}}</strong></p>
+                            <span>Room charges {{item.room_price}}$ /night</span><br>
+                            <a href="" class="btn btn-danger delete-item" data-item={{id}}>Remove</a>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="medium-icons">
-                            <label class="form-label">Phone</label>
-                            <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
-                        </div>
-                    </div>
-                    <div class="col-lg -12 text-center:"" ">
-                        <button type="submit" class="btn bg-success mt-2 mb-2">Continue to book</button>
                     </div>
                 </div>
-            </form>
-            <div class="col-lg-4 col-md-4 mt-0 list-payment-section">
-                <div class="booking-item-list-container container compact">
-                    <div class="listing-items">
-                        <img src="{{hotel.image.url}}" alt="hotel image">
-                        <div class="listing-item-content">
-                            <h3>{{hotel.name}}</h3>
-                            <span><i class="fa fa-map-maker"></i>{{hotel.address}}</span>
-                            <span><i class="fa fa-phone"></i>{{hotel.phone}}</span>
-                            <div class="rating-section">
-                                <div class="counter-star-rating">Reviews</div>
+            {% endfor %}
+            
+    </section>
+
+
+    <!-- end of selected rooms -->
+
+    <!-- biling info column -->
+    <div class="container-fluid  p-5 my-5">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8 bg- p-3">
+                <div class="row ">
+                    <!-- billing info -->
+                    <div class="card" style="width: 38rem;">
+                        <div class="card-body bg-succes">
+                          <h5 class="card-title text-center">Booking Summery</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Check in: <span style="padding-left: 30px;">{{checkin}}</span></h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Check out: <span style="padding-left: 30px;">{{checkout}}</span></h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Total days: <span >{{total_days}}</span></h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Adults: <span>{{adults}}</span></h6>
+                          <h6 class="card-subtitle mb-2 text-muted">Children: <span>{{children}}</span></h6><br>
+                          <div>
+                            <h6 class="card-subtitle mb-2 text-muted">Total Cost:<span style="border-bottom: 1px solid grey; padding-left: 4px;">   {{total}} $</span></h6>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="row my-3">
+                    <!-- booking form -->
+                    <form class="booking-list-form bg-info mb-4" method="POST">
+                        {% csrf_token %}
+                        <h3><i class="fa far-user"></i>Provide your booking details</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">First Name</label>
+                                <input class="form-control" type="text" name="full_name" value="" placeholder="First Name">
+            
+                            </div>
+                            <div class="col-md-6">
+                                <div class="medium-icons">
+                                    <label class="form-label">Email</label>
+                                    <input class="form-control" type="email" name="email" value="" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="medium-icons">
+                                    <label class="form-label">Phone</label>
+                                    <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="col-lg -12 text-center:">
+                                <button type="submit" class="btn bg-success mt-2 mb-2">Continue to book</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="boxed-widget opening-hours mt-0">
-                    <h3><i class="fa fa-calender-check=0"></i>Booking Summery</h3>
-                    <ul>
-                        <li>Check in <span>{{checkin}}</span></li>
-                        <li>Check out <span>{{checkout}}</span></li>
-                        <li>Total days <span>{{total_days}}</span></li>
-                        <li>Adults <span>{{adults}}</span></li>
-                        <li>Children <span>{{children}}</span></li>
-                        <li>V.A.T <span>$0.00</span></li>
-                        <li class="total-cost">Total Cost <span>{{total}}</span></li>
-                    </ul>
+                    </form>
                 </div>
             </div>
+            <div class="col-sm-12 col-mg-6 col-lg-4" >
+                <fieldset>
+               <legend>  <h3 class="text-center">My Hotel of Choice<h3></legend>
+                <hr/>
+                <div class="card" style="width: 25rem;">
+                    <img class="card-img-top" src="{{hotel.image.url}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h3 class="text-light card-img-overlay">{{hotel.name}}</h3>
+                      <h6 class="card-subtitle mb-2 text-primary ">Located in {{hotel.address}}</h6>
+                      <h6 class="card-subtitle mb-2 text-muted pt-2 ">About Us:</h6>
+                      <h6 class="card-text">{{hotel.description}}</h6>
+                    </div>
+                </div>
+              </fieldset>
+            </div>
         </div>
-    </section>
+    </div>
+
+    <!-- end of billing info -->
 
 
 <script>//deleting the rooms in the selection
@@ -136,7 +151,7 @@
             },
             dataType: "json",
             beforeSend: function(){
-                button.html("<p>deleted</p>")
+                button.html("<div class='spinner-border spinner-border-sm text-danger'></div>")
                 //console.log("deleting ......");
             },
             success: function(res){
@@ -151,5 +166,4 @@
 
 </script>
 
-  </body>
-</html> 
+{% endblock%}

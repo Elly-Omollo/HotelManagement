@@ -1,0 +1,150 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Bookings
+{% endblock %}
+
+{% block content  %}
+
+        <div class="container my-5 p-2 bg-light">
+            <a href="" class="bg-info">
+                <span class="material-symbols-outlined">
+                    reorder
+                </span>
+            </a>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="bg-light">
+                            <h4 class="bg-dark text-light p-2">Booking Id: #{{booking.bookingid}}</h4>
+                            <ul>
+                                <li>
+                                    <div class="bookings">
+                                        <div class="card">
+                                            <div class="card-body text-muted">
+                                                <h3 class="card-title pl-3 ">
+                                                    {{booking.full_name|title}}
+                                                    <span class="pl-4 bg-info btn">{{booking.payment_status|title}}</span>
+                                                </h3><hr/>
+                                                <div class="card-text">
+                                                    <p><b>Hotel Name:</b>
+                                                        <span>{{booking.hotel.name}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-text text-muted">
+                                                    <p><b>Hotel Location:</b>
+                                                        <span>{{booking.hotel.address}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title">
+                                                    <p><b>Hotel Email:</b>
+                                                        <span>{{booking.email}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Hotel Phone:</b>
+                                                        <span>{{booking.hotel.mobile}}</span>
+                                                    </p>
+                                                </div>
+                                                <hr/>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Chekin Date:</b>
+                                                        <span>{{booking.check_in_date}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Chekout Date:</b>
+                                                        <span>{{booking.check_out_date}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Total days:</b>
+                                                        <span>{{booking.total_days}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Adults:</b>
+                                                        <span>{{booking.number_adults}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Children:</b>
+                                                        <span>{{booking.num_children}}</span>
+                                                    </p>
+                                                </div>
+                                                <hr/>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Full Name:</b>
+                                                        <span>{{booking.full_name}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Email Address:</b>
+                                                        <span>{{booking.email}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Phone Number:</b>
+                                                        <span>{{booking.phone}}</span>
+                                                    </p>
+                                                </div>
+                                                <hr/>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Price:</b>
+                                                        <span>{{booking.payable}} $</span>
+                                                    </p>
+                                                </div>
+                                                <hr/>
+                                                <div class="card-title text-muted">
+                                                    <p><b>Booking Date:</b>
+                                                        <span>{{booking.date}}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn btn-outline-primary">
+                                        <a href="">
+                                            <span class="material-symbols-outlined">
+                                                receipt
+                                            </span>View Invoice
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="bg-light">
+                            <h4 class="bg-dark text-light p-2">Booked Rooms:<span class="btn btn-info ml-2">{{booking.room.all.count}}</span></h4>
+                            <ul>
+                                {% for r in booking.room.all %}
+                                <li >
+                                    <div class="bg-info">
+                                        <div class="bg-light card">
+                                            <div class="card-body">
+                                                <h3 class="card-title text-muted text-center"><span class="btn btn-info">{{r.room_type}}</span></h3>
+                                                <div class="card-subtitle">
+                                                    <p><b>Room Number:</b>
+                                                        <span>{{r.room_number}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="card-subtitle">
+                                                    <p><b>Room Price:</b>
+                                                        <span>{{r.room_type.price}}$ /night</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

@@ -113,7 +113,7 @@
                 </form>
               </div>
             </div>
-
+<hr/>
 
 
             <div class="container-fluid mt-3   container1 ">
@@ -122,15 +122,15 @@
             </div>
 
             
-              <div class="row ">
-                <div class="container bg-danger ">
+              <div class="container">
+                <div class=" row  ">
                   <div class="main" >
                     {% for h in hotels%}
                         <div class="card shadow">
                             <a href="{% url 'hotel:hotel_details' h.slug %}" class="card-link">
                                 <div class="card-items">
                                     <div class="image">
-                                        <img src="{{h.image.url}}" alt="hotels image">
+                                        <img src="{{h.image.rl}}" alt="hotels image">
                                     </div>  
                                     <div class="item2">  
                                         <!-- <span class="utf-open-now">Open now</span><br> -->
@@ -156,14 +156,33 @@
                             </a>
                         </div>
                     {% endfor %}
-                   
                 </div>
                 </div>
-
               </div>
+
+
+              <!-- new section -->
+              <div class="container " style="margin-bottom: 60px;">
+              <div class="=row d-flex card-deck" style="margin-bottom:40px;">
+                {% for h in hotels%}
+                <div class="card  border-dark text-white col-md-6 col-sm-12 col-lg-4" style="width: 18rem;">
+                  <a href="{% url 'hotel:hotel_details' h.slug %}" class="card-link">
+                  <img class="card-img" src="{{h.image.url}}" alt="Card image" width="150" height="200">
+                  <div class="card-img-overlay">
+                    <h3 class="card-title">{{h.name}}</h3>
+                    <h3 class="card-title pt-6">{{h.address}}</h3>
+                  </div>
+                  <div class="card-img-overlay">
+                  </div>
+                </a>
+                </div>
+                {% endfor %}
+              </div>
+              </div>
+              <!-- endof new section -->
             
            
- 
+ <section style="height: 40px;"></section>
 
 {% endblock%}
 

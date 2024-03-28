@@ -2,14 +2,9 @@
 {% load static %}
 {%block title%}Details page{% endblock%}
 {% block content%}
-    <header class="navbar1 nav bg-danger">
-        <div class="back"><a href=""><i> button to the home page</i></a></div>
-        <div class="sign"><a href=""><i>signin icon</i></a></div>
-    </header>
 
-   
 
-    <section class="section-carousel" id="page">
+    <section class="section-carousel " id="page">
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -18,7 +13,8 @@
             </div>
             <div class="carousel-inner">
             {% for hotelimage in hotel.hotel_gallery.all %}
-              <div class="carousel-item active">
+                
+              <div class="carousel-item  {% if forloop.first %} active {% endif %}">
                 <img src="{{hotelimage.image.url}}" class="d-block w-100 h-70" alt="">
               </div>
               {% endfor %}
@@ -34,64 +30,15 @@
           </div>
     </section>
 
-    <div class=" text-center my-3">
+    <div class="  my-3">
         <p>{{hotel.name}}</p>
+        <hr/>
     </div>
 
-    <!-- <section class="section3">
-      <div class="wrapper p-5">
-        <div class="form-control bg-primary text-center  mt-3 mb-5 pb-4" style="padding-left:30px;">
-          <h3>choose the dates to see price</h3>
-          <form class=" row width-form mt-0 form-group" method="post" action="{% url 'booking:check_room_availability' %}">
-            {% csrf_token %}
-            <div class="mb-3 row">
-                <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
-            </div>
-            <div class="mb-3 row">
-                <label for="Indate" class="form-label">Check in date</label>
-                <input type="date" class="form-control" value="" name="checkin" id="Indate" placeholder="Select date">
-            </div>
-            <div class="mb-3 row">
-                <label for="Outdate" class="form-label">Check out date</label>
-                <input type="date" class="form-control" id="Outdate" name="checkout" placeholder="Select date">
-            </div>
-            <div class="with-forms">
-                <div class="col-lg-12 col-md-12">
-                    <a href=""> Guests <span class="qtyTotal" name="qtyTotal">2</span></a>
-                    <div class="panel-dropdown-content">
-                        <div class="qtyButtons mb-3 ">
-                            <div class="qtyTitle">Adults</div>
-                            <input type="number" min="1" value="" class="form-control" name="adults" placeholder="Adults">
-                        </div>
-                        <div class="qtyButtons mb-3">
-                            <div class="qtyTitle">Children</div>
-                            <input type="number" min="0" value="" class="form-control" name="children" placeholder="Children">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="with-forms mt-3">
-                <div class="col-lg-12 col-md-12">
-                    <a href="">Select a room type</a>
-                    <select name="room-type" class="form-select" required>
-                       {% for r in hotel.hotel_room_types %}
-                         <option value="{{r.slug}}">{{r.room_type}}</option>
-                       {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn mt-5 bg-success ">Check Availability</button>
-        </form> 
-        </div>
-      </div>
-    </section> -->
+    
 
-    <!-- new form -->
-
-
-
-    <div class="container-fluid bg-primary mt-2 p-5">
-      <div class="row bg-info my-3 p-4 m-4 h-6">
+    <div class="container-fluid mt-2 p-5">
+      <div class="row  my-3 p-4 m-4 h-6">
         <h3 class="form-header"> select your hotel of desire</h3>
         <form class="form-control" id="myForm" method="post" action="{% url 'booking:check_room_availability' %}">
           {% csrf_token %}
@@ -131,7 +78,7 @@
               />
             </div>
             <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
-              <label>heck out date</label>
+              <label>check out date</label>
               <input 
                 class="form-control"
                 type="date"
@@ -174,8 +121,59 @@
     </div>
     <!-- end of new form -->
 
+    <div class="p-3 container-fluid ">
+      <div class="row p-5 " style="justify-content: space-between;">
+          <div class="card  col-4 mb-3" style="max-width: 20rem; ">
+            <div class="card-header">Description</div>
+            <div class="card-body">
+              <h5 class="card-title">{{hotel.name}}</h5>
+              <p class="card-text">{{ hotel.description }}</p>
+            </div>
+          </div>
+          <div class="card  mb-3 col-4" style="max-width: 18rem;">
+            <div class="card-header">Our contact details</div>
+            <div class="card-body">
+              <h5 class="card-title"><span class="material-symbols-outlined">person_pin_circle</span> {{hotel.address}}</h5><br>
+              <h5 class="card-title"><span class="material-symbols-outlined">
+                contact_phone
+                </span> {{hotel.mobile}}</h5><br>
+                {% if hotel.email  %}
+                    <h5 class="card-title"><span class="material-symbols-outlined">
+                    contact_mail
+                  </span> {{hotel.email}}</h5>
+                 {% endif %}
+              
+            </div>
+          
+          </div>
+          <div class="card mb-3 col-4" style="max-width: 18rem;">
+            <div class="card-header">Find us in</div>
+            <div class="card-body">
+              <h5 class="card-title"><a href="{{hotel.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i> facebook</i>  {{facebook}}</a></h5>
+              <h5 class="card-title"><a href="{{hotel.twitter}}"><i class="fa fa-facebook" aria-hidden="true"></i> twitter</i>  </a></h5>
+              <h5 class="card-title"><a href=" {{hotel.instagram}}"><i class="fa fa-facebook" aria-hidden="true"></i> instagram</i> </a></h5>
+            </div>
+            </div>
+          </div>
+      <div class="container">
+        <fieldset>
+          <div class="row">
+          <div class="card-header">Our Offers</div>
+          {% for t in hotel.tags.all %}
+          <div class="card mb-3 col-3" style="max-width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-text"><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</h5>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </fieldset>
+      </div>
+      </div>
+      
+
     <section class="section4">
-      <h3>Description</h3>
+      <!-- <h3>Description</h3>
       <p>{{ hotel.description }}</p>
        <div class="listing-tags">
          <a href=""><i class="material-symbols-outlined" aerial-hiden="true"> call</i>  {{hotel.mobile}}</a><br>
@@ -191,16 +189,36 @@
          <a href=""><i class="sl sl-icon-facebook" aerial-hiden="true"></i>{{hotel.facebook}}</a>
          <a href=""><i class="fa fa-twitter" aerial-hiden="true"></i>{{hotel.twitter}}</a>
          <a href=""><i class="sl sl-icon-instagram" aerial-hiden="true"></i>{{hotel.instagram}}</a>
-      </div>
-       <div class="list-tags">
+      </div> -->
+       <!-- <div class="list-tags">
         <h3 class="listing-headline-part mb-40 mt-40"> Tags</h3>
         {% for t in hotel.tags.all %}
             <a href=""><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</a>
-        {% endfor %}
+        {% endfor %} -->
          
-       </div>
+       <!-- </div> -->
     </section>
-    <section class="rooms-listing bg-primary mt-6 mb-6 p-7">
+    <div class="container-fluid bg-info p-3 my-5 ">
+      <!-- <div class="row bg-primary "> -->
+        <h4 style="text-align: center;">See the types of rooms we have </h4>
+        <div class="row my-5">
+          {% for r in hotel.hotel_room_types %}
+          <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <!-- <h5 class="card-title">Special title treatment</h5> -->
+                <h5 class="card-title">{{ r.room_type }}</h5>
+                <p><srong>Room capacity:</strong> {{ r.room_capsity }}  Persons</p>
+                <p><srong>Number of beds:</strong> {{ r.number_of_beds }}  Beds</p>
+                <p><srong>Price:</strong> ${{ r.price }} /Night</p>
+                <a href="{% url 'hotel:room_type_details' r.hotel.slug r.slug %}" class="btn btn-primary w-100">View Availables</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+    <!-- <section class="rooms-listing  mt-6 mb-6 p-7">
       <h3> select room</h3>
       <ul>
         
@@ -230,22 +248,45 @@
         <span><i>parking</i></span>
       </div>
       </div>
-    </section>
+    </section> -->
 
-    <section class="section6">
-      <div class="blogs">
-        <div class="img">
-          <img src="" alt="user">
+    <section class=" bg-success" style="box-shadow: 2px solid rgb(171, 20, 20);">
+      <h4 style="text-align: center;">Blogs</h4>
+      <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card " style="width: 16rem;">
+            <img class="card-img-top" src="" alt="Card image" width="50" height="100">
+            <div class="card-body">
+              <h4 class="card-title">Name: EllyOk</h4>
+              <p class="card-text">I reallly enjoyed staying in this hotel. actualy its one of the best hotels i have ever visited</p>
+              <a href="#" class="btn btn-primary">View More</a>
+            </div>
+          </div>
         </div>
-        <div class="title">username</div>
-        <div class="description">
-          <p>
-            
-            the stay waas soo enjoyablel and the services were also nice<br>
-          
-          </p>
+
+        <div class="col-lg-4">
+          <div class="card " style="width: 16rem;">
+            <img class="card-img-top" src="" alt="Card image" width="50" height="100">
+            <div class="card-body">
+              <h4 class="card-title">Name: EllyOk</h4>
+              <p class="card-text">I reallly enjoyed staying in this hotel. actualy its one of the best hotels i have ever visited</p>
+              <a href="#" class="btn btn-primary">View More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card " style="width: 16rem;">
+            <img class="card-img-top" src="" alt="Card image" width="50" height="100">
+            <div class="card-body">
+              <h4 class="card-title">Name: EllyOk</h4>
+              <p class="card-text">I reallly enjoyed staying in this hotel. actualy its one of the best hotels i have ever visited</p>
+              <a href="#" class="btn btn-primary">View More</a>
+            </div>
+          </div>
         </div>
       </div>
+      </div>
+    </div>
     </section>
-
 {% endblock %}

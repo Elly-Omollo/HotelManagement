@@ -1,108 +1,27 @@
 
-<section>
-    <div id="main-wrapper" class="selection-list">
-        <div id="titlebar" class="gradient">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>All Rooms Selections</h2>
-                        <nav id="breadcrubs">
-                            <ul>
-                                <li><a>Home</a></li>
-                                <li><a>Hotel</a></li>
-                                <li><a>Rooms</a></li>
-                                <li><a>My selected rooms</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mb-6">
-            <div class="row">
-                <div class="col-lg-8 col-md-8 payment-section bg-info p-5">
-                    <div class="mb-4 booking-listing-section-form ">
-                        <fieldset style="boder 2px solid black">
-                            <h3 style="font-family:sanserif; text-align:center; margin-top:.1px;"><i class="fas fa-bed "></i>Selected Rooms</h3>
-                            <div class="listing-section">
-                                <div class="pricing-list m-1">
-                                    <ul>
-                                        {% for id, item in data.items %}
-                                            <li>
-                                                <h5>
-                                                Room Name: {{item.room_name}}
-                                                <small>
-                                                        <a href="" style="cursor:pointer; " class="delete-item" data-item={{id}}><i class="fas fa-trash"></1>Cancel<a/>
-                                                </small> 
-                                                </h5>
-                                                <p><strong>Room Number: </strong>{{item.room_number}}</p>
-                                                <p><strong>Beds: </strong>{{item.number_of_beds}}</p>
-                                                <span>{{item.room_price}}$</span>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                       </fieldset>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <form class="booking-list-form mb-4" method="POST">
-            {% csrf_token %}
-            <h3><i class="fa far-user"></i>Billing information</h3>
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="form-label">First Name</label>
-                    <input class="form-control" type="text" name="full_name" value="" placeholder="First Name">
 
-                </div>
-                <div class="col-md-6">
-                    <div class="medium-icons">
-                        <label class="form-label">Email</label>
-                        <input class="form-control" type="email" name="email" value="" placeholder="Email">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="medium-icons">
-                        <label class="form-label">Phone</label>
-                        <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
-                    </div>
-                </div>
-                <div class="col-lg -12 text-center:"" ">
-                    <button type="submit" class="btn bg-success mt-2 mb-2">Continue to book</button>
-                </div>
-            </div>
-        </form>
-        <div class="col-lg-4 col-md-4 mt-0 list-payment-section">
-            <div class="booking-item-list-container container compact">
-                <div class="listing-items">
-                    <img src="{{hotel.image.url}}" alt="hotel image">
-                    <div class="listing-item-content">
-                        <h3>{{hotel.name}}</h3>
-                        <span><i class="fa fa-map-maker"></i>{{hotel.address}}</span>
-                        <span><i class="fa fa-phone"></i>{{hotel.phone}}</span>
-                        <div class="rating-section">
-                            <div class="counter-star-rating">Reviews</div>
+
+
+
+
+
+    <section class="my-5">
+        <div class="container selection-list p-3">
+            <h3 class="text-center">selected rooms<h3>
+        <div class="row ">
+            {% for id, item in data.items %}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card text-center bg-info">
+                        <div class="card-body">
+                            <h5 class="card-title text-light"><b> {{item.room_name}}</b></h5>
+                            <h3><strong>Room Number: </strong>{{item.room_number}}</h3>
+                            <p>Beds Available:<strong> {{item.number_of_beds}}</strong></p>
+                            <span>Room charges {{item.room_price}}$ /night</span><br>
+                            <a href="" class="btn btn-danger delete-item" data-item={{id}}>Remove</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="boxed-widget opening-hours mt-0">
-                <h3><i class="fa fa-calender-check=0"></i>Booking Summery</h3>
-                <ul>
-                    <li>Check in <span>{{checkin}}</span></li>
-                    <li>Check out <span>{{checkout}}</span></li>
-                    <li>Total days <span>{{total_days}}</span></li>
-                    <li>Adults <span>{{adults}}</span></li>
-                    <li>Children <span>{{children}}</span></li>
-                    <li>V.A.T <span>$0.00</span></li>
-                    <li class="total-cost">Total Cost <span>{{total}}</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-
+            {% endfor %}
+            
+    </section>

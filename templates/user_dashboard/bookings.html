@@ -1,0 +1,111 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Bookings
+{% endblock %}
+
+{% block content  %}
+<div class="container">
+    <div class="col-lg-6 col-md-12 my-5">
+        <div class="bg-light">
+            <ul>
+                {% for b in bookings %}
+                <h4 class="bg-dark text-light p-2">Booking Id: #{{b.bookingid}}</h4>
+                <li class="p-3">
+                    <div class="bookings">
+                        <div class="card">
+                            <div class="card-body text-muted">
+                                <h3 class="card-title pl-3 ">
+                                    {{b.full_name|title}}
+                                    <span class="pl-4 bg-info btn">{{b.payment_status|title}}</span>
+                                </h3><hr/>
+                                <div class="card-text">
+                                    <p><b>Hotel Name:</b>
+                                        <span>{{b.hotel.name}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-text text-muted">
+                                    <p><b>Hotel Location:</b>
+                                        <span>{{b.hotel.address}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title">
+                                    <p><b>Hotel Email:</b>
+                                        <span>{{b.email}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Hotel Phone:</b>
+                                        <span>{{b.hotel.mobile}}</span>
+                                    </p>
+                                </div>
+                                <hr/>
+                                <div class="card-title text-muted">
+                                    <p><b>Chekin Date:</b>
+                                        <span>{{b.check_in_date}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Chekout Date:</b>
+                                        <span>{{b.check_out_date}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Total days:</b>
+                                        <span>{{b.total_days}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Adults:</b>
+                                        <span>{{b.number_adults}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Children:</b>
+                                        <span>{{b.num_children}}</span>
+                                    </p>
+                                </div>
+                                <hr/>
+                                <div class="card-title text-muted">
+                                    <p><b>Full Name:</b>
+                                        <span>{{b.full_name}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Email Address:</b>
+                                        <span>{{b.email}}</span>
+                                    </p>
+                                </div>
+                                <div class="card-title text-muted">
+                                    <p><b>Phone Number:</b>
+                                        <span>{{b.phone}}</span>
+                                    </p>
+                                </div>
+                                <hr/>
+                                <div class="card-title text-muted">
+                                    <p><b>Price:</b>
+                                        <span>{{b.payable}} $</span>
+                                    </p>
+                                </div>
+                                <hr/>
+                                <div class="card-title text-muted">
+                                    <p><b>Booking Date:</b>
+                                        <span>{{b.date}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn btn-outline-primary">
+                        <a href="{% url 'user_dashboard:booking_details' b.bookingid %}">
+                            <span class="material-symbols-outlined">
+                                visibility<span>Details</span>
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

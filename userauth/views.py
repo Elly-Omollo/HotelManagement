@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.hashers import make_password, check_password
 from .models import  User, Profile
 from django.contrib import messages
-
+from django.contrib.auth.models import Group
 # Create your views here.
 
 
@@ -17,9 +17,10 @@ def RegisterView(request):
         messages.warning(request, f"Hey you are already logged in." )
         return redirect("hotel:index")
     form = UserRegistrationForm(request.POST or None)
-    
+    page=request.GET.get('page','User')
     if form.is_valid():
         form.save()
+
         full_name = form.cleaned_data.get("full_name") 
         phone = form.cleaned_data.get("phone")
         email = form.cleaned_data.get("email")
@@ -27,7 +28,7 @@ def RegisterView(request):
 
 
         user = authenticate(email=email, password=password)
-        # login(request, user)
+       
         auth.login(request, user)
 
         messages.success(request, f"hey {full_name}, your account has been created successfully.")
@@ -47,18 +48,6 @@ def RegisterView(request):
     return render(request, "userauth/signup.html", context)
 
 
-# def manager_login(request):
-#     if request.method=='POST':
-#         username=request.POST['username']
-#         passwd=request.POST['password']
-#         user=auth.authenticate(username=username, password=passwd)
-#         if user is not None:
-#             auth.login(request,user)
-#             return redirect('/manager_dashboard')
-#         messages.warning(request,'Invalid logins')
-#         return redirect(RegisterView)
-#     else:
-#         return render(request, 'userauth/manager_login.html')
  
 
 def login(request):
@@ -81,7 +70,7 @@ def login(request):
                 return redirect(next_url)
             else:
                 messages.error(request, "Username or Passowrd doest not exist")
-                return redirect("hotel:index")
+                return redirect("userauth:login")
 
         except:
             messages.error(request,'User doest not exist')
@@ -94,5 +83,5 @@ def login(request):
 def logoutView(request):
     auth.logout(request)
     messages.success(request, "You have longed out successfully")
-    return redirect("userauth:login")
+    return redirect("hotel:index")
     

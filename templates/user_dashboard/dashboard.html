@@ -1,0 +1,133 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content  %}
+
+<div class="container bg-light p-3 " style="margin-top: 100px;">
+    {{bookings.count}}
+    <div class="card col-lg-3 col-md-6 col-sm-12 bg-light">
+        <div class="row">
+            <div class="card-body">
+                <h3 class="card-title">What i should include</h3>
+                <p class="card-text">Side bar with navigation urls</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container bg-info p-2">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted text-light">{{bookings.count}}</h4>
+                        <span class="card-subtitle">Total paid bookings</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="material-symbols-outlined bg-success">
+                            done
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted text-light">{{total_spent.amount}}$</h4>
+                        <span class="card-subtitle">Total spent on booking</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="material-symbols-outlined bg-success">
+                            attach_money
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-muted text-light">{{request.user.profile.wallet}}$</h4>
+                        <span class="card-subtitle">Wallet Balance</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="material-symbols-outlined bg-success">
+                            account_balance_wallet
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container my-5 bg-light p-2">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 mb-4">
+                <!-- <div class=" row bg-dark "> -->
+                    <h4 class=" text-center">Booking</h4>
+                    <hr/>
+                <!-- </div> -->
+                <table class="table table-info table-striped  table-hover ">
+                    <thead class="text-center">
+                      <tr>
+                        <th>S/N</th>
+                        <th>Hotel Name</th>
+                        <th>Total Rooms</th>
+                        <th>Booking Date</th>
+                        <th>Payment Status</th>
+                        <th>View Booking</th>
+                      </tr>
+                    </thead> 
+                    <tbody class="text-center">
+                        {% for b in bookings  %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ b.hotel.name }}</td>
+                                <td>{{ b.room.all.count }}</td>
+                                <td>{{ b.date }}</td>
+                                <td><span>{{ b.payment_status }}</span></td>
+                                <td class="text-center">
+                                    <a href="{% url 'user_dashboard:booking_details' b.bookingid %}">
+                                        <span class="material-symbols-outlined">
+                                            visibility
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 col-lg-12 col-md-12 " style="margin-bottom: 100px;">
+        <div class="row text-center text-info ">
+            <h4> All Booking Invoices</h4>
+           
+        </div> <hr/>
+        <ul class="bg-success p-3 row">
+            {% for b in bookings %}
+                <li class="col-lg-3 col-sm-12 col-md-6">
+                    <span class="material-symbols-outlined">
+                        receipt
+                    </span>
+                    <strong>{{b.hotel.name}}<span>{{ b.payment_status }}</span></strong>
+                    <ul>
+                        <li><span>Order Number:</span> {{b.bookingid}}</li>
+                        <li><span>Date :</span> {{b.date}}</li>
+                    </ul>
+                    <div class="buttons-to-right mb-2">
+                        <a href="" class="btn btn-secondary text-center">Invoice
+                            <span class="material-symbols-outlined text-center">
+                                arrow_right_alt
+                            </span>
+                        </a> 
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+{% endblock %}

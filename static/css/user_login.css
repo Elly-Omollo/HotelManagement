@@ -25,9 +25,9 @@
 } */
 
 p{
-    text-align: center;
-    color: rgb(198, 118, 20);
-    font-weight: 600;
+    /* text-align: center; */
+    /* color: rgb(198, 118, 20); */
+    /* font-weight: 600; */
 }
 
 .wrapper{
@@ -151,6 +151,8 @@ p{
     padding:10 10px  5px ;
 
 }
+
+
 
 .input-box .material-symbols-outlined{
     position: absolute;

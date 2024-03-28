@@ -1,0 +1,102 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Wallet
+{% endblock %}
+
+{% block content  %}
+
+
+
+<div class="container my-5 p-2">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <diiv class="mt-1">
+                <h4 class="bg-secondary">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    Profile details
+                </h4>
+                <div class="card ">
+                    <div class="card-body">
+                        {{u_form.errors}}
+                        {{p_form.errors}}
+                        <form class="row with-forms" method="POST" enctype="multipart/form-data" >
+                            {% csrf_token %}
+                            <div class="col-md-12 ">
+                                <div class=" m-2 text-center " >
+                                    <img id="profile_image_preview" class="card-img mt-1" src="{{profile.image.url}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;" alt="profile" />
+                                    <div class="photoUpload">
+                                        <span>
+                                            <i class="material-symbols-outlined">
+                                                upload_file
+                                            </i>
+                                            
+                                        </span>
+                                        {{p_form.image}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label >Full Name</label>
+                                        {{p_form.full_name}}
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="email">Email</label>
+                                        {{u_form.email}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="phone">Phone</label>
+                                            {{p_form.phone}}
+                                    </div>
+                                    <div class="col">
+                                        <label for="gender">Gender</label>
+                                        {{p_form.gender}}
+                                    </div>
+                                    <div class="col">
+                                        <label for="country">Country</label>
+                                        {{p_form.country}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="state">State</label>
+                                        {{p_form.state}}
+                                    </div>
+                                    <div class="col">
+                                        <label for="city">City</label>
+                                        {{p_form.city}}
+                                    </div>
+                                    <div class="col">
+                                        <label for="address">Address</label>
+                                        {{p_form.address}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+                                <input class="btn mt-4 btn-outline-info" type="submit" value="Save Changes">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </diiv>
+        </div>
+    </div>
+</div>
+
+<script>
+    let loadFile = function(event){
+        let output2 = document.getElementById("profile_image_preview")
+        output2.src = URL.createObjectURL(event.target.files[0])
+        output2.onload = function(){
+            URL.revokeObjectURL(output2.src)
+
+        }
+    }
+</script>
+
+{% endblock %}

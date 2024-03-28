@@ -1,179 +1,223 @@
 {% extends 'base/base.html'%}
 {% block title%}
-  confirm booking 
+  confirm booking /Payment Section
 {% endblock %}
 
 {% block content %}
             <section>
-                <div id="main-wrapper">
-                    <div id="titlebar" class="gradient">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h2>All room selections</h2>
-                                    <nav id="breadcrumbs">
-                                        <ul>
-                                            <li><a>Home</a></li>
-                                            <li><a>Hotel</a></li>
-                                            <li><a>Rooms</a></li>
-                                            <li><a>My selected rooms</a></li>
-                                        </ul>
-                                    </nav>
+                <!-- top section -->
+                <section class="container bg-light col-md-12 col-sm-12 col-lg-12" style="margin-top:100px; padding-left: 100px;">
+                    <h2 class="text-center ">Payment Section</h2>
+                    <div class="text-danger">
+                        <h4><span class="text-danger">
+                            <strong>NOTE:
+                                <div class="spinner-grow text-danger spinner-grow-sm"></div>
+                                <div class="spinner-grow text-danger spinner-grow-sm"></div>
+                                <div class="spinner-grow text-danger spinner-grow-sm"></div>
+                                <div class="spinner-grow text-danger spinner-grow-sm"></div>
+                            </strong><br>Review your order before payment.
+                        </h4>
+                        <a class="text-light border-dark" href="/selected_rooms/" style="text-decoration: none;">
+                            <button class="btn btn-success my-4">MyOrders</button>
+                        </a>
+                    </div>
+                </section>
+                <!-- end of top section -->
+
+                <!-- section two -->
+            
+                <section class="container-fluid  p-5">
+                    <div class="bg-light p-4  mb-4">
+                        <div class="container ">
+                            <!-- selected rooms cards -->
+                            <div class="row  my-4 p-4">
+                                <h3 class="text-center">
+                                    <span class="material-symbols-outlined">
+                                        bed
+                                    </span>Selected Rooms
+                                </h3>
+                                <hr/>
+                                {% for r in booking.room.all %}
+                                <div class="col-lg-6 col-sm-12 col-md-6 card-deck ">
+                                  <div class="card">
+                                    <div class="card-body">
+                                      <h5 class="card-title">RoomType :{{r.room_type.room_type}}</h5>
+                                      <h5 class="card-title">Room Number : {{r.room_number}}</h5>
+                                      <p class="card-text"><strong>Beds:</strong>{{r.room_type.number_of_beds}}</p>
+                                      <p class="card-text text-muted">Price: <span class="text-center">{{r.room_type.price}}$  /Night</span></p>
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                                {% endfor %}
+                                       
+                            </div>
+
+                            <!-- end of selected rooms card -->
+                        </div>
+                    </div>
+
+
+                    <!-- Customer Details Section-->
+                    <div class="row bg-info">
+                        <div class="col-md-6 col-lg-6  col-sm-12 bg-light">
+                            <div class="row col-12 m-3 p-3">
+                                <h3 class="text-center">Customer Details</h3>
+                                
+                                <div class="form-group row">
+                                    <label for="full_name" class="col-sm-6 col-form-label">Full Name:</label>
+                                    <div class="col-sm-6 bg-light">
+                                        <input 
+                                        id="full_name"
+                                        name="full_name"
+                                        type="text"
+                                        value="{{booking.full_name}}"
+                                        readonly
+                                        class="form-control-plaintext"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-6 col-form-label">E-mail:</label>
+                                    <div class="col-sm-6 bg-light">
+                                        <input 
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        value="{{booking.email}}"
+                                        readonly
+                                        class="form-control-plaintext"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-sm-6 col-form-label">Phone:</label>
+                                    <div class="col-sm-6 bg-light">
+                                        <input 
+                                        id="phone"
+                                        name="phone"
+                                        type="text"
+                                        value="{{booking.phone}}"
+                                        readonly
+                                        class="form-control-plaintext"
+                                        />
+                                    </div>
+                                </div><hr/>
+                                <div class="row  col-12 p-3">
+                                    <h3 class="text-center">Booking Summery</h3>
+                                    <div class="row ">
+                                        <div class="card col-lg-7 " >
+                                            <div class="card-body">
+                                                <h5 class="card-title">Hotel: {{booking.hotel.name}}</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">Check in date:<span> {{booking.check_in_date}}</span></h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Check out date:<span> {{booking.check_out_date}}</span></h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Total days:<span> {{booking.total_days}}</span></h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Adults:<span> {{booking.number_adults}}</span></h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Children:<span> {{booking.num_children}}</span></h6>
+                                                <h6 class="card-subtitle mb-2 text-muted">Discount:<span> {{booking.saved}}$</span></h6>
+                                                <h6 class="card-title mb-2 ">Total cost: <span>{{booking.payable}}</span></h6>
+                                            </div>
+                                        </div>
+                                        <!-- payment -->
+                                        <div class=" col-lg-5 ">
+                                            <div class="row">
+                                                <form class="form-control bg-success p-3" method="POST" action="">
+                                                    <p class="text-center text-light">Have Coupon!!</p><hr/>
+                                                    {% csrf_token %}
+                                                        <input
+                                                        class="form-group col-12"
+
+                                                            id="couponCode"
+                                                            name="code"
+                                                            placeholder="coupon code "
+                                                            type="text"
+                                                        /><br>
+                                                        <input type="submit" class="coupon_code  col-12 btn btn-outline-light mt-2" value="Apply"/>  
+                                                </form>
+                                                <div class="row ">
+                                                    <p class="text-center">Continue to pay</p><hr/>
+                                                    <div id="paypal-button-container"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- endof payment -->
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="constainer mt-6">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 payment-selection">
-                                <div class="notification warning closeable">
-                                    <p><span>NOTE</span> Review your order before payment.</p>
-                                    <a class="close" href="#">check order</a>
-                                </div>
-                                <div class="booking-list-form mb-4">
-                                    <h3><i class="fa fa-bed"> </i>Selected Rooms</h3>
-                                    <div class="listing-selection">
-                                        <div class="price-listing-section">
-                                            <ul style="background:blue; padding:30px; border-radius:10px;">
-                                                {% for r in booking.room.all %}
-                                                    <li style="background:violet; border-radius:2px; padding-left:20px;width:100px;">
-                                                        <h5>Room :{{r.room_type.room_type}} </h5>
-                                                        <h5>Room Number : {{r.room_number}}</h5>
-                                                        <p><strong>Beds:</strong>{{r.room_type.number_of_beds}}</p>
-                                                        <span>${{r.room_type.price}} /Night</span>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="booking-list-form mb-4">
-                                    <h3><i class="fa fa-bed"> </i>Billing Information</h3>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label>Full Name:</label>
-                                            <input 
-                                            name="full_name"
-                                            type="text"
-                                            value="{{booking.full_name}}"
-                                            readonly
-                                            placeholder="Your name"
-                                            />
-                                        </div>
-                                        <div class="col-md-6"><br>
-                                            <div class="medium-icon">
-                                                <label>E-mail:</label>
-                                                <input 
-                                                name="email"
-                                                type="email"
-                                                value="{{booking.email}}"
-                                                readonly
-                                                placeholder="Enter your email"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6"><br>
-                                            <div class="medium-icon">
-                                                <label>Phone:</label>
-                                                <input 
-                                                name="phone"
-                                                type="text"
-                                                value="{{booking.phone}}"
-                                                readonly
-                                                placeholder="Enter your contact"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-lg-4 mt-0  " style="background:pink; margin:10px;">
-                                    <div class="booking-list-container">
-                                        <div class="listing-item">
-                                            <img src={{booking.hotel.image.url}} alt="hotelphoto" />
-                                            <h3>{{booking.hotel.name}}</h3>
+                        <div class="col-md-6 col-lg-6  col-sm-12 bg-success p-4">
+                            <div class="col-md-12 col-lg-12 mt-0  " style="height:100%; margin:10px;">
+                                <div class="booking-list-container">
+                                    <div class="listing-item">
+                                        <div class="row">
+                                            <img  class="card-img" src={{booking.hotel.image.url}} alt="hotelphoto" rounded style="width:34.3rem; height:50%;" />
+                                            <h3 class="text-center">{{booking.hotel.name}}</h3>
+                                            <hr/>
                                             <span><i class="fa fa-map-maker"></i>Address: {{booking.hotel.address}}</span><br>
                                             <span><i class="fa fa-phone"></i>Contact: {{booking.hotel.mobile}}</span>
+                                        </div>
+                                        <div class="row bg-light p-3 mt-4">
+                                            <div id="carouselExampleIndicators" class="carousel slide">
+                                                <div class="carousel-indicators">
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                </div>
+                                                <div class="carousel-inner">
+                                                {% for hotelimage in hotel.hotel_gallery.all %}
+                                                    
+                                                <div class="carousel-item  {% if forloop.first %} active {% endif %}">
+                                                    <img src="{{hotelimage.image.url}}" class="d-block w-100 h-70" alt="">
+                                                </div>
+                                                {% endfor %}
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden=""></span>
+                                                <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden=""></span>
+                                                <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- this part will have the view and the like butto in future -->
                                             <div class="utf-rating-section" data-rating="4.5">
                                                 <div class="utf-counter-star-rating"></div>
                                             </div>
-                                        </div>
+                                        <!--  -->
                                     </div>
-                                </div>
-                                <div class="booking-summery">
-                                    <h3><i class="fa fa-calender"></i>Booking Summery</h3>
-                                    <ul>
-                                        <li>Check in date:<span> {{booking.check_in_date}}</span></li>
-                                        <li>Check out date:<span> {{booking.check_out_date}}</span></li>
-                                        <li>Total days:<span> {{booking.total_days}}</span></li>
-                                        <li>Adults:<span>{{booking.number_adults}}</span></li>
-                                        <li>Children:<span>{{booking.num_children}}</span></li>
-                                        <li>Discount:<span>${{booking.saved}}</span></li>
-                                        <li class="total-cost">
-                                            <form class="form-control" method="POST" action="">
-                                                {% csrf_token %}
-                                                <div class="col-md-8">
-                                                    <input
-                                                        id="couponCode"
-                                                        name="code"
-                                                        placeholder="Have a coupon enter here....."
-                                                        type="text"
-                                                    />
-                                                </didv>
-                                                <div class="col-md-4">
-                                                    <input type="submit" class="coupon_code" vallue="Apply"/>
-
-                                                </div>
-                                            </form>
-                                        </li>
-                                        <li class="total-cost">Total cost: <span>{{booking.payable}}</span></li>
-                                    </ul>
-                                    <div id="paypal-button-container"></div>
-                                    {% comment %} <form class="form-group" action="" method="POST">
-                                        {% csrf_token %}
-                                        <input
-                                            type ="text"
-                                            name="publick_key"
-                                            value="flutter-public-key"
-                                        />
-                                        <input type="text" name="customer[email]" value="" />
-                                        <input type="text" name="customer[name]" value="" />
-                                        <input type="text" name="tx_ref" value="" />
-                                        <input type="text" name="amout" value="" />
-                                        <input type="text" name="currency" value="USD" />
-                                        <input type="text" name="meta[token]" value="" />
-                                        <input type="text" name="redirect_url" value="/success/page/" />
-                                        <button
-                                            id=""
-                                            class=""
-                                            style ="background:orange; color:rgb(37,28,3)"
-                                        >
-                                            pay with paypal
-                                            <img 
-                                                src=""
-                                                style="width:40px;"
-                                                alt="paypal image"
-                                            />
-                                        </button>
-                                    </form> {% endcomment %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-            {% comment %} <script src="https://www.paypal.com/sdk/js?client-id=TEST&currency=USD"></script> {% endcomment %}
+
+
+                    <!-- end of customer section -->
+
+                    
+                </section>
+                
+           
+            <!-- <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script> -->
+            <script src="https://www.paypal.com/sdk/js?client-id=AWL2Bo96B-xp99LGPxp6lRJx1LnfChoCXet5tV5WM9Wu6Jn0jL_wnJI9hK68wf6dleh8A25eLKQwylyH&currency=USD"></script>
             <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
             <script>
+
                 let booking_total = "{{booking.payable}}";
                 let booking_id = "{{booking.bookingid}}";
                 let success_id = "{{booking.success_id}}";
 
-                console.log("this is the amount you should pay",booking_total);
-                console.log("this is the booking id",booking_id);
-                console.log("this is the success id ",success_id);
-
                 paypal.Buttons({
+                    style:{
+                         layout: 'vertical',
+                         color:  'gold',
+                         shape:  'rect',
+                         label:  'paypal'
+                    },
                     createOrder: function(data, actions){
                         return actions.order.create({
                             purchase_units: [{
@@ -185,14 +229,55 @@
                     },
                     onApprove: function(data, actions){
                         return actions.order.capture().then(function(Detail){
-                            console.log(Detail);
+                            //console.log(" the are the payment details ===========",Detail);
                             if (Detail.status == "COMPLETED"){
                                 //redirect to the succcess page 
-                                windows.location.href = '/success/${booking_id}/?succcess=${success_id}&payer_id=${Detail.id}&status=${Detail.status}&booking_total=${booking_total}';
+                                window.location.href = `/success/${booking_id}/?success=${success_id}&payer_id=${Detail.id}&status=${Detail.status}&booking_total=${booking_total}`;
                             }
                         })
                     }
                 }).render("#paypal-button-container")
+                </script>
+~
+             <!-- <script>
+                var stripe = Stripe('{{stripe_publishable_key}}');
+                var checkoutButton = document.getElementById("checkout-button");
+
+                checkoutButton.addEventListener("click", function(){
+                    var email = "{{booking.email}}";
+
+                    checkoutButton.innerHTML = "Processing <i class='spinner-border spinner-border-sm text-info'></i>";
+                    console.log("=====", email);
+                    console.log(" stripe=====", stripe);
                 
+                    fetch("/api/create_checkout_session/{{booking.bookingid}}/",{
+                        method:"POST",
+                        body: JSON.stringify(
+                            {email:email}
+                        )
+                    }).then(function(response){
+                        console.log("response is ======",response);
+                        return response.json;
+
+                    }).then(function(session){
+                        return stripe.redirerctToCheckout({sessionId:session.sessionId});
+
+                    }).then(function(result){
+                        if(result.error){
+                            alert(result.error.message)
+                        }
+                    })
+                    .catch(function(error){
+                        console.log("error is ----", error);
+                    })
+                
+                });  
+            </script> -->
+            
+
+                
+                
+            </script>
+
             </script>
 {% endblock %}

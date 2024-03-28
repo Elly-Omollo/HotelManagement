@@ -82,31 +82,6 @@ def add_to_selection(request):
     return JsonResponse(data)
 
 
-    # if 'whishlist' in request.session:
-    #     if str(request.GET['id']) in request.session['whishlist']:
-    #         selection_data = request.session['whishlist']
-    #         selection_data[str(request.GET['id'])]['adults'] = int(room_selection[str(request.GET['id'])]['adults'])
-    #         selection_data[str(request.GET['id'])]['children'] = int(room_selection[str(request.GET['id'])]['children'])
-    #         request.session['whishlist'] = selection_data
-    #     else:
-    #         selection_data = request.session['whishlist']
-    #         selection_data.update(room_selection)
-    #         request.session['whishlist'] = selection_data
-    # else:
-    #     request.session['whishlist'] = room_selection
-
-
-    # data = {
-    #     "data": request.session['whishlist'],
-    #     "total_selected_items": len(request.session['whishlist'])
-    # }
-
-    
-
-    # response = JsonResponse(data)
-    # response.set_cookie("whishlist", data)
-
-    # return response
 
 def delete_selection(request):
     hotel_id = str(request.GET['id'])

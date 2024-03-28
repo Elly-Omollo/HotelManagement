@@ -1,0 +1,50 @@
+{% extends 'base/bass.html' %}
+{% block content %}
+
+<!-- <div class="mt-5 bg-primary">
+    <p>this is  the items confirmation page </p>
+</div> -->
+
+
+    <div class="container mb-5">
+        <div class="row justify-content-center mt-1">
+            <div class="col-md-5 col-sm-12 p-5 text-right">
+                <h1>Order Submited!</h1>
+                <p>You should recieve a confirmation email soon.</p>
+                <a href="/customer/">Back to Home Page</a>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-5 col-sm-12 text-center">
+                <h3 class="pb-3 ">Order Summery:</h3>
+                {% for item in items  %}
+                <ul>
+                    <li>
+                        <p>
+                            {{item.name}}: 
+                            <span class="pl-3" style="font-weight: 600; color: rgb(0, 0, 0);">{{ item.price }}$</span>
+                        </p>
+                    </li>
+                </ul>
+                {% endfor %}
+                <div class="row justify-content-center" style="border: .5px solid grey;">
+
+                    <p class="font-weight-bold pt-4">Total Cost: <span style="color: black;"  >{{price}}$</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-5">
+        <p> this is the order id {{pk}} </p>
+    </div>
+    <div class="my-5">
+        <p> this is the order id {{pk}} </p>
+    </div>
+    <div class="my-5">
+        <p> this is the order id {{pk}} </p>
+    </div>
+    <div class="my-5">
+        <p> this is the order id {{pk}} </p>
+    </div>
+
+{% endblock %}

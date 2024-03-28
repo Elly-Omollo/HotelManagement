@@ -1,8 +1,18 @@
 from datetime import datetime
+from decimal import Decimal
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from hotel.models import Coupon, Hotel, Room, RoomType, Booking, Activitylog
+from django.views.decorators.csrf import csrf_exempt
+from hotel.models import Coupon, Hotel, Notification, Room, RoomType, Booking, Activitylog
+from django.urls import reverse
+from django.http import HttpResponse, JsonResponse
+
+import stripe
+from django.conf import settings
+
+
+
 
 # Create your views here.
 
@@ -74,6 +84,7 @@ def selected_rooms(request):
     if 'selection_data_obj' in request.session:
         if request.method == "POST":
             if not request.user.is_authenticated:
+                messages.warning(request, "logind required")
                 return redirect("userauth:login")
             for h_id, item in request.session['selection_data_obj'].items():
                 id = int(item['hotel_id'])
@@ -114,7 +125,8 @@ def selected_rooms(request):
                 full_name=full_name,
                 email=email,
                 phone=phone,
-                username = request.user
+                username = request.user,
+                payment_status = "Processing",
             )
             # print("============= this is the",Booking)   
             # if request.user.is_authenticated:
@@ -225,7 +237,9 @@ def checkout(request, booking_id):
             return redirect("hotel:checkout", booking.bookingid)
 
     context ={
+        
         "booking":booking,
+        "stripe_publishable_key": settings.STRIPE_PUBLIC_KEY
 
     }
 
@@ -233,5 +247,142 @@ def checkout(request, booking_id):
 
 
 
+@csrf_exempt
+def create_check_out_session(request, bookingid):
+    booking = Booking.objects.get(bookingid=bookingid)
+    stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
+    
+    checkout_session = stripe.checkout.Session.create(
+        customer_email = booking.email,
+        payment_method_types = ['card'],
+        line_items = [
+            {
+                'price_data' :{
+                    'currency': 'USD',
+                    'product_data':{
+                        'name': booking.full_name
+                    },
+                    'unit_amount': int(booking.payable*100)
+                },
+                'quantity':1
+            }
+        ],
+        mode = 'payment',
+        success_url = reverse.build_absolute_url(reverse("hotel:success", args=[booking.bookingid])) + "?session_id={CHECKOUT_SESSION_ID}&success_id=" + booking.success_id + "&booking_total=" + str(booking.payable),
+        cancel_url = request.build_absolute_url(reverse("hotel:failed", args=[booking.bookingid]))
+    )
+
+    booking.payment_status = "Processing"
+    booking.stripe_payment_intent = checkout_session['id']
+    booking.save()
+
+    print("========the checkout session is ====", checkout_session)
+
+    return JsonResponse({"sessionId": checkout_session.id})
+
+
+def payment_success(request, bookingid):
+    success_id = request.GET.get('success')
+    booking_total = request.GET.get('booking_total')
+    # print("success_id is ==========", success_id)
+
+    if success_id and booking_total:
+        success_id = success_id.rstrip("/")
+        booking_total = booking_total.rstrip("/")
+
+        print("success_id is ==========", success_id)
+        print("booking_total is ==========", booking_total )
+
+        booking = Booking.objects.get(bookingid=bookingid, success_id=success_id)
+
+        if booking.payable == Decimal(booking_total):
+            # print("booking total matched==== and it is=====",booking_total)
+            if booking.payment_status == "Processing":
+                booking.is_active = True
+                booking.payment_status = "PAID"
+                booking.save()
+
+                noti = Notification.objects.create(
+                    booking=booking,
+                    type="Booking Confirmed",
+                )
+
+                if request.user.is_authenticated:
+                    noti.user= request.user
+                else:
+                    noti.user = None
+                noti.save()
+
+                if 'selection_data_obj' in request.session:
+                    del request.session['selection_data_obj']
+
+            else:
+                messages.success(request, "Payment already made. Thanks")
+                # return redirect("/")
+        else:
+            print("Error: Payment manipulation detected")    
+            messages.error(request, "Payment manipulation detected")
+    context = {
+        "booking": booking
+    }
+    return render(request, "hotel/payment_success.html", context)
+
+
+
+
+def payment_failed(request, bookingid):
+    return render(request, "hotel/payment_failed.html")
+
+
+@csrf_exempt
+def update_room_status(request):
+    today = timezone.now().date
+
+    booking = Booking.objects.filter(is_sctive=True, payment_status="PAID")
+    for b in booking:
+        if b.checked_in_tracker != True:
+            if b.check_in_date > today:
+                b.checked_in_tracker = False
+                b.checked_in = False
+                b.save()
+
+                for r in b.room.all():
+                    r.is_available = True
+                    r.save()
+            else:
+                b.checked_in_tracker = True
+                b.checked_in = True
+                b.save()
+
+                for r in b.room.all():
+                    r.is_available = False
+                    r.save()
+        else:
+            if b.check_out_date > today:
+                b.checked_out_tracker = False
+                b.checked_in = False
+                b.save()
+
+                for r in b.room.all():
+                    r.is_available = False
+                    r.save()
+
+            else:
+                b.checked_out_tracker = True
+                b.checked_in = True
+                b.save()
+
+                for r in b.room.all():
+                    r.is_available = True
+                    r.save()
+
+    return HttpResponse(today)
+
+
+
+
+
+
+            

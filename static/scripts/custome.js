@@ -30,3 +30,16 @@ loginbt.addEventListener('click', ()=>{
 // iconClose.addEventListener('click', ()=>{
 //     wrapper.classList.remove('active-poppup');
 // });
+
+
+function updateRoom(){
+    $.ajax({
+        url: "/update_room_status/",
+        type:"GET",
+        success: function(data){
+            console.log("Booking Confirmed");
+        },
+       
+    });
+}
+setInterval(makeAjaxCall, 86400000);

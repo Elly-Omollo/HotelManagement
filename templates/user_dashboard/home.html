@@ -1,0 +1,114 @@
+{% extends 'base/bass.html'%}
+{% load static %}
+{% block title %}
+Food Ordering
+{% endblock %}
+{% block content %}
+
+
+        <div class="container bg-info mb-5">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center">
+                    <h1>Welcome to our Food base</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-1">
+                <div class="card p-3 text-center ">
+                    <h2>These are the food categories that we have</h2>
+                    <!-- start of appetizers cards -->
+                    <div class="row my-4">
+                        <h4>appetizers</h4>
+                        <hr/>
+                        {% for item in appetizers %}
+                            <div class="card" style=" width: 14rem;">
+                                <img class="card-img-top" src="{{item.image.url}}" alt="Card image cap" with="200" height="150">
+                                <div class="card-body ">
+                                    <h5 class="card-title">{{item.name}}</h5>
+                                    <h5 class="card-title">{{item.price}} $</h5>
+                                    <!-- <a href="/customer/order" class="btn btn-outline-primary">Make Order!</a> -->
+                                </div>
+                            </div>
+                        {% endfor %}
+                        
+                          <!-- <a href="/customer/order" class="btn btn-outline-primary">Make Order!</a> -->
+                      </div>
+                      <a href="/customer/order">
+                        <button class="btn btn-outline-primary">Order Now!</button>
+                    </a>
+                    <!-- end of appetizers -->
+                    <!-- start of drinks cards -->
+                    <div class="row my-4">
+                        <h4>Drinks</h4>
+                        <hr/>
+                        {% for d in drinks %}
+                            <div class="card" style=" width: 14rem;">
+                                <img class="card-img-top" src="{{d.image.url}}" alt="Card image cap" with="100%" height="150">
+                                <div class="card-body ">
+                                    <h5 class="card-title">{{d.name}}</h5>
+                                    <h5 class="card-title">{{d.price}} $</h5>
+                                    
+                                </div>
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <a href="/customer/order">
+                        <button class="btn btn-outline-primary">Order Now!</button>
+                    </a>
+                    <!-- end of drinks -->
+                    <!-- start of entre cards -->
+                    <div class="row my-4">
+                        <h4>Entre</h4>
+                        <hr/>
+                        {% for e in entre %}
+                            <div class="card" style=" width: 14rem;">
+                                <img class="card-img-top" src="{{e.image.url}}" alt="Card image cap" with="200" height="150">
+                                <div class="card-body ">
+                                    <h5 class="card-title">{{e.name}}</h5>
+                                    <h5 class="card-title">{{e.price}} $</h5>
+                                    <!-- <a href="/customer/order" class="btn btn-outline-primary">Make Order!</a> -->
+                                </div>
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <a href="/customer/order">
+                        <button class="btn btn-outline-primary">Order Now!</button>
+                    </a>
+                    <!-- end of entre -->
+                    <!-- start of fruits cards -->
+                    <div class="row my-4">
+                        <h4>Fruits</h4>
+                        <hr/>
+                        {% for f in fruit %}
+                            <div class="card" style=" width: 14rem;">
+                                <img class="card-img-top" src="{{f.image.url}}" alt="Card image cap" with="200" height="150">
+                                <div class="card-body ">
+                                    <h5 class="card-title">{{f.name}}</h5>
+                                    <h5 class="card-title">{{f.price}} $</h5>
+                                    <!-- <a href="/customer/order" class="btn btn-outline-primary">Make Order!</a> -->
+                                </div>
+                            </div>
+                        {% endfor %}
+                      </div>
+                    <!-- end of Fruits -->
+                    <a href="/customer/order">
+                        <button class="btn btn-outline-primary">Order Now!</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+       
+
+{% endblock %}
+
+
+<!-- to be listeed in the off canvass page of the customer
+      these are just but the links to respective pages
+                1. Menu(order) => should point to the hotel kitchen index page where available dishes are listed
+                2. dashboard => should show any food order made(the ones that are completed and the onse that are still pending)
+                             => should contain the customer booking detais like the rooms and amount paid
+                             =>check out tracker should be put that will notify the customers that their stay in the hotel is due and that they should vacate
+
+                3. Place Order (order_confirmation) => will allow customers to make orders and pay for the orders made
+
+-->

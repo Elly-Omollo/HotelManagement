@@ -1,5 +1,5 @@
 from django.contrib import admin
-from hotel.models import Hotel, HotelGallery, Room, RoomType, Booking, Activitylog,StaffOnDuty, Coupon
+from hotel.models import Hotel, HotelGallery, Room, RoomType, Booking, Activitylog,StaffOnDuty, Coupon ,Notification
 
 # Register your models here.
 class hotelgalleryInline(admin.TabularInline):
@@ -15,6 +15,10 @@ class HotelAdmin(admin.ModelAdmin):
 class StaffAdmin(admin.ModelAdmin):
     list_display=('name', 'phone', 'email')
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'type', 'date')
+
+
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(HotelGallery)
 admin.site.register(RoomType)
@@ -23,3 +27,4 @@ admin.site.register(Room)
 admin.site.register(Activitylog)
 admin.site.register(StaffOnDuty, StaffAdmin)
 admin.site.register(Coupon)
+admin.site.register(Notification, NotificationAdmin)
