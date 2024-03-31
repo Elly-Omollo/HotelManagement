@@ -4,62 +4,67 @@ Dashboard
 {% endblock %}
 
 {% block content  %}
-
-<div class="container bg-light p-3 " style="margin-top: 100px;">
-    {{bookings.count}}
-    <div class="card col-lg-3 col-md-6 col-sm-12 bg-light">
-        <div class="row">
-            <div class="card-body">
-                <h3 class="card-title">What i should include</h3>
-                <p class="card-text">Side bar with navigation urls</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="container bg-info p-2">
-        <div class="row">
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <h4 class="card-title text-muted text-light">{{bookings.count}}</h4>
-                        <span class="card-subtitle">Total paid bookings</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined bg-success">
-                            done
+    <div class="container">
+        <div class="card bg-info">
+            <div class="row">
+                <div class="card-body">
+                    <h5 class="card-title">Dashboard <br>
+                        <span>
+                            Welcome <b>{{request.user|title}}</b>
                         </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <h4 class="card-title text-muted text-light">{{total_spent.amount}}$</h4>
-                        <span class="card-subtitle">Total spent on booking</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined bg-success">
-                            attach_money
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <h4 class="card-title text-muted text-light">{{request.user.profile.wallet}}$</h4>
-                        <span class="card-subtitle">Wallet Balance</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="material-symbols-outlined bg-success">
-                            account_balance_wallet
-                        </span>
-                    </div>
+                        <span class="card-text col-lg-3 col-sm-2 ml-5 p-4 bg-info count">You have made:<b class="text-center"> {{bookings.count}} </b> Booking(s)</span>
+                    </h5>
                 </div>
             </div>
         </div>
     </div>
+    <!-- <div class="row"> -->
+        <p class="text-center bg-light card p-3 mt-4"><b>Booking info</b></p>
+        <div class="container bg-info p-2">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-muted text-light">{{bookings.count}}</h4>
+                            <span class="card-subtitle">Total paid bookings</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="material-symbols-outlined bg-success">
+                                done
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-muted text-light">{{total_spent.amount}}$</h4>
+                            <span class="card-subtitle">Total spent on booking</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="material-symbols-outlined bg-success">
+                                attach_money
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-muted text-light">{{request.user.profile.wallet}}$</h4>
+                            <span class="card-subtitle">Wallet Balance</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="material-symbols-outlined bg-success">
+                                account_balance_wallet
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+
     <div class="container my-5 bg-light p-2">
         <div class="row">
             <div class="col-lg-12 col-md-12 mb-4">
@@ -100,6 +105,7 @@ Dashboard
             </div>
         </div>
     </div>
+
     <div class="container mt-3 col-lg-12 col-md-12 " style="margin-bottom: 100px;">
         <div class="row text-center text-info ">
             <h4> All Booking Invoices</h4>
@@ -129,5 +135,7 @@ Dashboard
 
     </div>
 
+
+    
 
 {% endblock %}

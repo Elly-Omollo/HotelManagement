@@ -1,75 +1,181 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/user_login.css' %}">
-            <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> this is for bootstrap 3 -->
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-             <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
-           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-            <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {%endblock%}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+           
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #636866 /* Light gray background */
+        }
+        .side{
+            margin-top: 60px;
+        }
+        .sidebar {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #05445E;
+        z-index: 1;
+        padding-top: 56px; /* Height of the navbar */
+        overflow-x: hidden;
+        transition: all 0.3s;
+        }
+
+        .main-content {
+        margin-left: 250px; /* Width of the sidebar */
+        padding-top: 56px; /* Height of the navbar */
+        }
+        @media (max-width: 768px) {
+        .sidebar {
+            padding-top: 15px; /* Adjust for smaller screens */
+            width: 100%;
+        }
+        .main-content {
+            margin-left: 0;
+        }
+        .count{
+            display: none;
+        }
+    }
+        /* Add your custom CSS styles here */
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand btn btn-primary" 
+            href="#">
+            eBooking
+        </a>
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+            >
+            <span class="navbar-toggler-icon"></span>
             
-        
-        {% block title %}
+        </button>
 
-        {% endblock %}
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg bg-light fixed-top mb-5">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">Home</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Menu</a>
-                  </li>
-                  <li class="nav-item mr-auto">
-                    <a class="nav-link" href="#">Place Order</a>
-                  </li>
-                 
-                </ul>
-                <form class="d-flex " role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
+        <div 
+            class="collapse navbar-collapse" 
+            id="navbarNav">
+
+            <ul class="navbar-nav ml-auto">
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li> -->
+            </ul>
+            {% if request.user.is_authenticated %}
+            <div class="navbar-text ">
+                <img src="{{profile.image.url}}" class="rounded-circle" alt="Profile">
+                <span class="p-2"> Welcome <b>{{request.user|title}}</b></span> 
             </div>
-        </nav>
+                <div class="navbar-text">
+                    <a class="nav-link btn btn-info" href="{% url 'userauth:log out' %}">LogOut</a>
+                </div>
+            {% else %}
+                <div class="navbar-text">
+                    <a class="nav-link btn btn-info" href="{% url 'userauth:login' %}">Login</a>
+                </div>
+                <div class="navbar-text">
+                    <a class="nav-link btn btn-info" href="{% url 'userauth:signup' %}">SignUp</a>
+                </div>
+            {% endif %}
+            
+        </div>
+    </nav>
+
+    <div class="container-fluid side">
+        <div class="row bg-light p-2">
+
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block  sidebar card">
+                <div class="sidebar-sticky">
+                    <div class="nav flex-column p-2">
+                        <li class="nav-item btn btn-info  mt-3">
+                            <a class="nav-link text-light" href="{% url 'user_dashboard:dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item btn btn-info">
+                            <a class="nav-link text-light" href="{% url 'user_dashboard:profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item btn btn-info">
+                            <a class="nav-link text-light " href="{% url 'user_dashboard:notifications' %}">Notifications</a>
+                        </li>
+                        <li class="nav-item btn btn-info">
+                            <a class="nav-link text-light" href="{% url 'user_dashboard:home' %}">KitchenBar</a>
+                        </li>
+                        <li class="nav-item btn btn-info">
+                            <a class="nav-link text-light" href="">Manager page</a>
+                        </li>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main content area -->
+            <!-- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 "> -->
+            <main  class="col-md-9 ml-sm-auto col-lg-10">
+                <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> -->
+                <div class="justify-content-between pt-3 pb-2 mb-3 flex-md-nowrap">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+
+                            <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title">Confirm Order Submition</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                               
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Go back</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Place Order!</button>
+                                </div>
+                        
+                            </div>
+                            </div>
+                        </div>
+                        
+
+                    <!-- end modal -->
 
 
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-primary fixed-bottom">
+        <div class="container text-center">
+            <span class="text-muted text-light">Your Footer Content Here</span>
+        </div>
+    </footer>
 
-        {% block content  %}
-
-        {%  endblock %}
-
-        
-
-
-        <footr class="page-footer font-small bg-light mt-5 fixed-bottom">
-          <div class="footer-copyright text-center py-3 ">
-            &copy; 2020 copyright:
-            <a href="">Home Page</a>
-            <a href="">About Us</a>
-          </div>
-        </footr>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-          {% for msg in messages %}
-              swal({
-                  title: "{{msg.tags}}",
-                  text: "{{msg}}",
-                  icon: "{{msg.tags}}",
-                  button: "OK",
-              });
-            {% endfor %}
-      </script>
-    </body>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
+ 

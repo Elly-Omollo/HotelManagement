@@ -14,7 +14,7 @@ from userauth.forms import UserUpdateForm, ProfileUpdateForm
 
 
 # Create your views here.
-
+@login_required
 def home(request):
    appetizers = MenuItem.objects.filter(category__name__icontains='Appetizer')
    drinks = MenuItem.objects.filter(category__name__icontains='Drink')
@@ -29,7 +29,7 @@ def home(request):
    }
    
    
-   return render(request, 'user_dashboard/home.html', context)
+   return render(request, 'user_dashboard/home1.html', context)
 
 # this is the user dashboard view
 @login_required
@@ -40,7 +40,7 @@ def dashboard(request):
         "bookings":bookings,
         "total_spent":total_spent
     }
-    return render(request, 'user_dashboard/dashboard.html', context)
+    return render(request, 'user_dashboard/dashboard1.html', context)
 
 @login_required
 def booking_details(request, bookingid):
@@ -155,7 +155,7 @@ def edit_hotel(request):
 
 
 
-
+@login_required
 def Order(request):
 
     #get all the items from every category
@@ -177,7 +177,7 @@ def Order(request):
         'details': details
     }
 
-    return render(request, 'user_dashboard/order.html', context)
+    return render(request, 'user_dashboard/order1.html', context)
 
 def order_confirmation(request):
 

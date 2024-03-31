@@ -16,7 +16,7 @@ urlpatterns = [
     
     # food base urls
     path('order_confirmation', views.order_confirmation, name='order_confirmation'),
-    path('home', views.home, name='home'),
+    path('kitchenBar', views.home, name='home'),
     path('order', views.Order, name='order'),
    
 ]
