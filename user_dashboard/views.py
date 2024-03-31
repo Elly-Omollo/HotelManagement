@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db import models
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 
+from user_dashboard.forms import HotelForm
 from user_dashboard.models import MenuItem, OrderModel
-from hotel.models import  Notification, Booking
+from hotel.models import  Hotel, Notification, Booking
 from userauth.models import Profile, User
 from userauth.forms import UserUpdateForm, ProfileUpdateForm
 
@@ -118,8 +119,37 @@ def profile(request):
     return render(request, "user_dashboard/profile.html", context)
 
 
+# manager dashboard
+@login_required
+def add_hotel(request):
+    if request.method == 'POST':
+        form = HotelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('user_dashboard:add_hotel')  # Redirect to the dashboard after adding the hotel
+    else:
+        form = HotelForm()
 
+    return render(request, "user_dashboard/add-hotel.html", {"form":form})
 
+# edit hotel view
+@login_required
+def edit_hotel(request):
+    hotel = Hotel.objects.filter(full_name=request.user)
+    allhotel=[]
+    if request.method == 'POST':
+        mh=get_object_or_404(Hotel, hotel_id=request.POST.get('hotel_id'))
+        form = HotelForm(request.POST, request.FILES, instance=mh)
+        if form.is_valid():
+            form.save()
+            return redirect('user_dashboard:edit_hotel')  # Redirect to the dashboard after editing the hotel
+    else:
+        for h in hotel:
+            allhotel.append(HotelForm( instance=h ))
+            print("OK",h )
+        # form = HotelForm()
+    return render(request, 'user_dashboard/edit-hotel.html', {'form': allhotel, 'hotel': hotel})
+# end of manager dashboard 
 
 
 

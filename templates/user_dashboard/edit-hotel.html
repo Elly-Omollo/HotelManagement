@@ -1,0 +1,22 @@
+{% extends 'base/bass.html'%}
+{% block title %}
+Manager | edit hotel
+{% endblock %}
+
+{% block content  %}
+<div class="container mt-5">
+
+    <h4 class="card p-4 text-center bg-light">Its time to make changes on hotels by the manager</h4>
+</div>
+{% for h in form  %}
+  <div class="container bg-light p-4 text-center my-5">
+      <h1>Edit Hotel</h1>
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ h.as_p }}
+              <button type="submit">Submit</button>
+          </form>
+  </div>
+{% endfor %}
+    
+    {% endblock %}

@@ -5,5 +5,5 @@ app_name = "userauth"
 urlpatterns = [
     path('signup', views.RegisterView, name='signup'),
     path('login', views.login, name='login'),
-    path('logout', views.logoutView, name='logout'),
+    path('logout', views.logoutView, name='log out'),
 ]

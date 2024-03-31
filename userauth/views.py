@@ -20,7 +20,7 @@ def RegisterView(request):
     page=request.GET.get('page','User')
     if form.is_valid():
         form.save()
-
+        
         full_name = form.cleaned_data.get("full_name") 
         phone = form.cleaned_data.get("phone")
         email = form.cleaned_data.get("email")
@@ -28,7 +28,6 @@ def RegisterView(request):
 
 
         user = authenticate(email=email, password=password)
-       
         auth.login(request, user)
 
         messages.success(request, f"hey {full_name}, your account has been created successfully.")
@@ -38,7 +37,15 @@ def RegisterView(request):
         profile.phone = phone
         profile.save()
 
-        return redirect("hotel:index")
+        if page == 'Manager':
+            group=Group.objects.get(name='Manager')
+            group.user_set.add(user)
+            return redirect("user_dashboard:profile")
+
+        else:
+            group=Group.objects.get(name='Customer')
+            group.user_set.add(user)
+            return redirect("hotel:index")
     
    
 

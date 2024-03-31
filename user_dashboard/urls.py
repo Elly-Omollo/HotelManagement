@@ -11,6 +11,8 @@ urlpatterns = [
     path('notification_seen/<id>', views.notification_seen, name='notification_seen'),
     path('wallet', views.wallet, name='wallet'),
     path('profile', views.profile, name='profile'),
+    path('add-hotel/', views.add_hotel, name='add_hotel'),
+    path('edit-hotel/', views.edit_hotel, name='edit_hotel'),
     
     # food base urls
     path('order_confirmation', views.order_confirmation, name='order_confirmation'),
