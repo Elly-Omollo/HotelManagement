@@ -14,9 +14,9 @@ HOTEL_STATUS = (
 )
 
 ICON_TYPE = (
-    ("Bootstrap","Bootstrap"),
-    ("Fontawesome","Fontawesome"),
-    ("Sanserif","Sanserif"),
+    ("Bootstrap Icons","Bootstrap Icons"),
+    ("Fontawesome Icons","Fontawesome Icons"),
+    ("Box Icons","Box Icons"),
 )
 
 PAYMENT_STATUS = (
@@ -35,8 +35,11 @@ NOTIFICATION_TYPE = (
    
 )
 
-
-
+RATING = (
+    ("1","1"),
+    ("2","2"),
+   
+)
 
 
 
@@ -47,6 +50,7 @@ class Hotel(models.Model):
     name =models.CharField(max_length=100, null=True,blank=True)
     description = models.TextField(null=True, blank=True)
     image = models.FileField(upload_to='hotel_gallery')
+    # email = models.EmailField(max_length=200, null=True, blank=True)
     address = models.CharField(max_length=100)
     mobile = models.CharField(max_length=30,null=True, blank=True)
     status = models.CharField(max_length=20,choices=HOTEL_STATUS, default="Live")
@@ -85,6 +89,14 @@ class Hotel(models.Model):
 
     def hotel_room_types(self):
         return RoomType.objects.filter(hotel=self)
+    
+    def average_rating(self):
+        average_rating = Review.objects.filter(hotel=self).aggregate(avg_rating=models.Avg("rating"))
+        return average_rating['avg_rating']
+    
+    def rating_count(self):
+        average_rating = Review.objects.filter(hotel=self).count()
+        
 
 
 class  HotelGallery(models.Model):
@@ -166,7 +178,7 @@ class Room(models.Model):
 
 
     def __str__(self):
-        return f"{self.room_type.room_type} - {self.hotel.name} "
+        return f"{self.room_type.room_type} "
     
     class Meta:
         verbose_name_plural = "Rooms"
@@ -182,6 +194,21 @@ class Room(models.Model):
     
     def hotel_gallery(self):
         return HotelGallery.objects.filter(hotel=self)
+    
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True, blank=True)
+    review = models.TextField(null = True, blank=True)
+    reply = models.TextField(null =True, blank=True)
+    rating = models.PositiveIntegerField(default=None, choices=RATING)
+    active = models.BooleanField(default=False)
+    bid =  ShortUUIDField(unique=True, length=6, max_length=20, alphabet="abcdefghijklmnopqrstuvwxyz123")
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.review}"
 
 
 

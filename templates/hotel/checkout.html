@@ -4,11 +4,11 @@
 {% endblock %}
 
 {% block content %}
-            <section>
+            <section class="pt-3">
                 <!-- top section -->
-                <section class="container bg-light col-md-12 col-sm-12 col-lg-12" style="margin-top:100px; padding-left: 100px;">
+                <section class="container-fluid bg-light pt-2  my-5" >
                     <h2 class="text-center ">Payment Section</h2>
-                    <div class="text-danger">
+                    <div class="text-danger ">
                         <h4><span class="text-danger">
                             <strong>NOTE:
                                 <div class="spinner-grow text-danger spinner-grow-sm"></div>
@@ -17,8 +17,8 @@
                                 <div class="spinner-grow text-danger spinner-grow-sm"></div>
                             </strong><br>Review your order before payment.
                         </h4>
-                        <a class="text-light border-dark" href="/selected_rooms/" style="text-decoration: none;">
-                            <button class="btn btn-success my-4">MyOrders</button>
+                        <a class="text-center" href="/selected_rooms/" style="text-decoration: none;">
+                            <button class="btn text-center btn-success my-4">MyOrders</button>
                         </a>
                     </div>
                 </section>
@@ -26,9 +26,9 @@
 
                 <!-- section two -->
             
-                <section class="container-fluid  p-5">
-                    <div class="bg-light p-4  mb-4">
-                        <div class="container ">
+                <!-- <section class="container-fluid bg-danger"> -->
+                    <!-- <div class="bg-light p-4  mb-4"> -->
+                        <!-- <div class="container "> -->
                             <!-- selected rooms cards -->
                             <div class="row  my-4 p-4">
                                 <h3 class="text-center">
@@ -54,103 +54,17 @@
                             </div>
 
                             <!-- end of selected rooms card -->
-                        </div>
-                    </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
 
 
                     <!-- Customer Details Section-->
-                    <div class="row bg-info">
-                        <div class="col-md-6 col-lg-6  col-sm-12 bg-light">
-                            <div class="row col-12 m-3 p-3">
-                                <h3 class="text-center">Customer Details</h3>
-                                
-                                <div class="form-group row">
-                                    <label for="full_name" class="col-sm-6 col-form-label">Full Name:</label>
-                                    <div class="col-sm-6 bg-light">
-                                        <input 
-                                        id="full_name"
-                                        name="full_name"
-                                        type="text"
-                                        value="{{booking.full_name}}"
-                                        readonly
-                                        class="form-control-plaintext"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-6 col-form-label">E-mail:</label>
-                                    <div class="col-sm-6 bg-light">
-                                        <input 
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        value="{{booking.email}}"
-                                        readonly
-                                        class="form-control-plaintext"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="phone" class="col-sm-6 col-form-label">Phone:</label>
-                                    <div class="col-sm-6 bg-light">
-                                        <input 
-                                        id="phone"
-                                        name="phone"
-                                        type="text"
-                                        value="{{booking.phone}}"
-                                        readonly
-                                        class="form-control-plaintext"
-                                        />
-                                    </div>
-                                </div><hr/>
-                                <div class="row  col-12 p-3">
-                                    <h3 class="text-center">Booking Summery</h3>
-                                    <div class="row ">
-                                        <div class="card col-lg-7 " >
-                                            <div class="card-body">
-                                                <h5 class="card-title">Hotel: {{booking.hotel.name}}</h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">Check in date:<span> {{booking.check_in_date}}</span></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted">Check out date:<span> {{booking.check_out_date}}</span></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted">Total days:<span> {{booking.total_days}}</span></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted">Adults:<span> {{booking.number_adults}}</span></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted">Children:<span> {{booking.num_children}}</span></h6>
-                                                <h6 class="card-subtitle mb-2 text-muted">Discount:<span> {{booking.saved}}$</span></h6>
-                                                <h6 class="card-title mb-2 ">Total cost: <span>{{booking.payable}}</span></h6>
-                                            </div>
-                                        </div>
-                                        <!-- payment -->
-                                        <div class=" col-lg-5 ">
-                                            <div class="row">
-                                                <form class="form-control bg-success p-3" method="POST" action="">
-                                                    <p class="text-center text-light">Have Coupon!!</p><hr/>
-                                                    {% csrf_token %}
-                                                        <input
-                                                        class="form-group col-12"
-
-                                                            id="couponCode"
-                                                            name="code"
-                                                            placeholder="coupon code "
-                                                            type="text"
-                                                        /><br>
-                                                        <input type="submit" class="coupon_code  col-12 btn btn-outline-light mt-2" value="Apply"/>  
-                                                </form>
-                                                <div class="row ">
-                                                    <p class="text-center">Continue to pay</p><hr/>
-                                                    <div id="paypal-button-container"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- endof payment -->
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-6  col-sm-12 bg-success p-4">
-                            <div class="col-md-12 col-lg-12 mt-0  " style="height:100%; margin:10px;">
-                                <div class="booking-list-container">
-                                    <div class="listing-item">
+                   
+                    <div class="row ">
+                        <div class="col-md-6 col-lg-6 col-sm-12  ">
+                            <div class="col-md-12 col-lg-12  ">
+                                <div class="container">
+                                    <div class="col">
                                         <div class="row">
                                             <img  class="card-img" src={{booking.hotel.image.url}} alt="hotelphoto" rounded style="width:34.3rem; height:50%;" />
                                             <h3 class="text-center">{{booking.hotel.name}}</h3>
@@ -193,13 +107,93 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6 col-lg-6  col-sm-12 bg-light">
+                            <div class="row">
+                                <div class="card">
+                                    <h3 class="text-center">Customer Details</h3>
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <label for="full_name" class="form-label">Full Name:</label>
+                                        <input type="text" class="form-control" id="full_name" name="email" value="{{booking.full_name}}" readonly>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <label for="email" class="form-label">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{booking.email}}" readonly>
+                                      </div>
+                                      <div class="col-lg-6 col-md-6 col-sm-12">
+                                        <label for="phone" class="form-label">Phone:</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" value="{{booking.phone}}" readonly>
+                                      </div>
+                                    </div>
+                                </div>
+                                
+                                <hr/>
+                                <div class="row">
+                                    <h3 class="text-center">Booking Summery</h3>
+                                    <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                          <th>Check in Date</th>
+                                          <th>Check Out Date</th>
+                                          <th>Total Days</th>
+                                          <th>Adults</th>
+                                          <th>Children</th>
+                                          <th>Saved</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td><span> {{booking.check_in_date}}</span></td>
+                                          <td><span>{{booking.check_out_date}}</span></td>
+                                          <td class="text-center"><span  > {{booking.total_days}}</span></td>
+                                          <td><span> {{booking.number_adults}}</span></td>
+                                          <td>{{booking.num_children}}</td>
+                                          <td><span> {{booking.saved}}$</span></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <div class="col-12 text-center mb-3 row">
+                                        <span><b>Total Cost: {{booking.payable}}$</b></span>
+                                    </div>
+                                        <!-- payment -->
+                                        <!-- <div class=""> -->
+                                            <!-- <div class="row"> -->
+                                                <form class="form-control bg-success p-3" method="POST" action="">
+                                                    <p class="text-center text-light">Have Coupon!!</p><hr/>
+                                                    {% csrf_token %}
+                                                        <input
+                                                        class="form-group col-12"
+
+                                                            id="couponCode"
+                                                            name="code"
+                                                            placeholder="coupon code "
+                                                            type="text"
+                                                        /><br>
+                                                        <input type="submit" class="coupon_code  col-12 btn btn-outline-light mt-2" value="Apply"/>  
+                                                </form>
+                                                <div class="row ">
+                                                    <h3 class="text-center">Continue to pay</h3><hr/>
+                                                    <div id="paypal-button-container"></div>
+                                                </div>
+                                            </div>
+                                        <!-- </div> -->
+
+                                        <!-- endof payment -->
+                                        
+                                    
+                                
+                            </div>
+                        </div>
+                        
                     </div>
 
 
                     <!-- end of customer section -->
 
                     
-                </section>
+            </section>
                 
            
             <!-- <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script> -->
@@ -238,7 +232,7 @@
                     }
                 }).render("#paypal-button-container")
                 </script>
-~
+
              <!-- <script>
                 var stripe = Stripe('{{stripe_publishable_key}}');
                 var checkoutButton = document.getElementById("checkout-button");

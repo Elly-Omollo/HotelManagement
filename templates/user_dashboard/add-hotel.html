@@ -1,19 +1,92 @@
-{% extends 'base/bass.html'%}
+{% extends 'base/base.html'%}
 {% block title %}
 Manager | Add hotel
 {% endblock %}
 
 {% block content  %}
 <div class="container mt-5">
-    <h4 class="card p-4 text-center bg-light">Its time to add hotels by the manager</h4>
+    <h4 class="card p-4 text-center danger">Its time to add hotels by the manager</h4>
 </div>
-  <div class="container bg-light p-4 text-center my-5">
-      <h1>Add Hotel</h1>
+  <div class="container-fluid bg-light my-5">
+    <div class="row ">
+        <div class="col-lg-4 bg-primary p-2 ml-0">
+        <h4 class="text-center text-light">Add Hotel</h4>
+      <!-- hotel form -->
+          <form method="post" class=" bg-light " enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row mt-4">
+                <div class="col-12">
+                    <label >Manager Name</label>
+                    {{form.full_name}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Hotel Name</label>
+                    {{form.name}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Description</label>
+                    {{form.description}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Image</label>
+                    {{form.image}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Address</label>
+                    {{form.address}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Mobile</label>
+                    {{form.mobile}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Facebook</label>
+                    {{form.facebook}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Twitter</label>
+                    {{form.twitter}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Instagram</label>
+                    {{form.instagram}}
+                </div>
+                <div class="col-12">
+                    <label for="email">Tags</label>
+                    {{form.tags}}
+                </div>
+            </div>
+            <div class="row col-12">
+                <input type="submit" class="btn btn-secondary">
+            </div>
+             
+          </form>
+    </div>
+
+ 
+    <div class="col-lg-4 bg-info">
+          <!-- roomtype form -->
+          <h4 class="text-center text-light">Add Room Type</h4>
           <form method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form.as_p }}
+              {{ roomtype_form.as_p }}
+                
               <button type="submit">Submit</button>
           </form>
+    </div>
+   <div class="col-lg-4 bg-secondary ml-auto">
+        <!-- room form -->
+          <h4 class="text-center text-light">Add Room Number</h4>
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ room_form.as_p }}
+              <button type="submit">Submit</button>
+          </form>
+    </div>
+
+    </div>
+    
+     
   </div>
     
     {% endblock %}

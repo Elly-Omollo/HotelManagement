@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  
+    body {
+      background-color: #6ee192; 
+    }
+    .form-container {
+      background-color: #ffffff; 
+      max-width: 550px;
+      margin: 50px auto; 
+      padding: 10px;
+      border-radius: 8px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    }
+    .form-group {
+      margin-bottom: 2px;
+    }
+    .form-group label {
+      /* display: block; */
+      padding-left: 2px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+      width: 100%;
+      height: 40px;
+      
+      
+    }
+  </style>
+</head>
+<body>
+
+<div class="container form-container">
+  <h2 class="text-center mb-4">User Registration</h2>
+  <form method="POST" action="" id="signup-form">
+    <div class="form-check row form-container text-center">
+      <input class="form-check-input" type="checkbox" id="manager-checkbox">
+      <label class="form-check-label " for="manager-checkbox"> Join as a Manager</label>
+    </div>
+    {%csrf_token%}
+    <div class="form-group">
+        <label for="id_username">Full Name:</label>
+        {{ form.full_name }}
+      </div>
+    <div class="form-group">
+      <label for="id_username">Username:</label>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <label for="id_email">Email:</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      <label for="id_email">Phone:</label>
+      {{ form.phone }}
+    </div>
+    <div class="form-group">
+      <label for="id_password1">Password:</label>
+      {{ form.password1 }}
+    </div>
+    <div class="form-group">
+      <label for="id_password2">Confirm Password:</label>
+      {{ form.password2 }}
+    </div>
+    <hr/>
+    <div class="row col-12 ">
+      <p class="card-text">
+          By creating  an account you agree with our <a href="">Terms and Conditions<a>
+      </p>
+  </div>
+    
+  </form>
+  <div class="row pt-4 text-center">
+        <div class="col">
+            <input type="submit" class="btn btn-primary " value="SUBMIT">
+        </div>
+    </div>
+   
+        
+            
+</div>
+
+
+
+    <script>
+        const form = document.getElementById('signup-form');
+        const managerCheckbox = document.getElementById('manager-checkbox');
+
+        managerCheckbox.addEventListener('change', function() {
+            const currentUrl = window.location.href;
+            const isChecked = this.checked;
+            const newUrl = isChecked ? currentUrl + '?page=Manager' : currentUrl.replace('?page=Manager', '');
+            history.pushState(null, null, newUrl);
+        });
+    </script>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

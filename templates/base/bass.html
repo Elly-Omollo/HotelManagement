@@ -21,7 +21,7 @@
             margin-top: 60px;
         }
         .sidebar {
-        height: 100%;
+        height: auto;
         position: fixed;
         top: 0;
         left: 0;
@@ -82,12 +82,9 @@
             </ul>
             {% if request.user.is_authenticated %}
             <div class="navbar-text ">
-                <img src="{{profile.image.url}}" class="rounded-circle" alt="Profile">
                 <span class="p-2"> Welcome <b>{{request.user|title}}</b></span> 
+                <img src="{{profile.image.url}} " style="width: 30px;height: 30px; " class="rounded-circle" alt="Profile">
             </div>
-                <div class="navbar-text">
-                    <a class="nav-link btn btn-info" href="{% url 'userauth:log out' %}">LogOut</a>
-                </div>
             {% else %}
                 <div class="navbar-text">
                     <a class="nav-link btn btn-info" href="{% url 'userauth:login' %}">Login</a>
@@ -106,23 +103,31 @@
             <!-- Sidebar -->
             <nav class="col-md-2 d-none d-md-block  sidebar card">
                 <div class="sidebar-sticky">
-                    <div class="nav flex-column p-2">
-                        <li class="nav-item btn btn-info  mt-3">
-                            <a class="nav-link text-light" href="{% url 'user_dashboard:dashboard' %}">Dashboard</a>
-                        </li>
-                        <li class="nav-item btn btn-info">
-                            <a class="nav-link text-light" href="{% url 'user_dashboard:profile' %}">Profile</a>
-                        </li>
-                        <li class="nav-item btn btn-info">
-                            <a class="nav-link text-light " href="{% url 'user_dashboard:notifications' %}">Notifications</a>
-                        </li>
-                        <li class="nav-item btn btn-info">
-                            <a class="nav-link text-light" href="{% url 'user_dashboard:home' %}">KitchenBar</a>
-                        </li>
-                        <li class="nav-item btn btn-info">
-                            <a class="nav-link text-light" href="">Manager page</a>
-                        </li>
+                    <div class="nav flex-column p-2 bg-secondary mt-2">
+                        <span class="text-light text-center">Customer Page</span>
+                        <div class="navbar-text mt-2">
+                            <a class="nav-link btn btn-light" href="{% url 'user_dashboard:dashboard' %}">Dashboard</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light" href="{% url 'user_dashboard:profile' %}">Profile</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light " href="{% url 'user_dashboard:notifications' %}">Notifications</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light" href="{% url 'user_dashboard:home' %}">KitchenBar</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light" href="{% url 'user_dashboard:bookings' %}">MyBookings</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light" href="{% url 'user_dashboard:change_password' %}">Change Password</a>
+                        </div>
+                        <div class="navbar-text">
+                            <a class="nav-link btn btn-light" href="{% url 'userauth:log out' %}">LogOut</a>
+                        </div>
                     </div>
+                    <div class="col mb-3"><h5>Customer Dashboard</h5></div>
                 </div>
             </nav>
 
@@ -166,9 +171,9 @@
 
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-primary fixed-bottom">
+    <footer class="footer mt-auto py-3 bg-secondary fixed-bottom">
         <div class="container text-center">
-            <span class="text-muted text-light">Your Footer Content Here</span>
+            <span class="text-light ">nyachomoelly@gmail.com</span>
         </div>
     </footer>
 

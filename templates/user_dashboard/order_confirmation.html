@@ -10,7 +10,9 @@
         <div class="row justify-content-center mt-1">
             <div class="col-md-5 col-sm-12 p-5 text-right">
                 <h1>Order Submited!</h1>
-                <p>You should recieve a confirmation email soon.</p>
+
+                <p>A confirmation email was sent to: {{items.email}}.</p>
+
                 <a href="{% url 'user_dashboard:order' %}">Back to Home Page</a>
             </div>
         </div>
@@ -27,15 +29,66 @@
                     </li>
                 </ul>
                 {% endfor %}
-                <div class="row justify-content-center" style="border: .5px solid grey;">
-
+                <div class="row justify-content-center bg-success" style="border: .5px solid grey;">
                     <p class="font-weight-bold pt-4">Total Cost: <span style="color: black;"  >{{price}}$</span></p>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-12 text-center ">
+                <a href="" style="text-decoration: none;">
+                    <div class="card m-1 btn btn-light">
+                    <span>PAY NOW</span>
+                    <h3 class="text-center">
+                        Continue to pay</h3><hr/>
+                                                    
+                        <div id="paypal-button-container"></div>
+                </div>
+                <a href="" style="text-decoration: none;">
+                    <div class="card m-1 btn btn-light">
+                    <span>PAY ON DELIVERY</span>
+                </div>
+                </a>
+                <div class="card m-1">
+                    <span>  </span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="my-5">
-        <p> this is the order id {{pk}} </p>
-    </div>
+   
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AWL2Bo96B-xp99LGPxp6lRJx1LnfChoCXet5tV5WM9Wu6Jn0jL_wnJI9hK68wf6dleh8A25eLKQwylyH&currency=USD"></script>
     
+    <script>
+
+        let order_total = "{{ price }}";
+        let order = "{{pk}}";
+        // let success_id = "{{booking.success_id}}";
+
+        paypal.Buttons({
+            style:{
+                 layout: 'vertical',
+                 color:  'gold',
+                 shape:  'rect',
+                 label:  'paypal'
+            },
+            createOrder: function(data, actions){
+                return actions.order.create({
+                    purchase_units: [{
+                    amount: {
+                        value: order_total
+                    } 
+                    }]
+                })
+            },
+            onApprove: function(data, actions){
+                return actions.order.capture().then(function(Detail){
+                    //console.log(" the are the payment details ===========",Detail);
+                    if (Detail.status == "COMPLETED"){
+                        //redirect to the succcess page 
+                        window.location.href = `/success/${booking_id}/?success=${success_id}&payer_id=${Detail.id}&status=${Detail.status}&booking_total=${booking_total}`;
+                    }
+                })
+            }
+        }).render("#paypal-button-container")
+        </script>
+
 {% endblock %}

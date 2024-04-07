@@ -12,9 +12,7 @@
                     --white:#ffffff;
                     --header-font: "Playfair Display",serif;
                 }
-                body{
-                    /* background-color:orange; */
-                }
+               
                 .nav_header a{
                     text-decoration:none;
                 }
@@ -64,21 +62,24 @@
                 }
                 .navigation a{
                     font-weight: 300;
+                    font-weight: 300;
+                   
+                    font-weight: 300; 
                    
                     position: relative;
                     font-size: 1.1em;
-                    color: #040111;
+                    color: #350ceb;
                     text-decoration: none;
                     font-weight: 500;
                     margin-right: 10px;
-                    margin-left: 10px;
+                     margin-left: 10px;
                 }
                 .navigation a::after{
                     content: '';
                     position: absolute;
                     width: 100%;
                     height: 3px;
-                    background: #d70707;
+                    background: #07d7d7;
                     border-radius: 5px;
                     left: 0;
                     bottom: -6px;
@@ -91,22 +92,19 @@
                     transform: scaleX(1);
                 }
                 header .btnlogin-popup{
-                    width: 130px;
-                    height: 50px;
-                    background: transparent;
+                    /* width: 130px; */
+                    /* height: 50px; */
+                    /* background: transparent; */
                     /* border: 2px solid #3b0f8e; */
                     outline: none;
                     /* border-radius: 6px; */
                     cursor: pointer;
                     font-size: 1.1em;
-                    color: #0e0d0d;
-                    font-weight: 500;
-                    margin-left: 40px;  
-                    transition: 1ms;
+                  
                 }
                 header .btnlogin-popup:hover{
-                    background: #c9c9c9;
-                    color: #01060a;
+                    background: #211a1a;
+                    color: #d8dbde;
                 }
                 .carousel-nav{
                     height:450px;
@@ -134,136 +132,25 @@
                     text-align:center;
 
                   }
+                  .row{
+                    padding: 10px;
+                  }
                   .row1{
+                    background-color: #0f172a;
                     box-shadow: 0 0 0 1 rgba(0 0 0 0.4);
                   }
-                  /* .main{
-                    padding:10px;
-                    display: flex;
-                    flex-wrap: wrap;
-                    padding:.5rem;
-                    overflow: hidden;
-                    height: auto;
-                    justify-content: space-around;
-                } */
-                .card a{
-                    text-decoration: none;
-                }
-                
-                .main .card{
-                    display:inline-block; 
-                    overflow: hidden;
-                    width: 30px;
-                    height:40px;
-                    margin:1rem;
-                    
-                    overflow: hidden;
-                    border-radius:1rem;
-                    box-shadow: 0 0 10 rgba(1, 0, 0, 0.6);
-                }
-                .main .card:hover{
-                    /* background-color:grey;  */
-                     border-radius:.1rem; 
-                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-                }
-                
-                .image{
-                    transform: scale(1.2);
-                    
-                    object-fit:cover;
-                    display: flex;
-                }
-                
-                .image img{
-                    width:auto;
-                    height: 200px;
-                    object-fit: cover;
-                } 
-                .card-items{
-                    
-                    
-                    height:100%;
-                    padding:20px;
-                    width: 500px;
-                    color: #0f1a2c;
-                   
-                }
-                .item2{
-                    margin-top:20px;
-                }
-      
-                
-                .listing-item-content h3{
-                    text-align: justity;
-                }
-                .utf-star-rating-section{
-                    display: flex;
-                    padding: 10px; 
-                    justify-content: 
-                    space-between;
-                    width:60%; 
-                    border-radius: .1rem;
-                }
-                
-                @media only screen and (max-width: 1000px){
-                    .main .card{
-                        
-                        
-                    }
-                }
-                @media only screen and (max-width: 600px){
-                    .main .card{
-                        
-                        
-                    }
-                }
-
-                
-
                   
-                .popular_grid{
-                    background:red;
-                    padding:.5rem;
-                    overflow: hidden;
-                    background-color: rgb(5, 222, 218); 
-                    display: flex;
-                    flex-wrap: wrap;
-                    height: auto;
-                    justify-content: space-around;
+                
+                .card{
+                    margin: auto;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                }
+               .card:hover{
+                    /* transform: translateX(-1px);  */
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                     
                 }
-                .popular_card{
-                    background-color:red;
-                    width: 250px;
-                    height:300px;
-                    margin:1rem;
-                    background:blue;
-                   overflow: hidden;
-                   border-radius:1rem;
-                   box-shadow: 0 0 0 rgba(0,0,0,0.4);
-
+                
+                .checked{
+                    color: orangered;
                 }
-                .popular_card img{
-                    height: 150px;
-                    width:100%;
-                }
-                .popular_content{
-                    padding:1rem;
-                }
-                .popula_card_hrader{
-                    display:flex;
-                    align-items:center;
-                    justify-content: space-between;
-                    {% comment %} gap: 1rem; {% endcomment %}
-                    margin-bottom: 0.5rem;
-                }
-                .popula_card_hrader h4{
-                    font-size:1.2rem;
-                    font-weight: 600;
-                    color: aqua;
-                }
-                .popular_content p{
-                   color:grey; 
-                } 
-                  {% comment %} end {% endcomment %}
-         

@@ -99,6 +99,8 @@ DATABASES = {
 }
 
 
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -143,6 +145,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR/ 'sent-emails'
+
+EMAIL_HOST = 'mail.shahibu.com'
+EMAIL_HOST_USER = 'ebooking@shahibu.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = 'Hr{Y,st!j}r8'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
 
 
 LOGIN_URL = "userauth:login"

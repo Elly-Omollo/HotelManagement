@@ -7,6 +7,12 @@
             <link rel="stylesheet" type="text/css" href="{% static 'css/user_login.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
             
+
+            <!-- font awesome -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+            <!-- end of font -->
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
              <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
@@ -51,7 +57,7 @@
                 
                 <nav class="navigation">
                     <a href="/" class="home"><ion-icon name="home"></ion-icon> Home</a>
-                    <a href="/selected_rooms/" class="home">WishList</a>
+                    <a href="/selected_rooms/" class="btn btn-primary text-light"><i class="fa-solid fa-bed"></i><span class="room_count">{{request.session.selection_data_obj|length}}</span></a>
                     <!-- <a href="/selected_rooms" class=""><i class="material-icons" style="font-size: 2.5rem;">hotel</i> </a> -->
                     
                     {% if request.path != '/login/user_login/' %}
@@ -74,42 +80,36 @@
                 <!-- <button class="btnlogin-popup"><span class="material-symbols-outlined">menu </span></button> -->
             </header> 
     
-            <div class="modal" id="account">
+            <div class="modal bg-light" id="account">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <!-- modal header -->
                         <div class="modal-header">
-                            <h4 class="modal-title text-align-center">LOGIN</h4>
-                            <div class="spinner-border"></div>
+                            <h4 class="modal-title text-center">LOGIN</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     
                         </div>
                         <!-- modal body -->
-                        <div class="modal-body">
-                            <div class=" row log-modal  col-12 p-4 ">
-                                <div class="container-fluid  col-4 mt-6 center">
-                                  <a href="{% url 'userauth:login' %}/"><b>LOGIN</b></a>
+                        <div class="modal-body bg-info">
+                            <div class=" row   p-4 text-center">
+                                <div class="col-md-6  ">
+                                  <a href="{% url 'userauth:login' %}" class="btn bg-primary"><b>LOGIN</b></a>
                                 </div>
-                                <div class="container-fluid  col-4 mt-6 center">
-                                  <a href="/user/signup"><b>Register</b></a>
+                                <div class="  col-md-6  ">
+                                  <a href="{% url 'userauth:signup' %} " class="btn bg-primary ml-5"><b>Register</b></a>
                                 </div>
-                                
                             </div>
-                        </div>
-                        <!-- modal footer -->
-                        <div class="modal-footer">
-                            <button type="button"class="btn btn-danger" data-bs-dismiss="modal">close</button>
                         </div>
                     </div>
                 </div>
             </div>
-            {%block content %}
 
-            {%endblock%}
+            <div class="container-fluid bg-light p-2">
+                {%block content %}
 
+                {%endblock%}
+            </div>
 
-    
-    
     
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>

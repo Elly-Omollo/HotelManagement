@@ -15,6 +15,9 @@ class HotelAdmin(admin.ModelAdmin):
 class StaffAdmin(admin.ModelAdmin):
     list_display=('name', 'phone', 'email')
 
+class RoomAdmin(admin.ModelAdmin):
+    list_display=('room_number','room_type', 'hotel', 'is_available')
+
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('user', 'type', 'date')
 
@@ -23,7 +26,7 @@ admin.site.register(Hotel, HotelAdmin)
 admin.site.register(HotelGallery)
 admin.site.register(RoomType)
 admin.site.register(Booking)
-admin.site.register(Room)
+admin.site.register(Room, RoomAdmin)
 admin.site.register(Activitylog)
 admin.site.register(StaffOnDuty, StaffAdmin)
 admin.site.register(Coupon)

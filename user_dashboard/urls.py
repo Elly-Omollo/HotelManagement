@@ -1,5 +1,8 @@
 from django.urls import path
 from user_dashboard import views
+from django.contrib.auth import views as auth_view
+
+
 
 app_name = "user_dashboard"
 
@@ -18,5 +21,11 @@ urlpatterns = [
     path('order_confirmation', views.order_confirmation, name='order_confirmation'),
     path('kitchenBar', views.home, name='home'),
     path('order', views.Order, name='order'),
+    path('orderpaid', views.orderpaid, name='orderpaid'),
+    
    
+
+#    password change 
+    path("change-password/", auth_view.PasswordChangeView.as_view(template_name="user_dashboard/password-reset/change-password.html", success_url="/dashboard/password-changed/"), name="change_password"),
+    path("password-changed/", views.password_changed, name="password_changed")
 ]

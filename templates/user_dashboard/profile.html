@@ -1,10 +1,9 @@
 {% extends 'base/bass.html'%}
 {% block title %}
-Wallet
+Profile
 {% endblock %}
 
 {% block content  %}
-
 
 
 <div class="container my-5 p-2">
@@ -25,7 +24,7 @@ Wallet
                             {% csrf_token %}
                             <div class="col-md-12 ">
                                 <div class=" m-2 text-center " >
-                                    <img id="profile_image_preview" class="card-img mt-1" src="{{profile.image.url}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;" alt="profile" />
+                                    <img id="profile_image_preview" class="card-img rounded-circle" src="{{profile.image.url}}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;" alt="profile" />
                                     <div class="photoUpload">
                                         <span>
                                             <i class="material-symbols-outlined">

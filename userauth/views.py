@@ -17,10 +17,9 @@ def RegisterView(request):
         messages.warning(request, f"Hey you are already logged in." )
         return redirect("hotel:index")
     form = UserRegistrationForm(request.POST or None)
-    page=request.GET.get('page','User')
+    page=request.GET.get('page') or 'User'
     if form.is_valid():
         form.save()
-        
         full_name = form.cleaned_data.get("full_name") 
         phone = form.cleaned_data.get("phone")
         email = form.cleaned_data.get("email")
@@ -40,7 +39,7 @@ def RegisterView(request):
         if page == 'Manager':
             group=Group.objects.get(name='Manager')
             group.user_set.add(user)
-            return redirect("user_dashboard:profile")
+            return redirect("user_dashboard:edit_hotel")
 
         else:
             group=Group.objects.get(name='Customer')
@@ -52,16 +51,20 @@ def RegisterView(request):
     context = {
         "form":form
     }
-    return render(request, "userauth/signup.html", context)
+    return render(request, "userauth/signup1.html", context)
 
 
  
 
 def login(request):
     if request.user.is_authenticated:
-        messages.warning(request, 'you are alredy logged in')
-        # return redirect("hotel:index")
+        if request.user.groups.filter(name='Customer').exists():
+            messages.warning(request, f"Hey {request.user.username} you are alredy logged in")
+            return redirect("hotel:index")
     
+        elif request.user.groups.filter(name='Manager').exists():
+            return redirect("user_dashboard:edit_hotel")
+        
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -72,23 +75,35 @@ def login(request):
 
             if user_query is not None:
                 auth.login(request, user_auth)
-                messages.success(request, 'you are logged in')
-                next_url = request.GET.get("next", "hotel:index")
-                return redirect(next_url)
+                group_names = [group.name for group in user_query.groups.all()]
+
+                if 'Customer' in group_names:
+                    messages.success(request, 'you are logged in succcessfully')
+                    next_url = request.GET.get("next", "hotel:index")
+                    return redirect(next_url)
+                
+                elif 'Manager' in group_names:
+                    messages.success(request, 'you are logged in succcessfully')
+                    next_url = request.GET.get("next", "user_dashboard:edit_hotel")
+                    return redirect(next_url)
+                
+                else:
+                    return redirect
             else:
-                messages.error(request, "Username or Passowrd doest not exist")
+                messages.error(request, "Username or Password does not exist")
                 return redirect("userauth:login")
 
-        except:
+
+        except User.DoesNotExist:
             messages.error(request,'User doest not exist')
             return redirect('userauth:login')
         
 
-    return render(request, 'userauth/login.html', {})
+    return render(request, 'userauth/login1.html', {})
         
 
 def logoutView(request):
     auth.logout(request)
     messages.success(request, "You have longed out successfully")
-    return redirect("hotel:index")
+    return redirect("userauth:login")
     

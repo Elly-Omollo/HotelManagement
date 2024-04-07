@@ -4,12 +4,12 @@
 {% block content%}
 
 
-    <section class="section-carousel " id="page">
-        <div id="carouselExampleIndicators" class="carousel slide">
+    <!-- <section class="section-carousel carousel-nav " id="page"> -->
+        <div id="indicator" class="carousel slide carousel-nav">
             <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
             {% for hotelimage in hotel.hotel_gallery.all %}
@@ -19,118 +19,184 @@
               </div>
               {% endfor %}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#indicator" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden=""></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#indicator" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden=""></span>
               <span class="visually-hidden">Next</span>
             </button>
           </div>
-    </section>
+    <!-- </section> -->
+          <div class="container-fluid ">
+            <div class=" row text-center bg-light p-3">
+                <h4><b>{{hotel.name|title}}</b></h4>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                  <div class="row">
+                    <div class="card-body" >
+                      <h4 class="card-title">{{hotel.name|title}}</h4>
+                      <p class="card-text"><i class="fa fa-map-marker" aria-hidden=""></i> {{hotel.address}}</p>
+                      <p class="card-text"><i class="fa fa-phone" aria-hidden=""></i> {{hotel.mobile}}</p>
+                      <p class="card-text"><i class="fa fa-envelope" aria-hidden=""></i>email</p>
+                      <div class=" row" data-rating="4.5">
+                        <div class="col-md-5 bg-success btn">
+                          <span class="fa fa-star checked" style="color: orange;"></span>
+                          <span class="fa fa-star checked" style="color: orange;"></span>
+                          <span class="fa fa-star checked" style="color: orange;"></span>
+                          <span class="fa fa-star checked" style="color: orange;"></span>
+                          <span class="fa fa-star checked"></span>
+                        </div>
+                        
+                          
+                        <div class="col-md-6 btn">(4.5) / (14 Reviews )</div>
+                        </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row bg-light m-1 rounded">
+                    <div class="col-md-3">
+                      <p class="btn text-center pt-2"><i class="fa-solid fa-heart"></i></p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-12">
+                      <p class="btn btn-secondary">Featured</p>
+                    </div>
+                    <div class="col-md-3  col-lg-3 col-sm-12 text-center pt-1">
+                      <p class="btn btn-light"><i class="fa-solid fa-share"></i></p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-12 mr-4">
+                      <p class="btn bg-info ">OPEN</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- booking form -->
+              <div class="col-lg-8 col-md-8 col-sm-12">
+                <form class="form-control bg-info p-4" method="POST" action="{% url 'booking:check_room_availability' %}">
+                  {% csrf_token %}
+                  <h3 class="form-header text-center">Booking Form</h3>
+                  <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="form-label">Check in date</label>
+                      <input type="date" class="form-control checkin-date" name="checkin"/>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Check out date</label>
+                      <input type="date" class="form-control checkout-date" name="checkout"/>
+                    </div>
+                  </div>
+                  <!-- date scripts -->
+                  <script>
+                    const today = new Date();
+                    console.log("==========",today);
+                    const formatedDate = today.toISOString().split("T")[0];
+                    console.log("==========",formatedDate);
+                    document.querySelector(".checkout-date").min =formatedDate;
+                    document.querySelector(".checkin-date").min =formatedDate;
+                  </script>
 
-    <div class="  my-3">
-        <p>{{hotel.name}}</p>
-        <hr/>
-    </div>
+                  <!-- end of script -->
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label class="form-label" for="room-type">Select a room type</label>
+                      <select name="room-type" class="form-select">
+                        {% for r in hotel.hotel_room_types %}
+                          <option value="{{r.slug}}">{{r.room_type}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-12">
+                      <label class="form-label">Adults</label>
+                      <input type="number" class="form-control" name="adults" min="1" />
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-12">
+                      <label class="form-label">Children (below 18yrs )</label>
+                      <input type="number" class="form-control" name="children" min="0" />
+                    </div>
+                  </div>
+                  <div class="row">
+                      <input type="submit" class="btn btn-outline-secondary form-control" value="Check Availability">
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-12">
+                <!-- <div class="row"> -->
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Description</h4>
+                      <hr style="width: 130px; font-size: large; margin-top: 0%;"/>
+                      <p class="card-text">{{hotel.description}}</p>
+                      <div class="row">
+                        <div class="col-2">
+                          <a href="{{hotel.facebook}}"><i class="fa-brands fa-facebook"></i> </a>
+                        </div>
+                        <div class="col-2">
+                          <a href="{{hotel.facebook}}"><i class="fa-brands fa-square-instagram"></i></a>
+                        </div>
+                        <div class="col-2 ">
+                          <a href="{{hotel.facebook}}"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- </div> -->
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h3>owners info</h3>
+                    <img src="hotel.full_name.profile.image.url " alt="profile" class="card-img-top" >
+                    <p>{{hotel.full_name}}</p>
+                    <p>{{hotel.full_name.email}} </p>
+                    <p>{{hotel.full_name.phone}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
     
-
-    <div class="container-fluid mt-2 p-5">
-      <div class="row  my-3 p-4 m-4 h-6">
-        <h3 class="form-header"> select your hotel of desire</h3>
-        <form class="form-control" id="myForm" method="post" action="{% url 'booking:check_room_availability' %}">
-          {% csrf_token %}
-          <div class="mb-3 row">
-            <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
-        </div>
-          <div class="row ">
-            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
-              <label>Adults</label>
-              <input 
-                class="form-control"
-                type="number"
-                placeholder="adults"
-                min="1"
-                name="adults"
-              />
+    <!-- end of new form -->
+          <div class="container-fluid  p-4">
+            <div class="row">
+              <div  class="card">
+                <h5 class="card-title">Tags</h5>
+                <div class="card-body">
+                   {% for t in hotel.tags.all %}
+                    <a class="card-tex btn rounded bg-light p-2"><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</a>
+                  {% endfor %}
+                </div>
+               
             </div>
-            <div class="fomr-group col-sl-12 col-lg-3 col-md-6"> 
-              <label>Children</label>
-              <input 
-                class="form-control"
-                type="number"
-                placeholder="children"
-                name="children"
-                min="0"
-              
-              />
-            </div>
-            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
-              <label>Check in date</label>
-              <input 
-                class="form-control"
-                type="date"
-                name="checkin"
-                placeholder="check in date"
-              
-              />
-            </div>
-            <div class="fomr-group col-sm-12 col-lg-3 col-md-6">
-              <label>check out date</label>
-              <input 
-                class="form-control"
-                type="date"
-                name="checkout"
-                placeholder="Check out date"
-              />
             </div>
             
           </div>
-          <div class="row my-3">
-              <!-- <div class="col-lg-4 col-md-12">
-                <label>Select location</label>
-                  <select name="location" class="form-select" type="hidden">
-                     {% for r in location %}
-                       <option value="{{r.id}}">{{r.address}}</option>
-                     {% endfor %}
-                  </select>
-              </div> -->
-              <div class="col-lg-4 col-md-12">
-                <label>Select a room type</label>
-                  <select name="room-type" class="form-select">
-                     {% for r in hotel.hotel_room_types %}
-                       <option value="{{r.slug}}">{{r.room_type}}</option>
-                     {% endfor %}
-                  </select>
-              </div>
-              <div class="fomr-group  col-lg-4 col-md-12">
-                <label>Check Availability</label>
-                <input 
-                  class="btn btn-outline-info form-control "
-                  type="submit"
-                  name="button"
-                  
-                  
-                />
-              </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- end of new form -->
+
+    <!-- description -->
+
+         
+
+
+
+    <!--  end of description-->
 
     <div class="p-3 container-fluid ">
+      
       <div class="row p-5 " style="justify-content: space-between;">
-          <div class="card  col-4 mb-3" style="max-width: 20rem; ">
+          <div class="card  col-lg-4 col-md-6 col-sm-12 mb-3" style="max-width: 20rem; ">
             <div class="card-header">Description</div>
             <div class="card-body">
               <h5 class="card-title">{{hotel.name}}</h5>
               <p class="card-text">{{ hotel.description }}</p>
             </div>
           </div>
-          <div class="card  mb-3 col-4" style="max-width: 18rem;">
+          <div class="card  mb-3 col-lg-4 col-md-6 col-sm-12" style="max-width: 18rem;">
             <div class="card-header">Our contact details</div>
             <div class="card-body">
               <h5 class="card-title"><span class="material-symbols-outlined">person_pin_circle</span> {{hotel.address}}</h5><br>
@@ -146,30 +212,31 @@
             </div>
           
           </div>
-          <div class="card mb-3 col-4" style="max-width: 18rem;">
+          <div class="card mb-3 col-lg-4 col-md-6 col-sm-12" style="max-width: 18rem;">
             <div class="card-header">Find us in</div>
             <div class="card-body">
-              <h5 class="card-title"><a href="{{hotel.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i> facebook</i>  {{facebook}}</a></h5>
-              <h5 class="card-title"><a href="{{hotel.twitter}}"><i class="fa fa-facebook" aria-hidden="true"></i> twitter</i>  </a></h5>
-              <h5 class="card-title"><a href=" {{hotel.instagram}}"><i class="fa fa-facebook" aria-hidden="true"></i> instagram</i> </a></h5>
+              <h5 class="card-title"><a href="{{hotel.facebook}}"><i class="fa-brands fa-facebook"></i></a></h5>
+              <h5 class="card-title"><a href="{{hotel.twitter}}"><i class="fa-brands fa-square-x-twitter"></i> </a></h5>
+              <h5 class="card-title"><a href=" {{hotel.instagram}}"><i class="fa-brands fa-square-instagram"></i>instagram</i> </a></h5>
             </div>
             </div>
           </div>
-      <div class="container">
-        <fieldset>
-          <div class="row">
-          <div class="card-header">Our Offers</div>
-          {% for t in hotel.tags.all %}
-          <div class="card mb-3 col-3" style="max-width: 18rem;">
-            <div class="card-body">
-            <h5 class="card-text"><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</h5>
+      <div class="container-fluid mt-3 p-3">
+          
+            <div class="row ">
+            <h4 class=" text-center">Our Offers</h4>
+            <hr/>
+            {% for t in hotel.tags.all %}
+            <div class="col-3" style="max-width: 18rem;">
+              <div class="">
+              <h5 class="card-text"><i class="fa fa-tag" aria-hiden="true"></i>{{t.name}}</h5>
+              </div>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
-        </div>
-      </fieldset>
+        
       </div>
-      </div>
+    </div>
       
 
     <section class="section4">
@@ -289,4 +356,8 @@
       </div>
     </div>
     </section>
+
+    <script>
+
+    </script>
 {% endblock %}

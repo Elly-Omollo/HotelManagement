@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from hotel.models import Coupon, Hotel, Notification, Room, RoomType, Booking, Activitylog
 from django.urls import reverse
@@ -10,6 +11,8 @@ from django.http import HttpResponse, JsonResponse
 
 import stripe
 from django.conf import settings
+
+from userauth.models import Profile, User
 
 
 
@@ -28,9 +31,11 @@ def index(request):
     return render(request, "hotel/index.html", context)
 
 def hotel_details(request, slug):
+   
     hotel = Hotel.objects.get(status="Live", slug=slug)
     context ={
         "hotel":hotel,
+        
     }
     return render(request, "hotel/hotel_details.html", context)
 
@@ -46,16 +51,6 @@ def room_type_details(request, slug, rt_slug):
     adults = request.GET.get("adults")
     children = request.GET.get("children")
 
-    print("These are the detsils that are from the selected rooms from room type details========")
-    
-    print("ID ========", id)
-    print("this is the checkin date ========", checkin)
-    print("chckout date ========", checkout)
-    # print("adults ========", adults)
-    # print(" children ========", children)
-    # print(" hotel ========", hotel)
-    # print(" room type ========", room_type)
-    # print(" rooms ========", rooms)
 
     context = {
         "hotel":hotel,
@@ -69,7 +64,7 @@ def room_type_details(request, slug, rt_slug):
 
     return render(request, "hotel/room_type_details.html", context)
 
-
+@login_required
 def selected_rooms(request):
     # these are the placeholdres variables
     total=0

@@ -1,94 +1,75 @@
 {% extends "base/base.html" %}
 {% load static %}
-{%block title%}Home Page{% endblock%}
+{%block title%}Selected Rooms{% endblock%}
 {% block content%}
-    <!-- <section style="margin-top: 100px;"> 
-        <div id="main-wrapper" class="selection-list1">
-            <div class="container mb-6">
-                <div class="row bg-danger">
-                    <div class="col-lg-8 col-md-8 payment-section bg-info p-5">
-                        <div class="mb-4 booking-listing-section-form ">
                             
-                                <h3 style="font-family:sanserif; text-align:center; margin-top:.1px;"><i class="fas fa-bed "></i>Selected Rooms</h3>
-                                <div class="listing-section">
-                                    <div class="row">
-                                        <ul class="card-group">
-                                            {% for id, item in data.items %}
-                                                <li class="card">
-                                                    <h5>
-                                                    Room Name: {{item.room_name}}
-                                                    <small>
-                                                            <a href="" style="cursor:pointer; " class="delete-item" data-item={{id}}><i class="fas fa-trash"></1>Cancel</a>
-                                                    </small> 
-                                                    </h5>
-                                                    <p><strong>Room Number: </strong>{{item.room_number}}</p>
-                                                    <p><strong>Beds: </strong>{{item.number_of_beds}}</p>
-                                                    <span>{{item.room_price}}$</span>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                          
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            
-        </div>
-    </section> -->
 
     <!-- slelecte rooms -->
-
-    <section class="my-5">
-        <div class="container selection-list p-3">
-            <h3 class="text-center">selected rooms<h3>
-          <div class="row ">
+    <div class="container-fluid selection-list bg-light mt-5 pt-5 ">
+        <div class="row">
+            <h3 class="text-center">selected rooms</h3>
             {% for id, item in data.items %}
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card text-center bg-info">
-                        <div class="card-body">
-                            <h5 class="card-title text-light"><b> {{item.room_name}}</b></h5>
-                            <h3><strong>Room Number: </strong>{{item.room_number}}</h3>
-                            <p>Beds Available:<strong> {{item.number_of_beds}}</strong></p>
-                            <span>Room charges {{item.room_price}}$ /night</span><br>
-                            <a href="" class="btn btn-danger delete-item" data-item={{id}}>Remove</a>
-                        </div>
+                <div class="card col-lg-3 col-md-6 col-sm-6 m-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><b> {{item.room_name}}</b></h5>
+                        <p class="card-text"><strong>Room Number: </strong>{{item.room_number}}</p>
+                        <p class="card-text">Beds Available: {{item.number_of_beds}}</p>
+                        <p class="card-text">Room charges {{item.room_price}}$ /night</p>
+                        <a href="" class="btn btn-danger delete-item" data-item={{id}}><i class="fa-solid fa-trash"></i></a>
+                       
                     </div>
                 </div>
             {% endfor %}
-            
-    </section>
+        </div>
+   
+
 
 
     <!-- end of selected rooms -->
 
     <!-- biling info column -->
-    <div class="container-fluid  p-5 my-5">
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-8 bg- p-3">
-                <div class="row ">
+    <div class="container-fluid   my-5">
+        <div class="row bg-info">
+            <div class="col-sm-12 col-md-6 col-lg-8 bg-secondary ">
+                <div class="row">
                     <!-- billing info -->
-                    <div class="card" style="width: 38rem;">
-                        <div class="card-body bg-succes">
-                          <h5 class="card-title text-center">Booking Summery</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">Check in: <span style="padding-left: 30px;">{{checkin}}</span></h6>
-                          <h6 class="card-subtitle mb-2 text-muted">Check out: <span style="padding-left: 30px;">{{checkout}}</span></h6>
-                          <h6 class="card-subtitle mb-2 text-muted">Total days: <span >{{total_days}}</span></h6>
-                          <h6 class="card-subtitle mb-2 text-muted">Adults: <span>{{adults}}</span></h6>
-                          <h6 class="card-subtitle mb-2 text-muted">Children: <span>{{children}}</span></h6><br>
-                          <div>
-                            <h6 class="card-subtitle mb-2 text-muted">Total Cost:<span style="border-bottom: 1px solid grey; padding-left: 4px;">   {{total}} $</span></h6>
+                    <div class="card" >
+                        <div class="card-body ">
+                            <h5 class="card-title text-center">Booking Summery</h5>
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th>Check in date</th>
+                                    <th>Check out date</th>
+                                    <th>Total days</th>
+                                    <th>Adults</th>
+                                    <th>Children</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{{checkin}}</td>
+                                    <td>{{checkout}}</td>
+                                    <td>{{total_days}}</td>
+                                    <td>{{adults}}</td>
+                                    <td>{{children}}</td>
+                                  </tr>
+                                  
+                                </tbody>
+                              </table>
+                          <div class="text-center">
+                            <h6 class="card-subtitle mb-2 text-muted">Total Cost: <span><b>{{total}} $</b></span></h6>
                           </div>
                         </div>
                       </div>
                 </div>
-                <div class="row my-3">
+                <div class="row ">
                     <!-- booking form -->
                     <form class="booking-list-form bg-info mb-4" method="POST">
                         {% csrf_token %}
-                        <h3><i class="fa far-user"></i>Provide your booking details</h3>
+                        <h3 class="text-center"><b><span class="material-symbols-outlined">
+                            person
+                            </span></b>Provide your booking details</h3>
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="form-label">First Name</label>
@@ -107,18 +88,17 @@
                                     <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
                                 </div>
                             </div>
-                            <div class="col-lg -12 text-center:">
-                                <button type="submit" class="btn bg-success mt-2 mb-2">Continue to book</button>
-                            </div>
+                            <input type="submit" class="btn btn-primary my-3" value="Continue to book">
+                           
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-sm-12 col-mg-6 col-lg-4" >
-                <fieldset>
-               <legend>  <h3 class="text-center">My Hotel of Choice<h3></legend>
+            <div class="col-sm-12 col-mg-6 col-lg-4 bg-light" >
+                <!-- <fieldset> -->
+                <h3 class="text-center">Your Hotel of Choice<h3>
                 <hr/>
-                <div class="card" style="width: 25rem;">
+                <div class="card" style="width: 23rem;">
                     <img class="card-img-top" src="{{hotel.image.url}}" alt="Card image cap">
                     <div class="card-body">
                         <h3 class="text-light card-img-overlay">{{hotel.name}}</h3>
@@ -131,18 +111,20 @@
             </div>
         </div>
     </div>
-
+</div>
     <!-- end of billing info -->
 
 
 <script>//deleting the rooms in the selection
     $(document).on("click", ".delete-item", function(){
-        event.preventDefault();// 
+        event.preventDefault();
 
         let id = $(this).attr("data-item")
         let button = $(this)
 
-        console.log("id is ===", id);
+        
+
+        // console.log("id is ===", id);
 
         $.ajax({
             url: "/booking/delete_selection/",
@@ -151,7 +133,7 @@
             },
             dataType: "json",
             beforeSend: function(){
-                button.html("<div class='spinner-border spinner-border-sm text-danger'></div>")
+                button.html("<div class='spinner-border spinner-border-sm text-light'></div>")
                 //console.log("deleting ......");
             },
             success: function(res){

@@ -1,65 +1,88 @@
 {% extends 'base/base.html' %}
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    {% block title %} room types {% endblock %}
-    <style>
-        
-    </style>
-  </head>
-  <body>
+{% block title %} room types {% endblock %}
+
+  
     {% block content  %}
 
 
     <p class="container my-3 text-white bg-dark">this is the hotel room type page<p>
-    
-        <div class="gradient my-5 mt-5">
-            <div class ="container-fluid bg-secondary">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>{{room_type.room_type}} Room</h2>
-                        <nav id="breadcrubs">
-                            <ul>
-                                <li><h2>{{rooms.count}} Rooms  available</h2></li>
-                            </ul>
+        <div id="indicator" class="carousel slide carousel-nav">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#indicator" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+            {% for hotelimage in hotel.hotel_gallery.all %}
+                
+              <div class="carousel-item  {% if forloop.first %} active {% endif %}">
+                <img src="{{hotelimage.image.url}}" class="d-block w-100 h-70" alt="">
+              </div>
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#indicator" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden=""></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#indicator" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden=""></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
 
-                        </nav>
+        
+            <div class ="container-fluid bg-secondary">
+                <div class="row text-center">
+                    <div class="col">
+                        <h2>{{room_type.room_type}} Room</h2>
+                        <h2>{{rooms.count}} Rooms  available</h2>
                     </div>
                 </div>
-
             </div>
-        </div>
+        
 
-        <section class=" fullwidth_block mt-0 pt-0 pd-5">
-            <div class="container">
-                <div class="row">
+        <!-- <section class=" fullwidth_block mt-0 pt-0 pd-5"> -->
+            <div class="container-fluid mt-3 bg-light">
+                <!-- <div class="row">
                     <div class="col-md-12">
                         <h3 class="mb-2 text-center">All availble rooms<br><span>The {{room_type.room_type}} has {{rooms.count}} available Room(s)</span></h3>
                     </div>
-                </div>
-                <div class="row">
+                </div> -->
+                <div class="row bg-success">
                     <div class="col-md-8">
-                        {% for r in rooms %}
-                            <div class="plan featured col-md-4 col-sm-6 col-xl-12">
-                                <div class="utf-price-plan">
-                                    <h3>Room No. {{r.room_number}}</h3>
-                                    <span class="value">${{r.room_type.price}}<span>/Night</span></span>
-
-                                </div>
-                                <div class="utf_price_plan_features">
-                                    <ul>
-                                        <li>Beds: {{r.room_type.number_of_beds}}</li>
-                                        <li>Capacity: {{r.room_type.room_capsity}} People</li>
-                                    </ul>
-                                    <input type="hidden" class="room_id_{{r.id}}" value="{{r.id}}" id="room_id">
-                                    <input type="hidden" class="room_number_{{r.id}}" value="{{r.room_number}}" id="room_number">
-                                    
-                                    
-                                    <button class="btn border add-to-selection" data-index="{{r.id}}"><i class="fa fa-shopping-cart"></i>Add to whishlist</button>
+                        <h4 class="text-center">Rooms available</h4>
+                        
+                        <div class="row p-3">
+                            {% for r in rooms %}
+                            <div class="col-md-6 col-lg-6 mb-3 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-muted text-center">Room No. {{r.room_number}}</h5>
+                                        <h5 class="card-subtitle ">{{r.room_type.price}}$</h5>
+                                        <span class="card-text">Have got: {{r.room_type.number_of_beds}} bed(s)</span><br>
+                                        <span class="card-text">Can accommodate: {{r.room_type.room_capsity}} People</span>
+                                        <div class="text-center">
+                                            <input type="hidden" class="room_id_{{r.id}}" value="{{r.id}}" id="room_id">
+                                            <input type="hidden" class="room_number_{{r.id}}" value="{{r.room_number}}" id="room_number">
+                                            <!-- <span class="btn add-to-selection" data-index="{{r.id}}"> Add to Whishlist</span> -->
+                                            <button class="btn btn-secondary tex-center mt-3  add-to-selection" data-index="{{r.id}}">
+                                                <span class="material-symbols-outlined">
+                                                    add_shopping_cart
+                                                </span>Add to Whishlist
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                            <div class="row text-center bg-light rounded">
+                                <a href="{% url 'hotel:selected_rooms' %}" class="btn bg-secondary text-light" style="text-decoration: none;"><b>Check Whishlist</b></a>
+                            </div>
+                        </div>
+
+                               
+                       
+
                         <input type="hidden" value="{{hotel.id}}" id="id">
                         <input type="hidden" value="{{hotel.name}}" id="hotel_name">
                         <input type="hidden" value="{{room_type.room_type}}" id="room_name">
@@ -71,25 +94,27 @@
                         <input type="hidden" value="{{adults}}" id="adults">
                         <input type="hidden" value="{{children}}" id="children">
                     </div>
-                    <div class="col-lg-4">
-                        <div class="booking_widget_box bg-info" style="border:1px dashed rgba(42, 1, 119, 0.61); padding:30px; border-radius:3px; ">
-                            <h3> <i class="fa fa-calender"></i>Booking</h3>
-                            <form class=" row width-form mt-0 form-group" method="POST" action="{% url 'booking:check_room_availability' %}">
+                    <div class="col-lg-4 pt-2">
+                        <div class=" bg-info p-2">
+                            <h3 class="text-center"> <span class="material-symbols-outlined">
+                                calendar_month
+                                </span>Room update Form</h3>
+                            <form class="  width-form mt-0 form-group" method="POST" action="{% url 'booking:check_room_availability' %}">
                                 {% csrf_token %}
-                                <div class="mb-3 row">
+                                <div class="mb-3 ">
                                     <input class="form-control" type="hidden" value="{{hotel.id}}" name="hotel-id" id="">
                                 </div>
-                                <div class="mb-3 row">
+                                <div class="mb-3 ">
                                     <label for="Indate" class="form-label">Check in date</label>
                                     <input type="date" class="form-control" name="checkin" id="Indate" placeholder="Select date">
                                 </div>
-                                <div class="mb-3 row">
+                                <div class="mb-3 ">
                                     <label for="Outdate" class="form-label">Check out date</label>
                                     <input type="date" class="form-control" id="Outdate" name="checkout" placeholder="Select date">
                                 </div>
                                 <div class="with-forms">
                                     <div class="col-lg-12 col-md-12">
-                                        <a href=""> Guests <span><input class="qtyTotal" name="qtyTotal" readonly></span></a>
+                                        <!-- <a href=""> Guests <span><input class="qtyTotal" name="qtyTotal" readonly></span></a> -->
                                         <div class="panel-dropdown-content">
                                             <div class="qtyButtons mb-3 ">
                                                 <div class="qtyTitle">Adults</div>
@@ -102,9 +127,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="with-forms mt-3">
+                                <div class="with-forms ">
                                     <div class="col-lg-12 col-md-12">
-                                        <a href="">Select a room type</a>
+                                        <h4 class="text-center">Select a room type</h4>
                                         <select name="room-type" class="form-select" required>
                                             {% for r in hotel.hotel_room_types %}
                                               <option value="{{r.slug}}">{{r.room_type}}</option>
@@ -112,13 +137,19 @@
                                          </select>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn mt-5 bg-success ">Check Availability</button>
+                                <div class="text-center pt-2">
+
+                                    <button type="submit" class="btn mt-2 bg-success ">Check Availability</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                <div class="row text-center h-100">
+                    <!-- <a href="" class="btn" style="text-decoration: none;">Continue to Book</a> -->
+                </div>
             </div>
-        </section>
+        <!-- </section> -->
 
         
         <script>//adding rooms to whishlist
@@ -154,7 +185,7 @@
                     console.log("checkout is", checkout);
                     console.log("adults is", adults);
                     console.log("children", children);
-                    console.log("id is", id);
+                    console.log("id is555555555555========", id);
 
                     $.ajax({
                         url: '/booking/add_to_selection/', 
@@ -180,9 +211,12 @@
 
                         },
                         success: function(response) {
-                            console.log(response);
                             $(".room_count").text(response.total_selectetd_items)
-                            button.text("Added")
+                            button.text("Added");
+                            // button.text(response.total_selectetd_items);
+                            console.log("respons ==============67",response);
+                            $(".room_count").text(response.total_selectetd_items);
+                            
 
 
                         }

@@ -1,27 +1,108 @@
-
-
-
-
-
-
-
-
-    <section class="my-5">
-        <div class="container selection-list p-3">
-            <h3 class="text-center">selected rooms<h3>
-        <div class="row ">
-            {% for id, item in data.items %}
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card text-center bg-info">
-                        <div class="card-body">
-                            <h5 class="card-title text-light"><b> {{item.room_name}}</b></h5>
-                            <h3><strong>Room Number: </strong>{{item.room_number}}</h3>
-                            <p>Beds Available:<strong> {{item.number_of_beds}}</strong></p>
-                            <span>Room charges {{item.room_price}}$ /night</span><br>
-                            <a href="" class="btn btn-danger delete-item" data-item={{id}}>Remove</a>
-                        </div>
-                    </div>
+<div class="container-fluid selection-list">
+    <div class="row">
+        <h3 class="text-center">selected rooms</h3>
+        {% for id, item in data.items %}
+            <div class="card col-lg-3 col-md-6 col-sm-6 m-4">
+                <div class="card-body">
+                    <h5 class="card-title"><b> {{item.room_name}}</b></h5>
+                    <p class="card-text"><strong>Room Number: </strong>{{item.room_number}}</p>
+                    <p class="card-text">Beds Available: {{item.number_of_beds}}</p>
+                    <p class="card-text">Room charges {{item.room_price}}$ /night</p>
+                    <a href="" class="btn btn-danger delete-item" data-item={{id}}><i class="fa-solid fa-trash"></i></a>
+                   
                 </div>
-            {% endfor %}
-            
-    </section>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+<!-- end of selected rooms -->
+
+<!-- biling info column -->
+<div class="container-fluid   my-5">
+    <div class="row bg-info">
+        <div class="col-sm-12 col-md-6 col-lg-8 bg-secondary ">
+            <div class="row">
+                <!-- billing info -->
+                <div class="card" >
+                    <div class="card-body ">
+                        <h5 class="card-title text-center">Booking Summery</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Check in date</th>
+                                <th>Check out date</th>
+                                <th>Total days</th>
+                                <th>Adults</th>
+                                <th>Children</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{checkin}}</td>
+                                <td>{{checkout}}</td>
+                                <td>{{total_days}}</td>
+                                <td>{{adults}}</td>
+                                <td>{{children}}</td>
+                              </tr>
+                              
+                            </tbody>
+                          </table>
+                      <div class="text-center">
+                        <h6 class="card-subtitle mb-2 text-muted">Total Cost: <span><b>{{total}} $</b></span></h6>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row ">
+                <!-- booking form -->
+                <form class="booking-list-form bg-info mb-4" method="POST">
+                    {% csrf_token %}
+                    <h3 class="text-center"><b><span class="material-symbols-outlined">
+                        person
+                        </span></b>Provide your booking details</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label">First Name</label>
+                            <input class="form-control" type="text" name="full_name" value="" placeholder="First Name">
+        
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label class="form-label">Email</label>
+                                <input class="form-control" type="email" name="email" value="" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label class="form-label">Phone</label>
+                                <input class="form-control" type="text" name="phone" value="" placeholder="Phone">
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary my-3" value="Continue to book">
+                       
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-mg-6 col-lg-4 bg-light" >
+            <!-- <fieldset> -->
+            <h3 class="text-center">Your Hotel of Choice<h3>
+            <hr/>
+            <div class="card" style="width: 23rem;">
+                <img class="card-img-top" src="{{hotel.image.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="text-light card-img-overlay">{{hotel.name}}</h3>
+                  <h6 class="card-subtitle mb-2 text-primary ">Located in {{hotel.address}}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted pt-2 ">About Us:</h6>
+                  <h6 class="card-text">{{hotel.description}}</h6>
+                </div>
+            </div>
+          </fieldset>
+        </div>
+    </div>
+</div>
+
+</div>
