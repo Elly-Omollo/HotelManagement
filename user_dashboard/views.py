@@ -20,7 +20,7 @@ from user_dashboard.models import MenuItem, OrderModel
 from hotel.models import  Hotel, Notification, Booking
 from userauth.models import Profile, User
 from userauth.forms import UserUpdateForm, ProfileUpdateForm
-
+from .mails import order_email
 
 # Create your views here.
 @login_required
@@ -305,20 +305,20 @@ def order_confirmation(request):
 
     subject = "Order Confirmation"
     message = f"""
-                hi {name}, Thank you for your order
+                Hi {name}, Thank you for your order
                 Your total is : {price}\n'
                 Your food is being made and will be delivered soon!
             """
     sender = "ebooking@shahibu.com"
     receiver = [email]
-
-    send_mail(
-        subject,
-        message,
-        sender,
-        receiver,
-        fail_silently=False
-    )
+    order_email(message, subject, receiver)
+    # send_mail(
+    #     subject,
+    #     message,
+    #     sender,
+    #     receiver,
+    #     fail_silently=False
+    # )
 
     
     

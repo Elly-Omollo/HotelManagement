@@ -21,14 +21,14 @@ def check_room_availability(request):
         hotel = Hotel.objects.get(id=id)
         room_type = RoomType.objects.get(hotel=hotel, slug=room_type)
 
-        print("this is the check availability form prints for ", hotel)
-        print("the  id is =======", id)
-        print("checkin date =======", checkin)
-        print("cheeck out date =======", checkout)
-        print("adults =======", adults)
-        print("children are =======", children)
-        print("the  room type is =======", room_type)
-        print("the  hotel name is =======",hotel)
+        # print("this is the check availability form prints for ", hotel)
+        # print("the  id is =======", id)
+        # print("checkin date =======", checkin)
+        # print("cheeck out date =======", checkout)
+        # print("adults =======", adults)
+        # print("children are =======", children)
+        # print("the  room type is =======", room_type)
+        # print("the  hotel name is =======",hotel)
         
 
         

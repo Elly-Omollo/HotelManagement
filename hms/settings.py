@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-from environs import Env
-env = Env() #initialize the env 
-env.read_env()
+# from environs import Env
+# env = Env() #initialize the env 
+# env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -143,9 +143,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ULR = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_FILE_PATH = BASE_DIR/ 'sent-emails'
-
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_FILE_PATH = BASE_DIR/ 'sent-emails'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mail.shahibu.com'
 EMAIL_HOST_USER = 'ebooking@shahibu.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -165,8 +165,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "userauth.User"
 
-STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
-STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+# STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
+# STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 
 
 

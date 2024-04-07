@@ -234,7 +234,7 @@ def checkout(request, booking_id):
     context ={
         
         "booking":booking,
-        "stripe_publishable_key": settings.STRIPE_PUBLIC_KEY
+        # "stripe_publishable_key": settings.STRIPE_PUBLIC_KEY
 
     }
 
