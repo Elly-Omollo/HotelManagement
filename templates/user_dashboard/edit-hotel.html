@@ -4,8 +4,10 @@ Manager | edit hotel
 {% endblock %}
 
 {% block content  %}
-<div class="container ">
 
+{% if hotel %}
+<div class="container mt-5 p-5" style=" margin-top: 100px; background-color: aqua;">
+    
     <h4 class="card p-4 text-center bg-light">Its time to make changes on hotels by the manager</h4>
 </div>
 {% for h in form  %}
@@ -18,5 +20,16 @@ Manager | edit hotel
           </form>
   </div>
 {% endfor %}
+{% else %}
+    
+    <div class="container " style="margin-top: 200px;">
+        <h3>Hey {{request.user.full_name}} </h3>
+        <h4>You have not added any hotel Yet.....</h4>
+        <a  href="{% url 'user_dashboard:add_hotel' %}" class="btn btn-primary">Contact the service providers</a>
+    </div>
+
+{% endif %}
     
     {% endblock %}
+
+

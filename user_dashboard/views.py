@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from paypal.standard.forms import PayPalPaymentsForm
+# from paypal.standard.forms import PayPalPaymentsForm
 from .models import  OrderModel, MenuItem
 
 
@@ -158,6 +158,7 @@ def add_hotel(request):
     if request.method == 'POST':
         form = AddHotelForm(request.POST, request.FILES)
         if form.is_valid():
+            messages.info(request, "One hotel has been added successfuly")
             form.save()
             return redirect('user_dashboard:add_hotel')  # Redirect to a success page after adding the hotel
     else:

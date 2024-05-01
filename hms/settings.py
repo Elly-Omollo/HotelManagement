@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-# from environs import Env
-# env = Env() #initialize the env 
-# env.read_env()
+from environ import Env
+env = Env() #initialize the env 
+env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     #utilities
     'sweetify', 
     'taggit', 
+    'environ', 
 
 ]
 
@@ -165,8 +166,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "userauth.User"
 
-# STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
-# STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
+STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 
 
 
