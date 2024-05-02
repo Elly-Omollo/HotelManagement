@@ -4,3 +4,7 @@ eBook
 .env
 test.html
 testdata.txt
+passenger_wsgi.py
+redman.zip
+requirements.txt
+.venv

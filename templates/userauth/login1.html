@@ -77,17 +77,20 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
-            </form>
-            <hr>
-            <p class="text-center">Or login as:</p>
-            <div class="text-center">
-                <a href="#" class="btn btn-secondary">Login as Manager</a>
-            </div>
-            <div class="text-center">
-                <a href="{% url 'userauth:signup' %}" class="btn btn-link">Create Account</a>
-            </div>
-        </div>
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'userauth:signup' %}" class="text-center btn btn-primary btn-block">
+                            <div  class="text-white">Create Account</div>
+                        </a>
+                    </div>
+                </div>
+                </form>
+           <hr/>
     </div>
 
     <script>

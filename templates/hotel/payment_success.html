@@ -3,8 +3,8 @@
 {%block title%}PaymentPage{% endblock%}
 {% block content%}
 
-        <div class="not_found_block " style="margin-top: 150px;">
-            <div class="container my-5 " style="margin-top: 100px;" >
+        <div class="not_found_block container-fluid" >
+            <div class="container my-5 " >
                 <div class="row">
                     <div class="col-md-12">
                         <section class="center" id="not-found">
@@ -38,9 +38,8 @@
                                     <h6 class="card-subtitle mb-2 text-muted">Begining {{booking.check_in_date}}</h6>
                                 </p>
                             </div>
-                            <div class="row my-3 pb-3" style="display: flex; flex-direction:column; border: 2px solid grey ;">
+                            <div class="row card ">
                                 <a href="{% url 'user_dashboard:dashboard' %}" class="btn btn-secondary">Dashboard</a>
-                                <a href="" target="_blank" class="mt-3">View Invoice</a>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-lg-offset-3">

@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-from environ import Env
-env = Env() #initialize the env 
-env.read_env()
+# from environ import Env
+# env = Env() #initialize the env 
+# env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'hms.urls'
@@ -166,8 +166,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "userauth.User"
 
-STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
-STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+# STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
+STRIPE_SECRET_KEY = 78463526176838754
+# STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+STRIPE_PUBLIC_KEY = 67457878365345653
 
 
 

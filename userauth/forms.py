@@ -5,12 +5,12 @@ from userauth.models import User, Profile
  
 class UserRegistrationForm(UserCreationForm):
 
-    full_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Enter your name here"}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Enter your username here"}))
-    email = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Enter your Email here"}))
-    phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Enter your phone here"}))
-    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Enter your password here"}))
-    password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder':"Confirm your password"}))
+    full_name = forms.CharField(widget=forms.TextInput(attrs={ 'class':'form-group'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-group'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class':'form-group'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-group'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={ 'class':'form-group'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={ 'class':'form-group'}))
     
     class Meta:
         model = User
